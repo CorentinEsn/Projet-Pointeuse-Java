@@ -3,6 +3,8 @@ package testSwing;
 //Usually you will require both swing and awt packages
 //even if you are working with just swings.
 import javax.swing.*;
+import java.util.*;
+import java.util.List;
 import java.awt.*;
 import java.awt.event.*;
 class gui {
@@ -39,11 +41,21 @@ class gui {
      }
      );
      
-     JTable test=new JTable();
+     HashMap<String, String> capitalCities = new HashMap<String, String>();
+
+     // Add keys and values (Country, City)
+     capitalCities.put("England", "London");
+     capitalCities.put("Germany", "Berlin");
+     capitalCities.put("Norway", "Oslo");
+     capitalCities.put("USA", "Washington DC");
+     System.out.println(capitalCities);
+     
+
+     
+     
      JButton reset = new JButton("Reset");
      panel.add(label); // Components Added using Flow Layout
      panel.add(tf);
-     panel.add(test);
      panel.add(send);
      panel.add(reset);
 
