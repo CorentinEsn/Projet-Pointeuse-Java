@@ -15,8 +15,16 @@ public class Schedule {
 	    SCH.put("Vendredi", null);
 	}
 
-	public void modifSCH(String key, Pair<LocalTime,LocalTime> hours) {
+	public void addHrs(String key, Pair<LocalTime,LocalTime> hours) {
+		
+		if(	key == "Lundi" || 
+			key == "Mardi" || 
+			key == "Mercredi" || 
+			key == "Jeudi" || 
+			key == "Vendredi") {
 		SCH.put(key,hours);
+		}
+		
 	}
 	
 	public HashMap< String , Pair<LocalTime,LocalTime> > getSCH() {

@@ -3,6 +3,9 @@ package environnementEntreprise;
 public class Employe {
 	//attributs
 	private int ID;
+	
+	public Schedule SCH;
+	
 	//private EmploiDuTemps emploiDuTemps;
 	
 	//methodes
@@ -14,13 +17,4 @@ public class Employe {
 		ID = newID;
 	}
 	
-	/*
-	public EmploiDuTemps getEmploiDuTemps() {
-		return ID;
-	}
-	
-	public void setID(int newEdt) {
-		 emploiDuTemps = newEdt;
-	}
-	*/
 }
