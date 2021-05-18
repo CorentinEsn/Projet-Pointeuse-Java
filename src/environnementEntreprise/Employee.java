@@ -1,14 +1,12 @@
 package environnementEntreprise;
 
-public class Employe {
-	//attributs
+public class Employee {
+	//attributes
 	private int ID;
 	
 	public Schedule SCH;
 	
-	//private EmploiDuTemps emploiDuTemps;
-	
-	//methodes
+	//methods
  	public int getID() {
 		return ID;
 	}

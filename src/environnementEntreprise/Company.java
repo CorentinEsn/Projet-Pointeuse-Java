@@ -1,25 +1,25 @@
 package environnementEntreprise;
 
-public class Entreprise {
-	//attributs
-	private String nom;
-	private Departement[] departements;
+public class Company {
+	//attributes
+	private String name;
+	private Department[] departments;
 	
-	//methodes
-	public Departement[] getDepartements() {
-		return departements;
+	//methods
+	public Department[] getDepartments() {
+		return departments;
 	}
 
-	public void setDepartements(Departement[] departements) {
-		this.departements = departements;
+	public void setDepartments(Department[] departments) {
+		this.departments = departments;
 	}
 	
-	public String getNom() {
-		return nom;
+	public String getName() {
+		return name;
 	}
 
-	public void setName(String nom) {
-		this.nom = nom;
+	public void setName(String newName) {
+		name = newName;
 	}
 
 }
