@@ -8,20 +8,20 @@ public class Schedule {
 	private HashMap< String , Pair<LocalTime,LocalTime> > SCH;
 	
 	public Schedule () {
-	    SCH.put("Lundi", null);
-	    SCH.put("Mardi", null);
-	    SCH.put("Mercredi", null);
-	    SCH.put("Jeudi", null);
-	    SCH.put("Vendredi", null);
+	    SCH.put("Monday", null);
+	    SCH.put("Tuesday", null);
+	    SCH.put("Wednesday", null);
+	    SCH.put("Thursday", null);
+	    SCH.put("Friday", null);
 	}
 
 	public void addHrs(String key, Pair<LocalTime,LocalTime> hours) {
 		
-		if(	key == "Lundi" || 
-			key == "Mardi" || 
-			key == "Mercredi" || 
-			key == "Jeudi" || 
-			key == "Vendredi") {
+		if(	key == "Monday" || 
+			key == "Tuesday" || 
+			key == "Wednesday" || 
+			key == "Thursday" || 
+			key == "Friday") {
 		SCH.put(key,hours);
 		}
 		
