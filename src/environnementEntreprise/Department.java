@@ -3,6 +3,7 @@ package environnementEntreprise;
 public class Department {
 	//attributs
 	private String name;
+	private String description;
 	private Employee[] employees;
 	
 	//methodes
@@ -22,6 +23,14 @@ public class Department {
 	
 	public void setName(String nom) {
 		this.name = nom;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String newDescription) {
+		description = newDescription;
 	}
 	
 }
