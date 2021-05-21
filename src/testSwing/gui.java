@@ -4,7 +4,7 @@ package testSwing;
 //even if you are working with just swings.
 import javax.swing.*;
 import java.util.*;
-import java.util.List;
+
 import java.awt.*;
 import java.awt.event.*;
 class gui {
@@ -30,6 +30,8 @@ class gui {
 
      //Creating the panel at bottom and adding components
      JPanel panel = new JPanel(); // the panel is not visible in output
+     JPanel panelTab =new JPanel();
+     panelTab.setLayout(new BorderLayout());
      JLabel label = new JLabel("Enter Text");
      JTextField tf = new JTextField(10); // accepts up to 10 characters
      JButton send = new JButton("Send");
@@ -48,23 +50,33 @@ class gui {
      capitalCities.put("Germany", "Berlin");
      capitalCities.put("Norway", "Oslo");
      capitalCities.put("USA", "Washington DC");
-     System.out.println(capitalCities);
+     //System.out.println(capitalCities);
+     String[]names= {"Pays","Capitale"};
      
-
+     Object[][] tableData = new Object[4][3];
      
+     int index = 0;
+     for (String key : capitalCities.keySet())
+     {
+         tableData[index][0] = key;
+         tableData[index][1] = capitalCities.get(key);
+         index++;
+     }
      
+     JTable test=new JTable(tableData,names);
      JButton reset = new JButton("Reset");
      panel.add(label); // Components Added using Flow Layout
      panel.add(tf);
      panel.add(send);
      panel.add(reset);
 
-     
+     panelTab.add(BorderLayout.NORTH,test.getTableHeader());
+     panelTab.add(BorderLayout.CENTER,test);
 
      //Adding Components to the frame.
      frame.getContentPane().add(BorderLayout.SOUTH, panel);
      frame.getContentPane().add(BorderLayout.NORTH, mb);
-     frame.getContentPane().add(BorderLayout.CENTER, ta);
+     frame.getContentPane().add(BorderLayout.CENTER, panelTab);
      frame.setVisible(true);
  }
 }
