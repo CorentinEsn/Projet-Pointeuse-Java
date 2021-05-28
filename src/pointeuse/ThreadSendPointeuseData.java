@@ -5,6 +5,10 @@ import java.io.ObjectOutputStream;
 import java.net.ConnectException;
 import java.net.Socket;
 import java.net.SocketTimeoutException;
+import java.time.*;
+import java.util.UUID;
+
+import environnementEntreprise.Pair;
 
 public class ThreadSendPointeuseData implements Runnable {
 	
@@ -12,7 +16,7 @@ public class ThreadSendPointeuseData implements Runnable {
 	private String address;
 	private int port;
 	
-	private static String dataToKeep; 
+	private static Pair<UUID, LocalDateTime> dataToKeep[] = readStockedData(); 
 	
 	public ThreadSendPointeuseData(SerialPointeuse dataToSend, String address, int port) {
 		this.dataToSend = dataToSend;
@@ -20,6 +24,11 @@ public class ThreadSendPointeuseData implements Runnable {
 		this.port = port;
 	}
 	
+	private static Pair<UUID, LocalDateTime>[] readStockedData() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 	public void run() {
     	
     	try

@@ -2,9 +2,11 @@ package pointeuse;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
+import java.net.*;
+/*import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.net.UnknownHostException;
+import java.net.UnknownHostException;*/
 
 public class ThreadReadPointeuseData implements Runnable {
 
@@ -15,6 +17,16 @@ public class ThreadReadPointeuseData implements Runnable {
 		this.dataToRead = dataToRead;
 		this.port = port;
 	}
+	
+	protected void onPacketReceived(SerialPointeuse packet) {
+        
+//        switch (packet.getPacketType()) {
+//            case EMPLOYEE_POINT: {
+//                App.getInstance().checkin(((PacketEmployeePoint) packet).getEmployeeId());
+//                break;
+//            }
+//        }
+    }
 	
 	public void run() {
 		try {
