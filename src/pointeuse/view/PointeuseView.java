@@ -1,4 +1,4 @@
-package pointeuse;
+package pointeuse.view;
 
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -25,6 +25,10 @@ import java.util.UUID;
 
 import javax.swing.*;
 import javax.swing.event.*;
+
+import pointeuse.TextPrompt;
+import pointeuse.controller.*;
+
 
 import java.io.Serializable;
 
@@ -76,7 +80,7 @@ public class PointeuseView extends JFrame{
 	      
 	      JButton checkInOutbutton = new JButton("Check In/Out");
 	      checkInOutbutton.setEnabled(false);
-	      checkInOutbutton.addActionListener(new AListener(tfUUID, tfIPAddress, spPort));
+	      checkInOutbutton.addActionListener(new ButtonListener(tfUUID, tfIPAddress, spPort));
 	      
 	      DocumentListener tfListener = new DListener(tfUUID, tfIPAddress, checkInOutbutton);
 	      
