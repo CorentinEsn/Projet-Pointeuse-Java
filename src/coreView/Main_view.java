@@ -78,7 +78,6 @@ public class Main_view extends JFrame {
 		grid.gridy = 2;
 		grid.gridx = 4;
 		grid.weightx = 10;
-		grid.fill = GridBagConstraints.HORIZONTAL;
 		JPanel buttons = new JPanel();
 
 		buttons.add(new JButton("Ajouter"));
@@ -94,7 +93,6 @@ public class Main_view extends JFrame {
 		GridBagConstraints grid = new GridBagConstraints();
 		JPanel date = new JPanel();
 
-        // tableau de chaînes contenant des langages
 		Integer[] daysList=new Integer[32];
 		for (Integer i=1;i<32;i++) 
 		{
@@ -104,7 +102,6 @@ public class Main_view extends JFrame {
         Integer[] yearsList = new Integer[LocalDateTime.now().getYear()-1969];
         for (int i=0;i<LocalDateTime.now().getYear()-1970;i++) {
         	yearsList[i+1]=LocalDateTime.now().getYear()-i;
-        	System.out.println(yearsList[i]);
         }
         
         System.out.println(LocalDateTime.now().getYear());
