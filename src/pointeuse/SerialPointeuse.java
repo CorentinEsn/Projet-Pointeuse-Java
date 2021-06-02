@@ -16,24 +16,43 @@ public class SerialPointeuse implements Serializable {
 	private String sDateCheckInOut;
 	private LocalDateTime dateCheckInOut;
 	
+	
 	public SerialPointeuse(String userUUID, String sDateCheckInOut, LocalDateTime dateCheckInOut) {
 		this.userUUID 			= userUUID;
 		this.sDateCheckInOut 	= sDateCheckInOut;
 		this.dateCheckInOut 	= dateCheckInOut;
 	}
 	
+	/**
+	 * give the UUID
+	 * @return the UUID of the current data
+	 */
 	public String getUserUUID() {
 		return userUUID;
 	}
 
+	/**
+	 * give the date in string format
+	 * @return the date in string format
+	 */
 	public String getStrDate() {
 		return sDateCheckInOut;
 	}
 	
+	
+	/**
+	 * give the date in LocalDateTime format
+	 * @return the date in LocalDateTime format
+	 */
 	public LocalDateTime getDate() {
 		return dateCheckInOut;
 	}
 	
+	/**
+	 * transform the data into a string, for test purposes
+	 * @return the data in a string format
+	 */
+	@Override
 	public String toString() {
 		return 	"UUID : "
 				+userUUID
@@ -42,17 +61,5 @@ public class SerialPointeuse implements Serializable {
 				+"\ndateCheckInOut = "
 				+dateCheckInOut;
 	}
-	
-	private void writeObject(final ObjectOutputStream oos) throws IOException {
-		oos.writeObject(this.userUUID);
-		oos.writeObject(this.sDateCheckInOut);
-	    oos.writeObject(this.dateCheckInOut);
-	}
-	
-	private void readObject(final ObjectInputStream ois) throws IOException, 
-    ClassNotFoundException {
-		this.userUUID = (String) ois.readObject();
-		this.sDateCheckInOut = (String) ois.readObject();
-		this.dateCheckInOut = (LocalDateTime) ois.readObject();
-	}
+
 }
