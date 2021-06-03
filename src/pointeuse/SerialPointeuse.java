@@ -54,12 +54,13 @@ public class SerialPointeuse implements Serializable {
 	 */
 	@Override
 	public String toString() {
-		return 	"UUID : "
+		return 	"\nUUID : "
 				+userUUID
 				+"\nsDateCheckInOut = "
 				+sDateCheckInOut
 				+"\ndateCheckInOut = "
-				+dateCheckInOut;
+				+dateCheckInOut
+				+"\n";
 	}
 
 }

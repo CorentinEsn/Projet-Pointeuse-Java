@@ -27,6 +27,7 @@ import javax.swing.*;
 import javax.swing.event.*;
 
 import pointeuse.TextPrompt;
+import pointeuse.ThreadSendPointeuseData;
 import pointeuse.controller.*;
 
 
@@ -46,7 +47,8 @@ public class PointeuseView extends JFrame{
 
 	      WindowListener closeListener = new WindowAdapter() {
 	         public void windowClosing(WindowEvent e){
-	            System.exit(0);
+	        	 ThreadSendPointeuseData.writeStockedData();
+	        	 System.exit(0);
 	         }
 	      };
 

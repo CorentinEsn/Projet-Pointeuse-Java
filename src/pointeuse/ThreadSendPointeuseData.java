@@ -3,7 +3,9 @@ package pointeuse;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.net.ConnectException;
+import java.net.InetSocketAddress;
 import java.net.Socket;
+import java.net.SocketAddress;
 import java.net.SocketTimeoutException;
 import java.time.*;
 import java.util.ArrayList;
@@ -26,9 +28,25 @@ public class ThreadSendPointeuseData implements Runnable {
 		this.port = port;
 	}
 	
-	private static ArrayList<SerialPointeuse> readStockedData() {
-		// TODO Auto-generated method stub
-		return null;
+	public static ArrayList<SerialPointeuse> readStockedData() {
+		saving.Serializer readingData = new saving.Serializer();
+		ArrayList<SerialPointeuse> gatheredData = readingData.serializeReadPointeuseData();
+		if(gatheredData == null) {
+			gatheredData = new ArrayList<SerialPointeuse>();
+		}
+		System.out.println(gatheredData);
+		return gatheredData;
+	}
+	
+	
+	public static void writeStockedData() {
+		saving.Serializer writingData = new saving.Serializer();
+//		SerialPointeuse tabData[] = new SerialPointeuse[dataToKeep.size()];
+//		int i = 0;
+//		for(SerialPointeuse data : dataToKeep) {
+//			tabData[i] = data;
+//		}
+		writingData.serializeWritePointeuseData(dataToKeep);
 	}
 	
 	private void addStockedData(SerialPointeuse failedData) {
@@ -73,13 +91,15 @@ public class ThreadSendPointeuseData implements Runnable {
 	
 	public void sendDataStocked(String address, int port) {
 		
+		System.out.println(dataToKeep);
 		for(SerialPointeuse data : dataToKeep) {
 			try
 	        {
 	            //ServerSocket myServerSocket = new ServerSocket(8080);
 	    		System.out.println("Initialise Client for failed data");
-	            Socket clientSocket = new Socket(address, port);
-	            clientSocket.setSoTimeout(5000);
+	            Socket clientSocket = new Socket();
+	            clientSocket.connect(new InetSocketAddress(8080),2000);
+	            //clientSocket.setSoTimeout(5000);
 	            try 
 	            {
 	                ObjectOutputStream objectOutput = new ObjectOutputStream(clientSocket.getOutputStream());
@@ -101,6 +121,10 @@ public class ThreadSendPointeuseData implements Runnable {
 	    	catch (ConnectException e) {
 	        	System.out.println("Error :  connection failed,  the data stays in dataToKeep");
 	        }
+			catch (SocketTimeoutException exception) {
+                // Output expected SocketTimeoutExceptions.
+                System.out.println("Error :  connection timeout, the data stays in dataToKeep");
+            }
 	        catch (IOException e) 
 	        {
 	            e.printStackTrace();
