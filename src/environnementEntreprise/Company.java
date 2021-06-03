@@ -21,6 +21,5 @@ public class Company {
 	public void setName(String newName) {
 		name = newName;
 	}
-	
-	
+		
 }
