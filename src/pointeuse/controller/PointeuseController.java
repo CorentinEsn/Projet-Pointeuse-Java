@@ -266,7 +266,7 @@ public class PointeuseController{
 	 */
 	public SerialPointeuse readPointeuseDataTCP(int port) {
 		
-		SerialPointeuse dataToRead = new SerialPointeuse("", "", null);
+		SerialPointeuse dataToRead = new SerialPointeuse(null, "", null);
 		
 		Thread t = new Thread(new ThreadReadPointeuseData(dataToRead, port));
 		t.start();

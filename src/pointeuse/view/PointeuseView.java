@@ -82,7 +82,7 @@ public class PointeuseView extends JFrame{
 	      
 	      JButton checkInOutbutton = new JButton("Check In/Out");
 	      checkInOutbutton.setEnabled(false);
-	      checkInOutbutton.addActionListener(new ButtonListener(tfUUID, tfIPAddress, spPort));
+	      checkInOutbutton.addActionListener(new ButtonListener(tfUUID, tfIPAddress, spPort, this));
 	      
 	      DocumentListener tfListener = new DListener(tfUUID, tfIPAddress, checkInOutbutton);
 	      

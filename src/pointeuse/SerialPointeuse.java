@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 public class SerialPointeuse implements Serializable {
 	/**
@@ -12,12 +13,12 @@ public class SerialPointeuse implements Serializable {
 	 */
 	private static final long serialVersionUID = 1L;
 	
-	private String userUUID;
+	private UUID userUUID;
 	private String sDateCheckInOut;
 	private LocalDateTime dateCheckInOut;
 	
 	
-	public SerialPointeuse(String userUUID, String sDateCheckInOut, LocalDateTime dateCheckInOut) {
+	public SerialPointeuse(UUID userUUID, String sDateCheckInOut, LocalDateTime dateCheckInOut) {
 		this.userUUID 			= userUUID;
 		this.sDateCheckInOut 	= sDateCheckInOut;
 		this.dateCheckInOut 	= dateCheckInOut;
@@ -27,7 +28,7 @@ public class SerialPointeuse implements Serializable {
 	 * give the UUID
 	 * @return the UUID of the current data
 	 */
-	public String getUserUUID() {
+	public UUID getUserUUID() {
 		return userUUID;
 	}
 
