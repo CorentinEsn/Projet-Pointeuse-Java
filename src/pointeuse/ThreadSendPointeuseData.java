@@ -15,10 +15,22 @@ import environnementEntreprise.Pair;
 
 public class ThreadSendPointeuseData implements Runnable {
 	
+	/**
+	 * the data to send to the main program
+	 */
 	private SerialPointeuse dataToSend;
+	/**
+	 * the IP Address of destination
+	 */
 	private String address;
+	/**
+	 * the destination port
+	 */
 	private int port;
 	
+	/**
+	 * a static array to store all the data that hasn't been sent for X reasons
+	 */
 	private static ArrayList<SerialPointeuse> dataToKeep = readStockedData();
 	
 	

@@ -8,10 +8,26 @@ import javax.swing.event.DocumentListener;
 
 public class DListener implements DocumentListener{
 
+	/**
+	 * reference to the UUID textfield
+	 */
 	private JTextField tfUUID;
+	/**
+	 * reference to the IP Address textfield
+	 */
 	private JTextField tfIPAddress;
+	/**
+	 * reference to the button
+	 */
 	private JButton checkInOutbutton;
 	
+	/**
+	 * @brief constructor
+	 * 
+	 * @param tfUUID {@link DListener#tfUUID}
+	 * @param tfIPAddress {@link DListener#tfIPAddress}
+	 * @param checkInOutbutton {@link DListener#checkInOutbutton}
+	 */
 	public DListener(JTextField tfUUID, JTextField tfIPAddress, JButton checkInOutbutton) {
 		super();
 		
@@ -31,6 +47,11 @@ public class DListener implements DocumentListener{
 		changedUpdate(e); 
 	}
 
+	/**
+	 * Every time a change occurs in one of the two Textfields {@link DListener#tfUUID} or {@link DListener#tfIPAddress},
+	 * check whether each fields are filled or not
+	 * if they are both filled, the button {@link DListener#checkInOutbutton} is activated so you can send the data
+	 */
 	@Override
 	public void changedUpdate(DocumentEvent e) {
 		boolean canEnable = true;

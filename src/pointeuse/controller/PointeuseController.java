@@ -16,175 +16,18 @@ import pointeuse.view.PointeuseView;
 import java.io.Serializable;
 
 
-//TODO: be careful to what should do what in the listener
 public class PointeuseController{
 
-
-	@SuppressWarnings("unused")
-	private static final long serialVersionUID = 1L;
+	/**
+	 * formatter to show the time in an Hours:Minutes format
+	 */
 	public static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH':'mm");
+	/**
+	 * refresh delay variable
+	 */
 	public static final int delay = 1000; //milliseconds
 	
 	public PointeuseController() {
-	      
-
-//	      /*WindowListener closeListener = new WindowAdapter() {
-//	         public void windowClosing(WindowEvent e){
-//	            System.exit(0);
-//	         }
-//	      };
-//
-//	      addWindowListener(closeListener);
-//	      
-//	      String sLdtDateCurrent = getFullDateFromCurrentDateTime();
-//	      String sLdtTimeCurrent = 	LocalDateTime.now().format(formatter)
-//									+" ... Let's say "
-//									+getFullTimeFromCurrentDateTime().format(formatter);
-//	      //System.out.println(ldtCurrentString);
-//	      JLabel  lbDateCurrent = new JLabel (sLdtDateCurrent);
-//	      JLabel  lbTimeCurrent = new JLabel (sLdtTimeCurrent);
-//	      lbDateCurrent.setHorizontalAlignment(SwingConstants.CENTER);
-//	      lbTimeCurrent.setHorizontalAlignment(SwingConstants.CENTER);
-//	      
-//	      
-//	      
-//	      
-//	      JTextField  tfUUID = new JTextField (22);
-//	      TextPrompt tpUUID = new TextPrompt("Employe UUID (format 8-4-4-4-12)", tfUUID);
-//	      
-//	      JTextField  tfIPAddress = new JTextField (9);
-//	      TextPrompt tpIPAddress = new TextPrompt("IP Address", tfIPAddress);
-//	      
-//	      
-//	      SpinnerModel modelPort = new SpinnerNumberModel(8080, 0, 65535, 1); 
-//	      JSpinner spPort = new JSpinner(modelPort);
-//	      JComponent editor = new JSpinner.NumberEditor(spPort, "#####");
-//	      spPort.setEditor(editor);
-//	      JLabel  lbPort = new JLabel ("Port :");
-//	      
-//	      JButton checkInOutbutton = new JButton("Check In/Out");
-//	      checkInOutbutton.setEnabled(false);
-//	      checkInOutbutton.addActionListener(new AListener(tfUUID, tfIPAddress, spPort);
-//	      */
-//	      /*{
-//	    	   public void actionPerformed(ActionEvent ae){
-//	    	      String textFieldValue = tfUUID.getText();
-//	    	      String textFieldIP = tfIPAddress.getText();
-//	    	      int spPortNum = (int) spPort.getValue();
-//	    	      
-//	    	      UUID uid = UUID.fromString(textFieldValue);
-//	    	      System.out.println(uid);
-//	    	      
-//	    	      
-//	    	      String ldtTimeOnClick = getFullTimeFromCurrentDateTime().format(formatter);
-//	    	      
-//	    	      System.out.println(textFieldValue + " checked in/out at " + ldtTimeOnClick);
-//	    	      
-//	    	      SerialPointeuse dataToSend = new SerialPointeuse(tfUUID.getText(), ldtTimeOnClick, getFullTimeFromCurrentDateTime());
-//	    	      
-//	    	      sendPointeuseDataTCP(dataToSend, textFieldIP, spPortNum);
-//	    	      
-//	    	      readPointeuseDataTCP(8080);
-//
-//	    	   }
-//	    	}*/
-//	      
-//	      
-//	      //DocumentListener tfListener = new DListener(tfUUID, tfIPAddress, checkInOutbutton);
-//	      /*{
-//	    	    @Override
-//	    	    public void removeUpdate(DocumentEvent e) { 
-//	    	    	changedUpdate(e);
-//	    	    }
-//	    	    
-//	    	    @Override
-//	    	    public void insertUpdate(DocumentEvent e) { 
-//	    	    	changedUpdate(e); 
-//	    	    }
-//
-//	    	    @Override
-//	    	    public void changedUpdate(DocumentEvent e) {
-//	    	        boolean canEnable = true;
-//	    	        if (tfUUID.getText().isEmpty() || tfIPAddress.getText().isEmpty()) {
-//	    	                canEnable = false;
-//	    	        }
-//	    	        
-//	    	        checkInOutbutton.setEnabled(canEnable);
-//	    	    }
-//	    	};*/
-//	      
-//	      /*
-//	      tfUUID.getDocument().addDocumentListener(tfListener);
-//	      tfIPAddress.getDocument().addDocumentListener(tfListener);
-//
-//
-//	      JPanel frame = new JPanel();
-//	      frame.setLayout(new GridBagLayout());
-//
-//	      GridBagConstraints gbc = new GridBagConstraints();
-//
-//
-//	      gbc.gridx = 0;
-//	      gbc.gridy = 0; // la grille commence en (0, 0)
-//	      gbc.gridwidth = 2;
-//	      gbc.anchor = GridBagConstraints.CENTER; 
-//
-//	      gbc.insets = new Insets(10, 15, 0, 0);
-//	      frame.add(lbDateCurrent, gbc);
-//
-//	      gbc.gridx = 0;
-//	      gbc.gridy = 1;
-//	      frame.add(lbTimeCurrent, gbc);
-//
-//
-//
-//	      gbc.gridx = 0;
-//	      gbc.gridy = 2;
-//	      gbc.gridwidth = 1;
-//	      frame.add(tfUUID, gbc);
-//
-//	      gbc.gridx = 2;
-//	      frame.add(checkInOutbutton, gbc);
-//
-//	      gbc.gridx = 0;
-//	      gbc.gridy = 3;
-//	      frame.add(tfIPAddress, gbc);
-//
-//	      gbc.gridx = 1;
-//	      gbc.anchor = GridBagConstraints.LINE_END;
-//	      frame.add(lbPort, gbc);
-//
-//	      gbc.gridx = 2;
-//	      gbc.anchor = GridBagConstraints.LINE_START;
-//	      frame.add(spPort, gbc);
-//
-//
-//
-//	      setContentPane(frame);
-//	      //frame.setMinimumSize(new Dimension(400, 200));
-//
-//	      setSize(600,200);
-//	      setVisible(true);
-//
-//	      Timer timerRepaint;
-//	      ActionListener taskPerformer = new AffListener(lbTimeCurrent, lbDateCurrent);
-//	      */
-//	      /*{
-//	          public void actionPerformed(ActionEvent evt) {
-//	        	  String sLdtDateNew = getFullDateFromCurrentDateTime(); 
-//	    	      String sLdtTimeNew = 		LocalDateTime.now().format(formatter)
-//	    	    		  					+" ... Let's say "
-//	    	    		  					+getFullTimeFromCurrentDateTime().format(formatter);
-//
-//	    	      lbTimeCurrent.setText(sLdtTimeNew);
-//	    	      lbDateCurrent.setText(sLdtDateNew);
-//	              //frame.repaint();
-//	          }
-//	      };*/
-//
-//	      //timerRepaint = new Timer(delay, taskPerformer);
-//	      //timerRepaint.start();
-	      
 	      
 	   }
 	

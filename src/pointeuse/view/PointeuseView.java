@@ -41,19 +41,24 @@ public class PointeuseView extends JFrame{
 	private static final long serialVersionUID = 1L;
 
 	
-	
+	/**
+	 * Constructor for the view, which generate the windows and all its elements
+	 */
 	public PointeuseView() {
 	      super("Pointeuse");//windows title
 
+	      /**
+	       * Listener that will serialize data when the app is closed
+	       */
 	      WindowListener closeListener = new WindowAdapter() {
 	         public void windowClosing(WindowEvent e){
 	        	 ThreadSendPointeuseData.writeStockedData();
 	        	 System.exit(0);
 	         }
 	      };
-
 	      addWindowListener(closeListener);
 	      
+	      //create the strings and label for the time anda date
 	      String sLdtDateCurrent = PointeuseController.getFullDateFromCurrentDateTime();
 	      String sLdtTimeCurrent = 	LocalDateTime.now().format(PointeuseController.formatter)
 									+" ... Let's say "
@@ -66,24 +71,26 @@ public class PointeuseView extends JFrame{
 	      
 	      
 	      
-	      
+	      //textfields of the IP and UUID
 	      JTextField  tfUUID = new JTextField (22);
 	      TextPrompt tpUUID = new TextPrompt("Employe UUID (format 8-4-4-4-12)", tfUUID);
 	      
 	      JTextField  tfIPAddress = new JTextField (9);
 	      TextPrompt tpIPAddress = new TextPrompt("IP Address", tfIPAddress);
 	      
-	      
+	      //Spinner to choose a port, restricted to a port's limits
 	      SpinnerModel modelPort = new SpinnerNumberModel(8080, 0, 65535, 1); 
 	      JSpinner spPort = new JSpinner(modelPort);
 	      JComponent editor = new JSpinner.NumberEditor(spPort, "#####");
 	      spPort.setEditor(editor);
 	      JLabel  lbPort = new JLabel ("Port :");
 	      
+	      //checking button, with a listener to make it do stuff
 	      JButton checkInOutbutton = new JButton("Check In/Out");
 	      checkInOutbutton.setEnabled(false);
 	      checkInOutbutton.addActionListener(new ButtonListener(tfUUID, tfIPAddress, spPort, this));
-	      
+	
+	      //Listener that checks whether you can send the data or not
 	      DocumentListener tfListener = new DListener(tfUUID, tfIPAddress, checkInOutbutton);
 	      
 	      tfUUID.getDocument().addDocumentListener(tfListener);
@@ -91,6 +98,9 @@ public class PointeuseView extends JFrame{
 	      
 	      JPanel frame = new JPanel();
 	      frame.setLayout(new GridBagLayout());
+	      
+	      
+	      //SETTING UP ALL THE PART OF THE UI
 	      
 	      GridBagConstraints gbc = new GridBagConstraints();
 	      
@@ -137,6 +147,8 @@ public class PointeuseView extends JFrame{
 	      setSize(600,200);
 	      setVisible(true);
 	      
+	      
+	      //timer to refresh the date regularly
 	      Timer timerRepaint;
 	      ActionListener taskPerformer = new AffListener(lbTimeCurrent, lbDateCurrent);
 	      

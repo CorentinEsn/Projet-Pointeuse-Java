@@ -7,6 +7,13 @@ import javax.swing.border.*;
 import javax.swing.event.*;
 import javax.swing.text.*;
 
+/**
+ * 
+ * @author Rob Camick
+ * @author Lilian for reducing it to its simplest form
+ * Small class to add a placeholder in a textfield
+ * source : https://www.javatips.net/api/AbacusI18n-master/src/org/tux/bagleyd/util/TextPrompt.java
+ */
 public class TextPrompt extends JLabel implements FocusListener, DocumentListener 
 {
 
@@ -37,7 +44,7 @@ public class TextPrompt extends JLabel implements FocusListener, DocumentListene
 	
 	private void checkForPrompt()
 	{
-		//  Text has been entered, remove the prompt
+		//Text has been entered, remove the prompt
 		if (document.getLength() > 0)
 		{
 			setVisible( false );
