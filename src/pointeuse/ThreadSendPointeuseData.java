@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.UUID;
 
 import environnementEntreprise.Pair;
+import pointeuse.controller.AffListener;
 
 public class ThreadSendPointeuseData implements Runnable {
 	
@@ -33,13 +34,26 @@ public class ThreadSendPointeuseData implements Runnable {
 	 */
 	private static ArrayList<SerialPointeuse> dataToKeep = readStockedData();
 	
-	
+	/**
+	 * @brief constructor
+	 * 
+	 * @param dataToSend {@link ThreadSendPointeuseData#dataToSend}
+	 * @param address {@link ThreadSendPointeuseData#address}
+	 * @param port {@link ThreadSendPointeuseData#port}
+	 */
 	public ThreadSendPointeuseData(SerialPointeuse dataToSend, String address, int port) {
 		this.dataToSend = dataToSend;
 		this.address = address;
 		this.port = port;
 	}
 	
+	/**
+	 * @brief read data from .dat file
+	 * 
+	 * usually called when there's a new data to sent
+	 * 
+	 * @return the Arraylist with all the data read from the .dat
+	 */
 	public static ArrayList<SerialPointeuse> readStockedData() {
 		saving.Serializer readingData = new saving.Serializer();
 		ArrayList<SerialPointeuse> gatheredData = readingData.serializeReadPointeuseData();
@@ -50,7 +64,9 @@ public class ThreadSendPointeuseData implements Runnable {
 		return gatheredData;
 	}
 	
-	
+	/**
+	 * @brief write the ArrayList {@link ThreadSendPointeuseData#dataToKeep} to a .dat file
+	 */
 	public static void writeStockedData() {
 		saving.Serializer writingData = new saving.Serializer();
 //		SerialPointeuse tabData[] = new SerialPointeuse[dataToKeep.size()];
@@ -61,10 +77,18 @@ public class ThreadSendPointeuseData implements Runnable {
 		writingData.serializeWritePointeuseData(dataToKeep);
 	}
 	
+	/**
+	 * @brief function to fill the array with new data to stock
+	 *
+	 * @param failedData the data to add to the array
+	 */
 	private void addStockedData(SerialPointeuse failedData) {
 		dataToKeep.add(failedData);
 	}
 
+	/**
+	 * @brief the main function, will connect to the server with the given info, and stock the data if the transfer fails
+	 */
 	public void run() {
     	
 		sendDataStocked(address, port);
@@ -101,6 +125,11 @@ public class ThreadSendPointeuseData implements Runnable {
         }
     }
 	
+	/**
+	 * @brief sends data that is stocked in dataToKeep
+	 * @param address {@link ThreadSendPointeuseData#address}
+	 * @param port {@link ThreadSendPointeuseData#port}
+	 */
 	public void sendDataStocked(String address, int port) {
 		
 		System.out.println(dataToKeep);
