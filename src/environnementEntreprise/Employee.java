@@ -1,12 +1,10 @@
 package environnementEntreprise;
 
-import java.time.LocalTime;
-import java.time.LocalTime.*;
-
+import java.util.HashMap;
 import static java.time.temporal.ChronoUnit.MINUTES;
 
 import java.time.LocalDateTime;
-import java.time.LocalDateTime.*;
+import java.time.LocalTime;
 
 public class Employee {
 	
@@ -21,6 +19,8 @@ public class Employee {
 	
 	public Schedule SCH;
 	public static int maxID=0;
+	
+	private HashMap<LocalDateTime,String> history;
 	
 	//methods
 	public Employee() {
@@ -61,10 +61,12 @@ public class Employee {
 		
 		LocalTime timeOfDay = time.toLocalTime();
 		long timeDiff;
+		String message = "cheched out";
 		
 		//THE EMPLOYEE IS CHECKING IN
 		if (checkedIn == false) {
 			checkedIn = true;
+			message = "cheched in";
 			switch (time.getDayOfWeek()) {
 			case MONDAY:
 				timeDiff = MINUTES.between(timeOfDay, SCH.getSCH().get("Monday").getL());
@@ -112,6 +114,7 @@ public class Employee {
 			}
 			
 			setoverTime(getoverTime()+timeDiff);
+			history.put(time, message);
 		}
 		
 	}
