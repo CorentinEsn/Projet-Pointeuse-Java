@@ -1,17 +1,19 @@
 package environnementEntreprise;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Department {
 	//attributs
 	private String name;
 	private String description;
-	private Employee[] employees;
+	private List<Employee> employees;
 	
 	//methodes
-	public Employee[] getEmployees() {
+	public List<Employee> getEmployees() {
 		return employees;
 	}
 
-	public void setEmployees(Employee[] employees) {
+	public void setEmployees(List<Employee> employees) {
 		this.employees = employees;
 	}
 	
@@ -31,6 +33,26 @@ public class Department {
 
 	public void setDescription(String newDescription) {
 		description = newDescription;
+	}
+	
+	public void addEmployee(Employee newEmployee) {
+		employees.add(newEmployee);
+	}
+
+	public void addEmployee(List<Employee> newEmployees) {
+		employees.addAll(newEmployees);
+	}
+	
+	public void remEmployee(int ID) {
+		Boolean removed = false;
+		for(Employee employee : employees) {
+			if(employee.getID() == ID && removed == false) {
+				employees.remove(employee);
+				removed = true;
+			}
+		
+		}
+		
 	}
 	
 }
