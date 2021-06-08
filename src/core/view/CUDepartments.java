@@ -21,10 +21,12 @@ public class CUDepartments extends JFrame {
     
     Company entreprise;
     
-	public CUDepartments(Company entreprise,DefaultTableModel model,JTextField nameField, JTextArea descriptionArea, int statut,int ligneSelectionnee) {
+	public CUDepartments(Company entreprise,DefaultTableModel model,JTextField nameField, JTextArea descriptionArea, int status,int ligneSelectionnee) {
 		super("Nouveau Département");
 		this.model=model;
+		if (status==1) {
 		this.oldDepartment=entreprise.getDepartments().get(ligneSelectionnee);
+		}
 		this.nameField=nameField;
 		this.descriptionArea=descriptionArea;
 	      WindowListener l = new WindowAdapter() {
@@ -68,7 +70,7 @@ public class CUDepartments extends JFrame {
 		grid.gridx=1;
 		grid.gridwidth=1;
 		grid.fill = GridBagConstraints.NONE;
-		if (statut==0) {
+		if (status==0) {
 			JButton addButton=new JButton("Ajouter");
 			addButton.addActionListener(new ButtonNewDepartment(entreprise,nameField,descriptionArea,model));
 			addButton.addActionListener(e->this.dispose());
