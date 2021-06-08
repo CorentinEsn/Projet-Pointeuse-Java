@@ -20,7 +20,7 @@ public class DListener implements DocumentListener{
 	 * reference to the button
 	 */
 	private JButton checkInOutbutton;
-	
+
 	/**
 	 * @brief constructor
 	 * 
@@ -30,13 +30,13 @@ public class DListener implements DocumentListener{
 	 */
 	public DListener(JTextField tfUUID, JTextField tfIPAddress, JButton checkInOutbutton) {
 		super();
-		
+
 		this.tfUUID = tfUUID;
 		this.tfIPAddress = tfIPAddress;
 		this.checkInOutbutton = checkInOutbutton;
 	}
-	
-	
+
+
 	@Override
 	public void removeUpdate(DocumentEvent e) { 
 		changedUpdate(e);

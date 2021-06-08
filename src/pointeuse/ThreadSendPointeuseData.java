@@ -15,7 +15,7 @@ import environnementEntreprise.Pair;
 import pointeuse.controller.AffListener;
 
 public class ThreadSendPointeuseData implements Runnable {
-	
+
 	/**
 	 * the data to send to the main program
 	 */
@@ -28,12 +28,12 @@ public class ThreadSendPointeuseData implements Runnable {
 	 * the destination port
 	 */
 	private int port;
-	
+
 	/**
 	 * a static array to store all the data that hasn't been sent for X reasons
 	 */
 	private static ArrayList<SerialPointeuse> dataToKeep = readStockedData();
-	
+
 	/**
 	 * @brief constructor
 	 * 
@@ -46,7 +46,7 @@ public class ThreadSendPointeuseData implements Runnable {
 		this.address = address;
 		this.port = port;
 	}
-	
+
 	/**
 	 * @brief read data from .dat file
 	 * 
@@ -63,20 +63,20 @@ public class ThreadSendPointeuseData implements Runnable {
 		System.out.println(gatheredData);
 		return gatheredData;
 	}
-	
+
 	/**
 	 * @brief write the ArrayList {@link ThreadSendPointeuseData#dataToKeep} to a .dat file
 	 */
 	public static void writeStockedData() {
 		saving.Serializer writingData = new saving.Serializer();
-//		SerialPointeuse tabData[] = new SerialPointeuse[dataToKeep.size()];
-//		int i = 0;
-//		for(SerialPointeuse data : dataToKeep) {
-//			tabData[i] = data;
-//		}
+		//		SerialPointeuse tabData[] = new SerialPointeuse[dataToKeep.size()];
+		//		int i = 0;
+		//		for(SerialPointeuse data : dataToKeep) {
+		//			tabData[i] = data;
+		//		}
 		writingData.serializeWritePointeuseData(dataToKeep);
 	}
-	
+
 	/**
 	 * @brief function to fill the array with new data to stock
 	 *
@@ -90,88 +90,88 @@ public class ThreadSendPointeuseData implements Runnable {
 	 * @brief the main function, will connect to the server with the given info, and stock the data if the transfer fails
 	 */
 	public void run() {
-    	
+
 		sendDataStocked(address, port);
-    	try
-        {
-            //ServerSocket myServerSocket = new ServerSocket(8080);
-    		System.out.println("Initialise Client");
-            Socket clientSocket = new Socket(address, port);
-            clientSocket.setSoTimeout(5000);
-            try 
-            {
-                ObjectOutputStream objectOutput = new ObjectOutputStream(clientSocket.getOutputStream());
-                System.out.println("Sending data");
-                objectOutput.writeObject(dataToSend);                
-            } 
-            catch (SocketTimeoutException exception) {
-                // Output expected SocketTimeoutExceptions.
-                System.out.println("Error :  send failed, stocking the data for now");
-                addStockedData(dataToSend);
-            }
-            catch (IOException e) 
-            {
-                e.printStackTrace();
-            }
-            clientSocket.close();
-        }
-    	catch (ConnectException e) {
-        	System.out.println("Error :  connection failed, stocking the data for now");
-        	addStockedData(dataToSend);
-        }
-        catch (IOException e) 
-        {
-            e.printStackTrace();
-        }
-    }
-	
+		try
+		{
+			//ServerSocket myServerSocket = new ServerSocket(8080);
+			System.out.println("Initialise Client");
+			Socket clientSocket = new Socket(address, port);
+			clientSocket.setSoTimeout(5000);
+			try 
+			{
+				ObjectOutputStream objectOutput = new ObjectOutputStream(clientSocket.getOutputStream());
+				System.out.println("Sending data");
+				objectOutput.writeObject(dataToSend);                
+			} 
+			catch (SocketTimeoutException exception) {
+				// Output expected SocketTimeoutExceptions.
+				System.out.println("Error :  send failed, stocking the data for now");
+				addStockedData(dataToSend);
+			}
+			catch (IOException e) 
+			{
+				e.printStackTrace();
+			}
+			clientSocket.close();
+		}
+		catch (ConnectException e) {
+			System.out.println("Error :  connection failed, stocking the data for now");
+			addStockedData(dataToSend);
+		}
+		catch (IOException e) 
+		{
+			e.printStackTrace();
+		}
+	}
+
 	/**
 	 * @brief sends data that is stocked in dataToKeep
 	 * @param address {@link ThreadSendPointeuseData#address}
 	 * @param port {@link ThreadSendPointeuseData#port}
 	 */
 	public void sendDataStocked(String address, int port) {
-		
+
 		System.out.println(dataToKeep);
 		for(SerialPointeuse data : dataToKeep) {
 			try
-	        {
-	            //ServerSocket myServerSocket = new ServerSocket(8080);
-	    		System.out.println("Initialise Client for failed data");
-	            Socket clientSocket = new Socket();
-	            clientSocket.connect(new InetSocketAddress(8080),2000);
-	            //clientSocket.setSoTimeout(5000);
-	            try 
-	            {
-	                ObjectOutputStream objectOutput = new ObjectOutputStream(clientSocket.getOutputStream());
-	                System.out.println("Sending data");
-	                objectOutput.writeObject(dataToSend);                
-	            } 
-	            catch (SocketTimeoutException exception) {
-	                // Output expected SocketTimeoutExceptions.
-	                System.out.println("Error :  send failed, the data stays in dataToKeep");
-	            }
-	            catch (IOException e) 
-	            {
-	                e.printStackTrace();
-	            }
-	            clientSocket.close();
-	            //the data was sent, remove it from the tab
-	            dataToKeep.remove(data);
-	        }
-	    	catch (ConnectException e) {
-	        	System.out.println("Error :  connection failed,  the data stays in dataToKeep");
-	        }
+			{
+				//ServerSocket myServerSocket = new ServerSocket(8080);
+				System.out.println("Initialise Client for failed data");
+				Socket clientSocket = new Socket();
+				clientSocket.connect(new InetSocketAddress(8080),2000);
+				//clientSocket.setSoTimeout(5000);
+				try 
+				{
+					ObjectOutputStream objectOutput = new ObjectOutputStream(clientSocket.getOutputStream());
+					System.out.println("Sending data");
+					objectOutput.writeObject(dataToSend);                
+				} 
+				catch (SocketTimeoutException exception) {
+					// Output expected SocketTimeoutExceptions.
+					System.out.println("Error :  send failed, the data stays in dataToKeep");
+				}
+				catch (IOException e) 
+				{
+					e.printStackTrace();
+				}
+				clientSocket.close();
+				//the data was sent, remove it from the tab
+				dataToKeep.remove(data);
+			}
+			catch (ConnectException e) {
+				System.out.println("Error :  connection failed,  the data stays in dataToKeep");
+			}
 			catch (SocketTimeoutException exception) {
-                // Output expected SocketTimeoutExceptions.
-                System.out.println("Error :  connection timeout, the data stays in dataToKeep");
-            }
-	        catch (IOException e) 
-	        {
-	            e.printStackTrace();
-	        }
-			
-			
+				// Output expected SocketTimeoutExceptions.
+				System.out.println("Error :  connection timeout, the data stays in dataToKeep");
+			}
+			catch (IOException e) 
+			{
+				e.printStackTrace();
+			}
+
+
 		}
 	}
 }

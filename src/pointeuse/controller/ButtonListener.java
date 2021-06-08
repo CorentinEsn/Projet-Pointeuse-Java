@@ -29,17 +29,17 @@ public class ButtonListener implements ActionListener{
 	 * reference to the frame
 	 */
 	private JFrame frameRef;
-	
+
 	/**
 	 * Regex Pattern for the IP address
 	 */
 	private final String PATTERNIP = "^((0|1\\d?\\d?|2[0-4]?\\d?|25[0-5]?|[3-9]\\d?)\\.){3}(0|1\\d?\\d?|2[0-4]?\\d?|25[0-5]?|[3-9]\\d?)$";
-	
+
 	/**
 	 * Regex Pattern for the UUID
 	 */
 	private final String PATTERNUUID = "\\b[0-9a-f]{8}\\b-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-\\b[0-9a-f]{12}\\b";
-	
+
 	/**
 	 * 
 	 * @param tfUUID {@link ButtonListener#tfUUID}
@@ -54,7 +54,7 @@ public class ButtonListener implements ActionListener{
 		this.spPort = spPort;
 		this.frameRef = frameRef;
 	}
-	
+
 	/**
 	 * @brief when activated via the pressing of a button, will gather the data of the textfields and prepare the data for sending
 	 * before preparing it, it checks whether the textfields are in a correct format
@@ -66,13 +66,13 @@ public class ButtonListener implements ActionListener{
 		//checks if UUID is a correct value
 		if(!textFieldValue.matches(PATTERNUUID)) {
 			JOptionPane.showMessageDialog(frameRef,
-				    "The UUID is not in a correct format.\n 8-4-4-4-12 like 6a2f41a3-c54c-fce8-32d2-0324e1c32e22",
-				    "Insane error",
-				    JOptionPane.ERROR_MESSAGE);
-				throw new IllegalArgumentException("the UUID do not hgave a correct format");
+					"The UUID is not in a correct format.\n 8-4-4-4-12 like 6a2f41a3-c54c-fce8-32d2-0324e1c32e22",
+					"Insane error",
+					JOptionPane.ERROR_MESSAGE);
+			throw new IllegalArgumentException("the UUID do not hgave a correct format");
 		}
-		
-		
+
+
 		String textFieldIP = tfIPAddress.getText();
 		//if the IP has a correct format or not
 		if(textFieldIP.matches(PATTERNIP) || textFieldIP.contentEquals("localhost")) {
@@ -96,12 +96,12 @@ public class ButtonListener implements ActionListener{
 		}else {
 			//custom title, error icon
 			JOptionPane.showMessageDialog(frameRef,
-			    "The IP Address is not in a correct format.",
-			    "Insane error",
-			    JOptionPane.ERROR_MESSAGE);
+					"The IP Address is not in a correct format.",
+					"Insane error",
+					JOptionPane.ERROR_MESSAGE);
 			throw new IllegalArgumentException("the ip Address isn't a correct IP");
 		}
-		
+
 
 	}
 

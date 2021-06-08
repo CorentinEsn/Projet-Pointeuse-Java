@@ -29,7 +29,7 @@ public class AffListener implements ActionListener{
 		this.lbTimeCurrent = lbTimeCurrent;
 		this.lbDateCurrent = lbDateCurrent;
 	}
-	
+
 	/**
 	 * @brief will update the main screen with the new time and date
 	 */
