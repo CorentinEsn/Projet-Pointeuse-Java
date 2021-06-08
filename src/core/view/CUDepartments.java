@@ -2,31 +2,29 @@ package core.view;
 
 import java.awt.*;
 import java.awt.event.*;
-import java.util.ArrayList;
-import java.util.List;
-
 import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableColumn;
 
-import core.controller.ButtonAUDepartment;
-import core.controller.ButtonNewEmployeeDepartment;
+import core.controller.ButtonModDepartment;
+import core.controller.ButtonNewDepartment;
 import environnementEntreprise.Company;
+import environnementEntreprise.Department;
 
 public class CUDepartments extends JFrame {
 	JLabel nameLabel = new JLabel("Nom : ");
     JTextField nameField;  // accepts up to 30 characters (French longest name is 27 character)
-    
+    Department oldDepartment;
 	JLabel descriptionLabel = new JLabel("Description : ");
     JTextArea descriptionArea ; 
     private DefaultTableModel model;
     
     Company entreprise;
     
-	public CUDepartments(Company entreprise,DefaultTableModel model,JTextField nameField, JTextArea descriptionArea ) {
+	public CUDepartments(Company entreprise,DefaultTableModel model,JTextField nameField, JTextArea descriptionArea, int statut,int ligneSelectionnee) {
 		super("Nouveau Département");
 		this.model=model;
+		this.oldDepartment=entreprise.getDepartments().get(ligneSelectionnee);
 		this.nameField=nameField;
 		this.descriptionArea=descriptionArea;
 	      WindowListener l = new WindowAdapter() {
@@ -70,10 +68,18 @@ public class CUDepartments extends JFrame {
 		grid.gridx=1;
 		grid.gridwidth=1;
 		grid.fill = GridBagConstraints.NONE;
-		JButton addButton=new JButton("Ajouter");
-		addButton.addActionListener(new ButtonNewEmployeeDepartment(entreprise,nameField,descriptionArea,model));
-		addButton.addActionListener(e->this.dispose());
-		add(addButton,grid);
+		if (statut==0) {
+			JButton addButton=new JButton("Ajouter");
+			addButton.addActionListener(new ButtonNewDepartment(entreprise,nameField,descriptionArea,model));
+			addButton.addActionListener(e->this.dispose());
+			add(addButton,grid);
+		}
+		else {
+			JButton modButton=new JButton("Modifier");
+			modButton.addActionListener(new ButtonModDepartment(entreprise,nameField,descriptionArea,model,oldDepartment));
+			modButton.addActionListener(e->this.dispose());
+			add(modButton,grid);
+		}
 		
 	}
 	

@@ -20,7 +20,7 @@ public class ButtonAUDepartment implements ActionListener{
 	private Company entreprise;
 	private DefaultTableModel model;
 	private int statut; //=0 si ajout; =1 si modif
-	
+	private int ligneSelectionnee=0;
 	public ButtonAUDepartment(Company entreprise,DefaultTableModel model) {
 		this.entreprise=entreprise;
 		this.nameField=new JTextField("");
@@ -42,12 +42,12 @@ public class ButtonAUDepartment implements ActionListener{
 	@Override
 	public void actionPerformed(ActionEvent ae) {
 		if(departmenttable.getSelectedRow()>0) {
-			int ligneSelectionnee=departmenttable.getSelectedRow();
+			ligneSelectionnee=departmenttable.getSelectedRow();
 			System.out.println(ligneSelectionnee);
 			this.nameField.setText(departmenttable.getValueAt(ligneSelectionnee, 0).toString());
 			this.descriptionArea.setText(departmenttable.getValueAt(ligneSelectionnee, 1).toString());
 		}
-		JFrame frame = new CUDepartments(entreprise,model,nameField,descriptionArea);
+		JFrame frame = new CUDepartments(entreprise,model,nameField,descriptionArea,statut,ligneSelectionnee);
 		frame.setVisible(true);
 }
 	

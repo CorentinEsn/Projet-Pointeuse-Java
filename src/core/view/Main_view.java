@@ -119,7 +119,9 @@ public class Main_view extends JFrame {
 		modButton.addActionListener(new ButtonAUDepartment(entreprise,model,departmenttable));
 		buttons.add(modButton);
 		grid.gridx = 6;
-		buttons.add(new JButton("Supprimer"));
+		JButton delButton = new JButton("Supprimer");	
+		delButton.addActionListener(new ButtonDel(entreprise,model,departmenttable));
+		buttons.add(delButton);
 		card.add(buttons, grid);
 	}
 

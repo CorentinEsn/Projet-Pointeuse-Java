@@ -23,6 +23,7 @@ public class Company {
 	public void setName(String newName) {
 		name = newName;
 	}
+
 	public void addDepartment(Department department) {
 		departments.add(department);
 	}
@@ -33,17 +34,21 @@ public class Company {
 			}
 		}
 	}
-	public void modDepartment(Department oldDepartment,Department newDepartment) {
+	public int modDepartment(Department oldDepartment,Department newDepartment) {
 		for (int i=0;i <departments.size();i++) {
 			if (departments.get(i).getName()==oldDepartment.getName()) {
 				departments.get(i).setName(newDepartment.getName());
 				departments.get(i).setDescription(newDepartment.getDescription());
+				return i;
 				}
+
 			}
+		return 0;
 	}
 	
 	public Company(String name){
 		this.name=name;
 		this.departments=new ArrayList<>();
 	}
+
 }
