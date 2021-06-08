@@ -1,5 +1,6 @@
 package core.controller;
 
+import java.awt.PageAttributes.OriginType;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -18,6 +19,7 @@ public class ButtonAUDepartment implements ActionListener{
 	private JTable departmenttable;
 	private Company entreprise;
 	private DefaultTableModel model;
+	private int statut; //=0 si ajout; =1 si modif
 	
 	public ButtonAUDepartment(Company entreprise,DefaultTableModel model) {
 		this.entreprise=entreprise;
@@ -25,6 +27,7 @@ public class ButtonAUDepartment implements ActionListener{
 		this.descriptionArea=new JTextArea(3,10);
 		this.model=model;
 		this.departmenttable=new JTable();
+		statut=0;
 	}
 	public ButtonAUDepartment(Company entreprise,DefaultTableModel model,JTable departmenttable) {
 		
@@ -33,6 +36,7 @@ public class ButtonAUDepartment implements ActionListener{
 		this.descriptionArea=new JTextArea(3,10);
 		this.model=model;
 		this.departmenttable=departmenttable;
+		statut=1;
 	}
 	
 	@Override
