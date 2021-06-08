@@ -1,13 +1,19 @@
-package coreView;
+package core.view;
 
 import java.awt.*;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.*;
 import javax.swing.table.TableColumn;
 
+import environnementEntreprise.Company;
+
 public class CUEmployee extends JFrame {
+	Company entreprise;
 	
 	Integer[] hoursList= {0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24};
 	Integer[] minutesList= {0,15,30,45};
@@ -15,10 +21,10 @@ public class CUEmployee extends JFrame {
     JTextField nameField = new JTextField(30); // accepts up to 30 characters (French longest name is 27 character)
     
 	JLabel firstnameLabel = new JLabel("Prénom : ");
-    JTextField firstnameField = new JTextField(20); // accepts up to 20 characters
+    JTextField firstnameField;
     
     JLabel departmentLabel = new JLabel("Département : ");
-    JTextField departmentField = new JTextField("Faudra mettre une liste"); // accepts up to 20 characters
+    JTextField departmentField=new JTextField();
     
     JLabel scheduleLabel=new JLabel("Emploi du temps :");
     JLabel arrivalLabel=new JLabel("Arrivée :");
@@ -38,10 +44,20 @@ public class CUEmployee extends JFrame {
     }
     
     
-	public CUEmployee() {
+	public CUEmployee(Company entreprise, JTextField nameField,
+			JTextField firstnameField) {
 		super("Nouvel Employé");
-		setDefaultCloseOperation(EXIT_ON_CLOSE);
+		
+	      WindowListener l = new WindowAdapter() {
+	          public void windowClosing(WindowEvent e){
+	             setVisible(false);
+	            
+	          }
+	       };
 		setSize(500, 400);
+		this.entreprise=entreprise;
+		this.nameField=nameField;
+		this.firstnameField=firstnameField;
 		
 		setLayout(new GridBagLayout());
 		GridBagConstraints grid = new GridBagConstraints();
@@ -71,7 +87,7 @@ public class CUEmployee extends JFrame {
 		add(departmentLabel,grid);
 		grid.gridx=1;
 		grid.gridwidth=2;
-		add(departmentField,grid);
+		//add(departmentField,grid);
 		
 		grid.gridy = 3;
 		grid.gridx = 0;
@@ -104,9 +120,4 @@ public class CUEmployee extends JFrame {
 		add(new JButton("Ajouter"),grid);
 	}
 	
-	public static void main(String[] args) {
-		// Assemble all the pieces of the MVC
-		CUEmployee v = new CUEmployee();
-		v.setVisible(true);
-		}
 }

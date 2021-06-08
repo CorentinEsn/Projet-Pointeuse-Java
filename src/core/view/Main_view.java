@@ -1,18 +1,20 @@
-package coreView;
+package core.view;
 
 import java.awt.*;
-import java.awt.List;
 import java.time.LocalDateTime;
-import java.util.*;
-
 import javax.swing.*;
-import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.DefaultTableModel;
+
+import core.controller.*;
+import environnementEntreprise.*;
 
 public class Main_view extends JFrame {
-
-	public Main_view() {
-		super("Bienvenue chez les Ch'tis");
-		// setDefaultCloseOperation(EXIT_ON_CLOSE);
+	Company entreprise;
+	Object[][] tableData;
+	public Main_view(Company Entreprise) {
+		super(Entreprise.getName());
+		this.entreprise=Entreprise;
+		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setSize(800, 500);
 		JTabbedPane tabbedPane = new JTabbedPane();
 		JPanel card1 = new JPanel();
@@ -34,7 +36,12 @@ public class Main_view extends JFrame {
 		GridBagConstraints grid = new GridBagConstraints();
 		String[] names = { "ID", "Nom", "Prénom", "Département", "Heures supplémentaires", "Présent?",
 				"Emploi du Temps" };
-		Object[][] tableData = new Object[20][7];
+		if(entreprise.getDepartments().size()==0) {
+			tableData = new Object[1][7];
+		}
+		else{
+			tableData = new Object[entreprise.getDepartments().size()][7];
+		}
 		JTable employeetable = new JTable(tableData, names);
 		grid.fill = GridBagConstraints.HORIZONTAL;
 		grid.gridy = 0;
@@ -50,20 +57,45 @@ public class Main_view extends JFrame {
 		grid.fill = GridBagConstraints.HORIZONTAL;
 		JPanel buttons = new JPanel();
 
-		buttons.add(new JButton("Ajouter"));
-		buttons.add(new JButton("Modifier"));
+		
+		JButton addButton = new JButton("Ajouter");
+		addButton.addActionListener(new ButtonAUeEmployee(entreprise));
+		buttons.add(addButton);
+		JButton modButton = new JButton("Modifier");
+		modButton.addActionListener(new ButtonAUeEmployee(entreprise));
+		buttons.add(modButton);
 		grid.gridx = 6;
 		buttons.add(new JButton("Supprimer"));
 		card.add(buttons, grid);
 
 	}
 
+	public void createDepartmentTable() {
+		
+	}
 	public void DepartmentView(JPanel card) {
 		card.setLayout(new GridBagLayout());
 		GridBagConstraints grid = new GridBagConstraints();
 		String[] names = { "Nom", "Description" };
-		Object[][] tableData = new Object[20][7];
-		JTable departmenttable = new JTable(tableData, names);
+		if(entreprise.getDepartments().size()==0) {
+			tableData = new Object[1][2];
+		}
+		else{
+			tableData = new Object[entreprise.getDepartments().size()][2];
+		}
+		for(int i=0;i<entreprise.getDepartments().size();i++) {
+			tableData[i][0]=entreprise.getDepartments().get(i).getName();
+			tableData[i][1]=entreprise.getDepartments().get(i).getDescription();
+		}
+		DefaultTableModel model = new DefaultTableModel(names, 0);
+		for(int i=0;i<entreprise.getDepartments().size();i++) {
+			model.addRow(
+	                   new Object[]{
+	                         entreprise.getDepartments().get(entreprise.getDepartments().size()-1).getName(),
+	                         entreprise.getDepartments().get(entreprise.getDepartments().size()-1).getDescription()
+	                   });
+		}
+		JTable departmenttable = new JTable(model);
 		departmenttable.getColumnModel().getColumn(0).setPreferredWidth(50);
 		departmenttable.getColumnModel().getColumn(1).setPreferredWidth(350);
 
@@ -80,12 +112,15 @@ public class Main_view extends JFrame {
 		grid.weightx = 10;
 		JPanel buttons = new JPanel();
 
-		buttons.add(new JButton("Ajouter"));
-		buttons.add(new JButton("Modifier"));
+		JButton addButton = new JButton("Ajouter");
+		addButton.addActionListener(new ButtonAUDepartment(entreprise,model));
+		buttons.add(addButton);
+		JButton modButton = new JButton("Modifier");	
+		modButton.addActionListener(new ButtonAUDepartment(entreprise,model,departmenttable));
+		buttons.add(modButton);
 		grid.gridx = 6;
 		buttons.add(new JButton("Supprimer"));
 		card.add(buttons, grid);
-
 	}
 
 	public void TimeView(JPanel card) {
@@ -104,7 +139,6 @@ public class Main_view extends JFrame {
         	yearsList[i+1]=LocalDateTime.now().getYear()-i;
         }
         
-        System.out.println(LocalDateTime.now().getYear());
         JComboBox<Integer> dayComboBox  = new JComboBox<Integer>(daysList); 
         JComboBox<String> monthComboBox =new JComboBox<>(months);
         JComboBox<Integer> yearComboBox  = new JComboBox<Integer>(yearsList); 
@@ -129,7 +163,10 @@ public class Main_view extends JFrame {
 
 	public static void main(String[] args) {
 		// Assemble all the pieces of the MVC
-		Main_view v = new Main_view();
+		Company Entreprise =new Company("Polytech") ;
+		Department department=new Department("info","test");
+		Entreprise.addDepartment(department);
+		Main_view v = new Main_view(Entreprise);
 		v.setVisible(true);
 
 	}

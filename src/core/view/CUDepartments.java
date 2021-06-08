@@ -1,29 +1,44 @@
-package coreView;
+package core.view;
 
 import java.awt.*;
+import java.awt.event.*;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.*;
 import javax.swing.border.Border;
+import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
 
+import core.controller.ButtonAUDepartment;
+import core.controller.ButtonNewEmployeeDepartment;
+import environnementEntreprise.Company;
+
 public class CUDepartments extends JFrame {
-	
-	Integer[] hoursList= {0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24};
-	Integer[] minutesList= {0,15,30,45};
 	JLabel nameLabel = new JLabel("Nom : ");
-    JTextField nameField = new JTextField(30); // accepts up to 30 characters (French longest name is 27 character)
+    JTextField nameField;  // accepts up to 30 characters (French longest name is 27 character)
     
 	JLabel descriptionLabel = new JLabel("Description : ");
-    JTextArea descriptionArea = new JTextArea(3,10); 
+    JTextArea descriptionArea ; 
+    private DefaultTableModel model;
     
+    Company entreprise;
     
-	public CUDepartments() {
+	public CUDepartments(Company entreprise,DefaultTableModel model,JTextField nameField, JTextArea descriptionArea ) {
 		super("Nouveau Département");
-		setDefaultCloseOperation(EXIT_ON_CLOSE);
+		this.model=model;
+		this.nameField=nameField;
+		this.descriptionArea=descriptionArea;
+	      WindowListener l = new WindowAdapter() {
+	          public void windowClosing(WindowEvent e){
+	             setVisible(false);
+	             CUDepartments.this.nameField.setText("");
+	             CUDepartments.this.descriptionArea.setText("");
+	             
+	          }
+	      };
 		setSize(500, 400);
-		
+		this.entreprise=entreprise;
 		setLayout(new GridBagLayout());
 		GridBagConstraints grid = new GridBagConstraints();
 		grid.fill = GridBagConstraints.HORIZONTAL;
@@ -55,12 +70,11 @@ public class CUDepartments extends JFrame {
 		grid.gridx=1;
 		grid.gridwidth=1;
 		grid.fill = GridBagConstraints.NONE;
-		add(new JButton("Ajouter"),grid);
+		JButton addButton=new JButton("Ajouter");
+		addButton.addActionListener(new ButtonNewEmployeeDepartment(entreprise,nameField,descriptionArea,model));
+		addButton.addActionListener(e->this.dispose());
+		add(addButton,grid);
+		
 	}
 	
-	public static void main(String[] args) {
-		// Assemble all the pieces of the MVC
-		CUDepartments v = new CUDepartments();
-		v.setVisible(true);
-		}
 }

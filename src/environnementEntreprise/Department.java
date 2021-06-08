@@ -1,17 +1,19 @@
 package environnementEntreprise;
 
+import java.util.ArrayList;
+
 public class Department {
 	//attributs
 	private String name;
 	private String description;
-	private Employee[] employees;
+	private ArrayList<Employee> employees;
 	
 	//methodes
-	public Employee[] getEmployees() {
+	public ArrayList<Employee> getEmployees() {
 		return employees;
 	}
 
-	public void setEmployees(Employee[] employees) {
+	public void setEmployees(ArrayList<Employee> employees) {
 		this.employees = employees;
 	}
 	
@@ -33,4 +35,11 @@ public class Department {
 		description = newDescription;
 	}
 	
+	public Department() {
+		// TODO Auto-generated constructor stub
+	}
+	public Department(String name,String description) {
+		this.name=name;
+		this.description=description;
+	}
 }
