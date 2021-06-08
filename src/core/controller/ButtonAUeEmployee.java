@@ -5,6 +5,7 @@ import java.awt.event.ActionListener;
 import java.util.*;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 
 import core.view.CUEmployee;
 import environnementEntreprise.Company;
@@ -14,13 +15,16 @@ public class ButtonAUeEmployee implements ActionListener{
 	private JTextField nameField;
 	private JTextField firstnameField;
 	private JComboBox<String> departmentBox;
+	private DefaultTableModel model;
 	ArrayList<ArrayList<JComboBox<Integer>>> tabBoxs=new ArrayList<>(5);
 	
-	public ButtonAUeEmployee(Company Entreprise) {
+	public ButtonAUeEmployee(Company Entreprise,DefaultTableModel model) {
 		entreprise=Entreprise;
 		this.nameField=new JTextField("");
 		this.firstnameField=new JTextField("");
-		//this.departmentBox=new JComboBox<String>();
+		this.departmentBox=new JComboBox<String>();
+		this.model=model;
+		
 		//this.tabBoxs=new ArrayList<ArrayList<JComboBox<Integer>>>();
 	}
 	
@@ -35,7 +39,13 @@ public class ButtonAUeEmployee implements ActionListener{
 	}
 	@Override
 	public void actionPerformed(ActionEvent ae) {
-		JFrame frame = new CUEmployee(entreprise,nameField, firstnameField);
+		
+		for(int i=0;i<entreprise.getDepartments().size();i++) {
+			departmentBox.addItem(entreprise.getDepartments().get(i).getName());
+			
+		}
+		System.out.println(entreprise.getDepartments().get(0).getName());
+		JFrame frame = new CUEmployee(entreprise,nameField, firstnameField,departmentBox,model);
 		frame.setVisible(true);
 	}
 }

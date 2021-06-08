@@ -14,6 +14,7 @@ public class ButtonNewDepartment implements ActionListener {
 	 private JTextArea description;
 	 private Company entreprise;
 	 private DefaultTableModel model;
+	 
 	 public ButtonNewDepartment(Company entreprise, JTextField name, JTextArea description ,DefaultTableModel model) {
 		 super();
 		 this.entreprise=entreprise;

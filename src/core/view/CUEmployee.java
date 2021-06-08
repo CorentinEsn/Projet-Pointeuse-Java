@@ -8,8 +8,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
 
+import core.controller.ButtonNewDepartment;
+import core.controller.ButtonNewEmployee;
 import environnementEntreprise.Company;
 
 public class CUEmployee extends JFrame {
@@ -24,13 +27,14 @@ public class CUEmployee extends JFrame {
     JTextField firstnameField;
     
     JLabel departmentLabel = new JLabel("Département : ");
-    JTextField departmentField=new JTextField();
+    JComboBox<String> departmentBox=new JComboBox<String>();
     
     JLabel scheduleLabel=new JLabel("Emploi du temps :");
     JLabel arrivalLabel=new JLabel("Arrivée :");
     JLabel departureLabel =new JLabel("Départ :");
     JLabel[] daysLabels= {new JLabel("Lundi : "),new JLabel("Mardi : "),new JLabel("Mercredi : "),new JLabel("Jeudi : "),new JLabel("Vendredi : ")};
     ArrayList<ArrayList<JComboBox<Integer>>> tabBoxs=new ArrayList<>(5);
+    private DefaultTableModel model;
     
     public void putInTabBoxs() {
     	for (int i=0;i<5;i++) {
@@ -45,7 +49,7 @@ public class CUEmployee extends JFrame {
     
     
 	public CUEmployee(Company entreprise, JTextField nameField,
-			JTextField firstnameField) {
+			JTextField firstnameField,JComboBox<String> departmentBox,DefaultTableModel model) {
 		super("Nouvel Employé");
 		
 	      WindowListener l = new WindowAdapter() {
@@ -58,6 +62,7 @@ public class CUEmployee extends JFrame {
 		this.entreprise=entreprise;
 		this.nameField=nameField;
 		this.firstnameField=firstnameField;
+		this.model=model;
 		
 		setLayout(new GridBagLayout());
 		GridBagConstraints grid = new GridBagConstraints();
@@ -87,7 +92,7 @@ public class CUEmployee extends JFrame {
 		add(departmentLabel,grid);
 		grid.gridx=1;
 		grid.gridwidth=2;
-		//add(departmentField,grid);
+		add(departmentBox,grid);
 		
 		grid.gridy = 3;
 		grid.gridx = 0;
@@ -117,7 +122,10 @@ public class CUEmployee extends JFrame {
 		grid.gridx=0;
 		grid.gridwidth=1;
 		grid.fill = GridBagConstraints.NONE;
-		add(new JButton("Ajouter"),grid);
+		JButton addButton=new JButton("Ajouter");
+		addButton.addActionListener(new ButtonNewEmployee(entreprise,nameField,firstnameField,departmentBox,tabBoxs,model));
+		addButton.addActionListener(e->this.dispose());
+		add(addButton,grid);
 	}
 	
 }

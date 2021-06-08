@@ -63,10 +63,10 @@ public class Main_view extends JFrame {
 
 			
 			JButton addButton = new JButton("Ajouter");
-			addButton.addActionListener(new ButtonAUeEmployee(entreprise));
+			addButton.addActionListener(new ButtonAUeEmployee(entreprise,model));
 			buttons.add(addButton);
 			JButton modButton = new JButton("Modifier");
-			modButton.addActionListener(new ButtonAUeEmployee(entreprise));
+			modButton.addActionListener(new ButtonAUeEmployee(entreprise,model));
 			buttons.add(modButton);
 			grid.gridx = 6;
 			buttons.add(new JButton("Supprimer"));
@@ -92,8 +92,8 @@ public class Main_view extends JFrame {
 				for(int i=0;i<entreprise.getDepartments().size();i++) {
 					model.addRow(
 			                   new Object[]{
-			                         entreprise.getDepartments().get(entreprise.getDepartments().size()-1).getName(),
-			                         entreprise.getDepartments().get(entreprise.getDepartments().size()-1).getDescription()
+			                         entreprise.getDepartments().get(i).getName(),
+			                         entreprise.getDepartments().get(i).getDescription()
 			                   });
 				}
 			}		
@@ -178,7 +178,7 @@ public class Main_view extends JFrame {
 		// Assemble all the pieces of the MVC
 		Company Entreprise =new Company("Polytech") ;
 		Department department=new Department("info","test");
-		//Entreprise.addDepartment(department);
+		Entreprise.addDepartment(department);
 		
 		Thread t = new Thread(new ThreadReadPointeuseData(Entreprise, 8080));//NEED A WAY TO CHANGE THE PORT IN-APP
 		t.start();

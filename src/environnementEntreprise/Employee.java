@@ -136,13 +136,6 @@ public class Employee {
 	public void setPrenom(String prenom) {
 		this.prenom = prenom;
 	}
-	
-	//ADAM TEST
-	public static void main(String args[]) { 
-		Employee employee = new Employee("nassiri","adam");
-		//Pair<LocalTime,LocalTime> horaires = new Pair();
-		
-		//employee.SCH.addHrs("Monday",); 
-	}
+
 	
 }
