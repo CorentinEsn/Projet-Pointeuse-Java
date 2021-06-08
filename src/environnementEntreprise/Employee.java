@@ -1,6 +1,8 @@
 package environnementEntreprise;
 
 import java.util.HashMap;
+import java.util.UUID;
+
 import static java.time.temporal.ChronoUnit.MINUTES;
 
 import java.time.LocalDateTime;
@@ -8,7 +10,8 @@ import java.time.LocalTime;
 
 public class Employee {
 	
-	private int ID;
+
+	private UUID uuid;
 	private String nom;
 	private String prenom;
 	
@@ -24,29 +27,28 @@ public class Employee {
 	
 	//methods
 	public Employee() {
-		maxID++;
-		this.setID(maxID);
+
+		this.uuid = UUID.randomUUID();
 		checkedIn = false;
 		overTime = 0;
 	}
 	
 	public Employee(String nom, String prenom) {
-		maxID++;
-		this.setID(maxID);
 		
 		this.setNom(nom);
 		this.setPrenom(prenom);
+		this.uuid = UUID.randomUUID();
 		
 		checkedIn = false;
 		overTime = 0;
 	}
 	
- 	public int getID() {
-		return ID;
+ 	public UUID getUUID() {
+		return uuid;
 	}
 	
-	public void setID(int newID) {
-		ID = newID;
+	public void setUUID(UUID newUUID) {
+		uuid = newUUID;
 	}
 
 	public long getoverTime() {

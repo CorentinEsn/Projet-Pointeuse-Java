@@ -1,6 +1,7 @@
 package environnementEntreprise;
 
 import java.util.ArrayList;
+import java.util.UUID;
 
 public class Department {
 	//attributs
@@ -44,13 +45,13 @@ public class Department {
 		employees.addAll(newEmployees);
 	}
 	
-	public void remEmployee(int ID) {
+	public void remEmployee(UUID uuid) {
 		Boolean removed = false;
 		ArrayList<Employee> toBeRemoved = new ArrayList<Employee>();
 		
 		//detection
 		for(Employee employee : employees) {
-			if(employee.getID() == ID && removed == false) {
+			if(employee.getUUID() == uuid && removed == false) {
 				toBeRemoved.add(employee);
 				removed = true;
 			}

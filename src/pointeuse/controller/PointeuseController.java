@@ -103,16 +103,18 @@ public class PointeuseController{
 	}
 
 	/**
-	 * create a thread that will recieve the data, currently used to test the sending
+	 * Create a thread that will receive the data, currently used to test the sending
+	 * please to not use outside of testing
+	 * if you do need it, the function need to be updated to have a company and all
 	 * @param port the port to which the data will be sent
 	 * @return a SerialPointeuse object containing the data
 	 */
-	public SerialPointeuse readPointeuseDataTCP(int port) {
+	@SuppressWarnings("unused")
+	private SerialPointeuse readPointeuseDataTCP(int port) {
 
 		SerialPointeuse dataToRead = new SerialPointeuse(null, "", null);
-
-		Thread t = new Thread(new ThreadReadPointeuseData(dataToRead, port));
-		t.start();
+		//Thread t = new Thread(new ThreadReadPointeuseData(null, port));
+		//t.start();
 
 
 

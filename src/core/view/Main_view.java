@@ -1,12 +1,15 @@
 package core.view;
 
 import java.awt.*;
+
 import java.time.LocalDateTime;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 
 import core.controller.*;
 import environnementEntreprise.*;
+import pointeuse.ThreadReadPointeuseData;
+import pointeuse.ThreadSendPointeuseData;
 
 public class Main_view extends JFrame {
 	Company entreprise;
@@ -168,6 +171,10 @@ public class Main_view extends JFrame {
 		Company Entreprise =new Company("Polytech") ;
 		Department department=new Department("info","test");
 		Entreprise.addDepartment(department);
+		
+		Thread t = new Thread(new ThreadReadPointeuseData(Entreprise, 8080));//NEED A WAY TO CHANGE THE PORT IN-APP
+		t.start();
+		
 		Main_view v = new Main_view(Entreprise);
 		v.setVisible(true);
 
