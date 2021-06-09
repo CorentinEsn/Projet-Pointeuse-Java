@@ -45,7 +45,35 @@ public class Main_view extends JFrame {
 			String[] columns = { "ID", "Nom", "Prénom", "Département", "Heures supplémentaires", "Présent?",
 					"Emploi du Temps" };
 			DefaultTableModel model = new DefaultTableModel(columns, 0);//creation of the model for JTable
-
+			
+			int numberOfEmployees=0;
+			for(int i=0;i<entreprise.getDepartments().size();i++) {//check if there are employees stocked
+			if(entreprise.getDepartments().get(i).getEmployees().size()>0) {
+				numberOfEmployees++;
+			}
+			}
+			if (numberOfEmployees==0) {
+				model.addRow(//if there are no employees stocked, create an empty table
+		                   new Object[]{
+		                         "","","","","","",""		                         
+		                   });
+			}
+			else{ //if there are departments in stock, use them to create the table
+				for(int i=0;i<numberOfEmployees;i++) {
+					model.addRow(
+							 new Object[] {
+									 entreprise.getDepartments().get(i).getEmployees().get(entreprise.getDepartments().get(i).getEmployees().size()-1).getUUID(),
+									 entreprise.getDepartments().get(i).getEmployees().get(entreprise.getDepartments().get(i).getEmployees().size()-1).getName(),
+									 entreprise.getDepartments().get(i).getEmployees().get(entreprise.getDepartments().get(i).getEmployees().size()-1).getFirstname(),
+									 entreprise.getDepartments().get(i).getName(),
+									 entreprise.getDepartments().get(i).getEmployees().get(entreprise.getDepartments().get(i).getEmployees().size()-1).getoverTime()
+							 });
+				}
+			}		
+			
+			
+			
+			
 			JTable employeetable = new JTable(model);
 			grid.fill = GridBagConstraints.HORIZONTAL;
 			grid.gridy = 0;
@@ -66,10 +94,12 @@ public class Main_view extends JFrame {
 			addButton.addActionListener(new ButtonAUeEmployee(entreprise,model));
 			buttons.add(addButton);
 			JButton modButton = new JButton("Modifier");
-			modButton.addActionListener(new ButtonAUeEmployee(entreprise,model));
+			modButton.addActionListener(new ButtonAUeEmployee(entreprise,model,employeetable));
 			buttons.add(modButton);
 			grid.gridx = 6;
-			buttons.add(new JButton("Supprimer"));
+			JButton delButton = new JButton("Supprimer");	
+			delButton.addActionListener(new ButtonDel(entreprise,model,employeetable,1));
+			buttons.add(delButton);
 			card.add(buttons, grid);
 
 		}
@@ -131,7 +161,7 @@ public class Main_view extends JFrame {
 			
 			//Deleting button
 			JButton delButton = new JButton("Supprimer");	
-			delButton.addActionListener(new ButtonDel(entreprise,model,departmenttable));
+			delButton.addActionListener(new ButtonDel(entreprise,model,departmenttable,0));
 			buttons.add(delButton);
 			card.add(buttons, grid);
 		}

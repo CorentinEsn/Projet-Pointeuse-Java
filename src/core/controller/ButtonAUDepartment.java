@@ -10,7 +10,7 @@ import environnementEntreprise.Company;
 
 
 //this button is located on the departmentcard of the mainframe, 
-//it is the add or the modified button (depends of "satus")
+//it is the add or the modified button (depends of "status")
 //it create the form  "CUDepartments"
 public class ButtonAUDepartment implements ActionListener{
 	

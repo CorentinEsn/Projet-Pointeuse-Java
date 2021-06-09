@@ -33,7 +33,6 @@ public class ButtonNewDepartment implements ActionListener {
 	                         entreprise.getDepartments().get(entreprise.getDepartments().size()-1).getName(),
 	                         entreprise.getDepartments().get(entreprise.getDepartments().size()-1).getDescription()
 	                   });
-		 System.out.println(entreprise.getDepartments().get(entreprise.getDepartments().size()-1).getDescription());
 		 name.setText("");
 		 description.setText("");
 	 }

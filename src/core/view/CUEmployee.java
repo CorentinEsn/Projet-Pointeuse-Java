@@ -11,15 +11,17 @@ import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
 
+import core.controller.ButtonModDepartment;
+import core.controller.ButtonModEmployee;
 import core.controller.ButtonNewDepartment;
 import core.controller.ButtonNewEmployee;
 import environnementEntreprise.Company;
+import environnementEntreprise.Employee;
 
 public class CUEmployee extends JFrame {
 	Company entreprise;
 	
-	Integer[] hoursList= {0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24};
-	Integer[] minutesList= {0,15,30,45};
+	
 	JLabel nameLabel = new JLabel("Nom : ");
     JTextField nameField = new JTextField(30); // accepts up to 30 characters (French longest name is 27 character)
     
@@ -33,23 +35,13 @@ public class CUEmployee extends JFrame {
     JLabel arrivalLabel=new JLabel("Arrivée :");
     JLabel departureLabel =new JLabel("Départ :");
     JLabel[] daysLabels= {new JLabel("Lundi : "),new JLabel("Mardi : "),new JLabel("Mercredi : "),new JLabel("Jeudi : "),new JLabel("Vendredi : ")};
-    ArrayList<ArrayList<JComboBox<Integer>>> tabBoxs=new ArrayList<>(5);
-    private DefaultTableModel model;
-    
-    public void putInTabBoxs() {
-    	for (int i=0;i<5;i++) {
-    		tabBoxs.add(new ArrayList<JComboBox<Integer>>(4));}
-    	for(int i=0;i<5;i++) {
-    		tabBoxs.get(i).add(new JComboBox<Integer>(hoursList)); 
-    		tabBoxs.get(i).add(new JComboBox<Integer>(minutesList)); 
-    		tabBoxs.get(i).add(new JComboBox<Integer>(hoursList)); 
-    		tabBoxs.get(i).add(new JComboBox<Integer>(minutesList)); 
-    	}
-    }
-    
+    ArrayList<ArrayList<JComboBox<Integer>>> tabBoxs;
+    private DefaultTableModel model;  
+    private Employee oldEmployee;
+    private int selectedline;
     
 	public CUEmployee(Company entreprise, JTextField nameField,
-			JTextField firstnameField,JComboBox<String> departmentBox,DefaultTableModel model) {
+			JTextField firstnameField,JComboBox<String> departmentBox,DefaultTableModel model,ArrayList<ArrayList<JComboBox<Integer>>> tabBoxs,int status,JTable employeeTable) {
 		super("Nouvel Employé");
 		
 	      WindowListener l = new WindowAdapter() {
@@ -63,6 +55,20 @@ public class CUEmployee extends JFrame {
 		this.nameField=nameField;
 		this.firstnameField=firstnameField;
 		this.model=model;
+		this.tabBoxs=tabBoxs;
+		if (status==1) {
+		this.selectedline=employeeTable.getSelectedRow();
+		}
+		if (status==1) {//if update, set the olddepartment
+			for (int i=0;i<entreprise.getDepartments().size();i++) {
+				for (int j=0;j<entreprise.getDepartments().get(i).getEmployees().size() ;j++) {
+				if (entreprise.getDepartments().get(i).getEmployees().get(j).getUUID()==employeeTable.getValueAt(0, selectedline));{
+					this.oldEmployee=entreprise.getDepartments().get(i).getEmployees().get(j);
+				}
+				}
+			}
+			}
+			
 		
 		setLayout(new GridBagLayout());
 		GridBagConstraints grid = new GridBagConstraints();
@@ -103,7 +109,6 @@ public class CUEmployee extends JFrame {
 		grid.gridx=3;
 		add(departureLabel,grid);
 		
-		putInTabBoxs();
 		grid.gridy=4;
 		
 		for (int i=0;i<5;i++) {
@@ -122,10 +127,19 @@ public class CUEmployee extends JFrame {
 		grid.gridx=0;
 		grid.gridwidth=1;
 		grid.fill = GridBagConstraints.NONE;
-		JButton addButton=new JButton("Ajouter");
-		addButton.addActionListener(new ButtonNewEmployee(entreprise,nameField,firstnameField,departmentBox,tabBoxs,model));
-		addButton.addActionListener(e->this.dispose());
-		add(addButton,grid);
+		if (status==0) {
+			JButton addButton=new JButton("Ajouter");
+			addButton.addActionListener(new ButtonNewEmployee(entreprise,nameField,firstnameField,departmentBox,tabBoxs,model));
+			addButton.addActionListener(e->this.dispose());
+			add(addButton,grid);
+		}
+		//if update, button update
+		else {
+			JButton modButton=new JButton("Modifier");
+			modButton.addActionListener(new ButtonModEmployee(entreprise,nameField,firstnameField,departmentBox,tabBoxs,model,oldEmployee,selectedline));
+			modButton.addActionListener(e->this.dispose());
+			add(modButton,grid);
+		}
 	}
 	
 }

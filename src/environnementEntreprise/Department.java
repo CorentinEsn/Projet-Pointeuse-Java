@@ -42,7 +42,24 @@ public class Department {
 	}
 
 	public void addEmployee(ArrayList<Employee> newEmployees) {
-		employees.addAll(newEmployees);
+		employees.addAll(newEmployees)
+		
+		;
+	}
+	
+	public int modEmployee(Employee oldEmployee,Employee newEmployee) {
+		for (int i=0;i <employees.size();i++) {
+			if (employees.get(i).getUUID()==oldEmployee.getUUID()) {
+				employees.get(i).setName(newEmployee.getName());
+				employees.get(i).setFirstname(newEmployee.getFirstname());
+				employees.get(i).setoverTime(newEmployee.getoverTime());
+				employees.get(i).setSCH(newEmployee.getSCH());
+				employees.get(i).setUUID(newEmployee.getUUID());
+				return i;
+				}
+
+			}
+		return 0;
 	}
 	
 	public void remEmployee(UUID uuid) {
@@ -72,6 +89,7 @@ public class Department {
 	public Department(String name,String description) {
 		this.name=name;
 		this.description=description;
+		this.employees=new ArrayList<>();
 	}
 	
 }

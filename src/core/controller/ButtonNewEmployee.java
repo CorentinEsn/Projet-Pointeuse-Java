@@ -10,6 +10,7 @@ import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 
 import environnementEntreprise.Company;
+import environnementEntreprise.Employee;
 import environnementEntreprise.Pair;
 import environnementEntreprise.Schedule;
 
@@ -54,5 +55,25 @@ public class ButtonNewEmployee implements ActionListener {
 		 Pair<LocalTime,LocalTime> temPair=new Pair<LocalTime, LocalTime>(arrivalLocalTime, departureLocalTime);
 		 schedule.addHrs(i, temPair);//adding pair to the schedule
 	 }
+		 
+		 for (int i=0;i<entreprise.getDepartments().size();i++) {
+			 if (entreprise.getDepartments().get(i).getName()==departmentbox.getSelectedItem().toString()) {
+				 entreprise.getDepartments().get(i).addEmployee(new Employee(name.getText(), firstname.getText(),schedule));;
+				 model.addRow(
+						 new Object[] {
+								 entreprise.getDepartments().get(i).getEmployees().get(entreprise.getDepartments().get(i).getEmployees().size()-1).getUUID(),
+								 entreprise.getDepartments().get(i).getEmployees().get(entreprise.getDepartments().get(i).getEmployees().size()-1).getName(),
+								 entreprise.getDepartments().get(i).getEmployees().get(entreprise.getDepartments().get(i).getEmployees().size()-1).getFirstname(),
+								 entreprise.getDepartments().get(i).getName(),
+								 entreprise.getDepartments().get(i).getEmployees().get(entreprise.getDepartments().get(i).getEmployees().size()-1).getoverTime()
+						 }
+						 );
+			 }
+		 }
+		 
+		 name.setText(null);
+		 firstname.setText(null);
+		 
+		
 	 }
 }

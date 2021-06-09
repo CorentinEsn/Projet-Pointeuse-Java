@@ -12,8 +12,8 @@ public class Employee {
 	
 
 	private UUID uuid;
-	private String nom;
-	private String prenom;
+	private String name ;
+	private String firstname;
 	
 	//overTime contains the amount of spare minutes an employee has
 	private long overTime;
@@ -21,6 +21,15 @@ public class Employee {
 	private boolean checkedIn;
 	
 	public Schedule SCH;
+	
+	public Schedule getSCH() {
+		return SCH;
+	}
+
+	public void setSCH(Schedule sCH) {
+		SCH = sCH;
+	}
+
 	public static int maxID=0;
 	
 	private HashMap<LocalDateTime,String> history;
@@ -33,12 +42,12 @@ public class Employee {
 		overTime = 0;
 	}
 	
-	public Employee(String nom, String prenom) {
+	public Employee(String name, String firstname,Schedule SCH) {
 		
-		this.setNom(nom);
-		this.setPrenom(prenom);
+		this.setName(name);
+		this.setFirstname(firstname);
 		this.uuid = UUID.randomUUID();
-		
+		this.SCH=SCH;
 		checkedIn = false;
 		overTime = 0;
 	}
@@ -121,20 +130,20 @@ public class Employee {
 		
 	}
 
-	public String getNom() {
-		return nom;
+	public String getName() {
+		return name;
 	}
 
-	public void setNom(String nom) {
-		this.nom = nom;
+	public void setName(String name) {
+		this.name = name;
 	}
 
-	public String getPrenom() {
-		return prenom;
+	public String getFirstname() {
+		return firstname;
 	}
 
-	public void setPrenom(String prenom) {
-		this.prenom = prenom;
+	public void setFirstname(String firstname) {
+		this.firstname = firstname;
 	}
 
 	
