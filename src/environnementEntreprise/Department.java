@@ -3,12 +3,12 @@ package environnementEntreprise;
 import java.util.ArrayList;
 
 public class Department {
-	//attributs
+	//attributes
 	private String name;
 	private String description;
 	
 	private ArrayList<Employee> employees;
-	//methodes
+	//methods
 	
 	public ArrayList<Employee> getEmployees() {
 		return employees;
