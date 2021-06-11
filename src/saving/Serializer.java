@@ -92,7 +92,7 @@ public class Serializer {
 			company = (Company) iS.readObject();
 			iS.close();	
 		}catch(EOFException e) {
-			System.out.println("File not found");
+			System.out.println("Empty file");
 
 		}catch(ClassNotFoundException e) {
 			//this could happen if the file has been modified, or if there was some difference between the classes version
@@ -105,7 +105,8 @@ public class Serializer {
 		return company;
 
 	}
-}
+
+
 
 /**
  * serialize the port used by the server

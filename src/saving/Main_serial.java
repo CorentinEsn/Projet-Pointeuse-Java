@@ -12,6 +12,7 @@ public class Main_serial {
 		
 		Serializer serializer = new Serializer();
 		serializer.serializeCompany(Entreprise);
+		serializer.unserialiseCompagny();
 		
 }
 }
