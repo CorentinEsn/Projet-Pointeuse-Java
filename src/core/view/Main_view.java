@@ -17,6 +17,7 @@ import pointeuse.ThreadReadPointeuseData;
 public class Main_view extends JFrame {
 	Company entreprise; //all the data of the company (departments, employees...)
 	JTable employeetable;
+	JTextField portTextField;
 	public JTable getEmployeetable() {
 		return employeetable;
 	}
@@ -37,7 +38,7 @@ public class Main_view extends JFrame {
 		JPanel card3 = new JPanel();//creation of the main container for the schedules
 		TimeView(card3);
 		
-		JPanel card4 = new JPanel();//creation of the main container for the schedules
+		JPanel card4 = new JPanel();//creation of the main container for the configuration
 		ConfigView(card4);
 
 
@@ -239,11 +240,12 @@ public class Main_view extends JFrame {
 		buttons.add(Portlabel);
 
 		//Modifying button
-		JTextField portTextField= new JTextField("8080");	
+		portTextField= new JTextField("8080");	
 		buttons.add(portTextField);
 		
 		JLabel Infolabel= new JLabel("Le changement ne sera effectif quu'après redémarrage de l'application"); 
 		buttons.add(Infolabel);
+		card.add(buttons);
 		
 	}
 
