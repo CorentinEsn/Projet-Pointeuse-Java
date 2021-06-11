@@ -67,7 +67,14 @@ public class Employee {
 	public void setoverTime(long newoverTime) {
 		overTime = newoverTime;
 	}
-
+	
+	public void setHistory(HashMap<LocalDateTime,String> newHistory) {
+		history = newHistory;
+	}
+	
+	public HashMap<LocalDateTime,String> getHistory(){
+		return history;
+	}
 	public void checkIO(LocalDateTime time){
 
 		LocalTime timeOfDay = time.toLocalTime();

@@ -54,6 +54,7 @@ public class Department {
 				employees.get(i).setoverTime(newEmployee.getoverTime());
 				employees.get(i).setSCH(newEmployee.getSCH());
 				employees.get(i).setUUID(newEmployee.getUUID());
+				employees.get(i).setHistory(newEmployee.getHistory());
 				return i;
 				}
 
