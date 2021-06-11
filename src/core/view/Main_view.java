@@ -22,6 +22,39 @@ public class Main_view extends JFrame {
 	Company entreprise; //all the data of the company (departments, employees...)
 	JTable employeetable;
 	JTextField portTextField;
+	DefaultTableModel modelEmployee;
+	DefaultTableModel modelDepartment;
+	JButton selectionButton=new JButton("Valider");
+	public JButton getSelectionButton() {
+		return selectionButton;
+	}
+
+
+	public void setSelectionButton(JButton selectionButton) {
+		this.selectionButton = selectionButton;
+	}
+
+
+	public DefaultTableModel getModelEmployee() {
+		return modelEmployee;
+	}
+
+
+	public void setModelEmployee(DefaultTableModel modelEmployee) {
+		this.modelEmployee = modelEmployee;
+	}
+
+
+	public DefaultTableModel getModelDepartment() {
+		return modelDepartment;
+	}
+
+
+	public void setModelDepartment(DefaultTableModel modelDepartment) {
+		this.modelDepartment = modelDepartment;
+	}
+
+
 	public JTable getEmployeetable() {
 		return employeetable;
 	}
@@ -60,6 +93,7 @@ public class Main_view extends JFrame {
 		tabbedPane.addTab("Employés", card1);
 		tabbedPane.addTab("Départements", card2);
 		tabbedPane.addTab("Horaires", card3);
+		tabbedPane.addTab("Config", card4);
 		//adding the tabs panel
 		add(tabbedPane, BorderLayout.CENTER);
 	}
@@ -69,9 +103,8 @@ public class Main_view extends JFrame {
 	public void EmployeeView(JPanel card) {
 		card.setLayout(new GridBagLayout());
 		GridBagConstraints grid = new GridBagConstraints();
-		String[] columns = { "ID", "Nom", "Prénom", "Département", "Heures supplémentaires", "Présent?",
-		"Emploi du Temps" };
-		DefaultTableModel model = new DefaultTableModel(columns, 0);//creation of the model for JTable
+		String[] columns = { "ID", "Nom", "Prénom", "Département", "Heures supplémentaires", "Présent?" };
+		 modelEmployee = new DefaultTableModel(columns, 0);//creation of the model for JTable
 
 		int numberOfEmployees=0;
 		for(int i=0;i<entreprise.getDepartments().size();i++) {//check if there are employees stocked
@@ -80,7 +113,7 @@ public class Main_view extends JFrame {
 			}
 		}
 		if (numberOfEmployees==0) {
-			model.addRow(//if there are no employees stocked, create an empty table
+			modelEmployee.addRow(//if there are no employees stocked, create an empty table
 					new Object[]{
 							"","","","","","",""		                         
 					});
@@ -88,15 +121,20 @@ public class Main_view extends JFrame {
 		else{ //if there are departments in stock, use them to create the table
 			for(int i=0;i<entreprise.getDepartments().size();i++) {
 				for(int j=0;j<entreprise.getDepartments().get(i).getEmployees().size();j++) {
-
-					model.addRow(
+					Employee temp=entreprise.getDepartments().get(i).getEmployees().get(j);
+					String checkString="Absent";
+					if(temp.isCheckedIn()) {
+						checkString="Présent";
+					}
+					modelEmployee.addRow(
 							new Object[] {
-									entreprise.getDepartments().get(i).getEmployees().get(j).getUUID(),
-									entreprise.getDepartments().get(i).getEmployees().get(j).getName(),
-									entreprise.getDepartments().get(i).getEmployees().get(j).getFirstname(),
+									temp.getUUID(),
+									temp.getName(),
+									temp.getFirstname(),
 									entreprise.getDepartments().get(i).getName(),
-									entreprise.getDepartments().get(i).getEmployees().get(j).getoverTime()
-
+									temp.getovertimeFormatted(),
+									checkString
+									
 							});
 				}
 			}		
@@ -104,7 +142,7 @@ public class Main_view extends JFrame {
 
 
 
-		employeetable = new JTable(model);
+		employeetable = new JTable(modelEmployee);
 		grid.fill = GridBagConstraints.HORIZONTAL;
 		grid.gridy = 0;
 		grid.gridwidth = 50;
@@ -121,14 +159,14 @@ public class Main_view extends JFrame {
 
 
 		JButton addButton = new JButton("Ajouter");
-		addButton.addActionListener(new ButtonAUeEmployee(entreprise,model));
+		addButton.addActionListener(new ButtonAUeEmployee(entreprise,modelEmployee));
 		buttons.add(addButton);
 		JButton modButton = new JButton("Modifier");
-		modButton.addActionListener(new ButtonAUeEmployee(entreprise,model,employeetable,1));
+		modButton.addActionListener(new ButtonAUeEmployee(entreprise,modelEmployee,employeetable,1));
 		buttons.add(modButton);
 		grid.gridx = 6;
 		JButton delButton = new JButton("Supprimer");	
-		delButton.addActionListener(new ButtonDel(entreprise,model,employeetable,1));
+		delButton.addActionListener(new ButtonDel(entreprise,modelEmployee,employeetable,1));
 		buttons.add(delButton);
 		card.add(buttons, grid);
 		grid.gridx = 7;
@@ -146,9 +184,9 @@ public class Main_view extends JFrame {
 		card.setLayout(new GridBagLayout());
 		GridBagConstraints grid = new GridBagConstraints();//used for placing the differents items
 		String[] columns = { "Nom", "Description" };//names of the tabs columns
-		DefaultTableModel model = new DefaultTableModel(columns, 0);//creation of the model for JTable
+		modelDepartment = new DefaultTableModel(columns, 0);
 		if(entreprise.getDepartments().size()==0) {//if there are no departments stocked, create an empty table
-			model.addRow(
+			modelDepartment.addRow(
 					new Object[]{
 							"",
 							""
@@ -156,7 +194,7 @@ public class Main_view extends JFrame {
 		}
 		else{ //if there are departments in stock, use them to create the table
 			for(int i=0;i<entreprise.getDepartments().size();i++) {
-				model.addRow(
+				modelDepartment.addRow(
 						new Object[]{
 								entreprise.getDepartments().get(i).getName(),
 								entreprise.getDepartments().get(i).getDescription()
@@ -164,7 +202,7 @@ public class Main_view extends JFrame {
 			}
 		}		
 
-		JTable departmenttable = new JTable(model);//creation of the table itself
+		JTable departmenttable = new JTable(modelDepartment);//creation of the table itself
 		departmenttable.getColumnModel().getColumn(0).setPreferredWidth(50);//set the size of the first column
 		departmenttable.getColumnModel().getColumn(1).setPreferredWidth(350);//set the size of second column
 
@@ -185,19 +223,19 @@ public class Main_view extends JFrame {
 
 		//Adding button
 		JButton addButton = new JButton("Ajouter"); 
-		addButton.addActionListener(new ButtonAUDepartment(entreprise,model));
+		addButton.addActionListener(new ButtonAUDepartment(entreprise,modelDepartment));
 		buttons.add(addButton);
 
 		//Modifying button
 		JButton modButton = new JButton("Modifier");	
-		modButton.addActionListener(new ButtonAUDepartment(entreprise,model,departmenttable));
+		modButton.addActionListener(new ButtonAUDepartment(entreprise,modelDepartment,departmenttable));
 		buttons.add(modButton);
 		grid.gridx = 6;
 
 
 		//Deleting button
 		JButton delButton = new JButton("Supprimer");	
-		delButton.addActionListener(new ButtonDel(entreprise,model,departmenttable,0));
+		delButton.addActionListener(new ButtonDel(entreprise,modelDepartment,departmenttable,0));
 		buttons.add(delButton);
 		card.add(buttons, grid);
 	}
@@ -225,11 +263,11 @@ public class Main_view extends JFrame {
 		monthComboBox.setSelectedIndex(today.getMonthValue());
 		JComboBox<Integer> yearComboBox  = new JComboBox<Integer>(yearsList); 
 		yearComboBox.setSelectedIndex(1);
-		JButton selectionButton=new JButton("Valider");
+		selectionButton=new JButton("Valider");
 		String[] columns = { "ID", "Nom", "Prénom", "Heure d'arrivée", "Heure théorique d'arrivée", "Heure de départ",
 		"Heure théorique de départ" };
-		DefaultTableModel model = new DefaultTableModel(columns, 0);//creation of the model for JTable
-		selectionButton.addActionListener(new SelectionTimeListener(entreprise, model, LocalDate.of(	Integer.parseInt(yearComboBox.getSelectedItem().toString()),
+		DefaultTableModel modelTime = new DefaultTableModel(columns, 0);
+		selectionButton.addActionListener(new SelectionTimeListener(entreprise, modelTime, LocalDate.of(	Integer.parseInt(yearComboBox.getSelectedItem().toString()),
 																										monthComboBox.getSelectedIndex(),
 																										Integer.parseInt(dayComboBox.getSelectedItem().toString()))));
 		date.add(dayComboBox);
@@ -238,7 +276,7 @@ public class Main_view extends JFrame {
 		date.add(selectionButton);
 		card.add(date, grid);
 		
-		JTable timeTable = new JTable(model);//creation of the table itself
+		JTable timeTable = new JTable(modelTime);//creation of the table itself
 		selectionButton.doClick();
 		grid.fill = GridBagConstraints.HORIZONTAL;
 		grid.gridy = 1;
@@ -282,11 +320,11 @@ public class Main_view extends JFrame {
 			Department department=new Department("info","test");
 			Entreprise.addDepartment(department);
 		}
+		Main_view v;
 
-		Thread t = new Thread(new ThreadReadPointeuseData(Entreprise, port));
+		v = new Main_view(Entreprise);
+		Thread t = new Thread(new ThreadReadPointeuseData(Entreprise, port,v));
 		t.start();
-
-		Main_view v = new Main_view(Entreprise);
 		v.setVisible(true);
 
 	}

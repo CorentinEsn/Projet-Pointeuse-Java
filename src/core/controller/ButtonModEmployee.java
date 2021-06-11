@@ -3,6 +3,7 @@ package core.controller;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 import javax.swing.JComboBox;
@@ -65,13 +66,22 @@ public class ButtonModEmployee implements ActionListener{
 			if (entreprise.getDepartments().get(i).getName()==departmentbox.getSelectedItem().toString()) {
 				entreprise.getDepartments().get(i).modEmployee(oldEmployee,newEmployee);
 				model.removeRow(selectedline);
+				Employee employeeToModify=entreprise.getDepartments().get(i).getEmployees().get(entreprise.getDepartments().get(i).getEmployees().size()-1);
+				
+				String check="Absent";
+				if (employeeToModify.isCheckedIn()) {
+					check="Présent";
+				}
+				
 				model.addRow(
 						new Object[] {
-								entreprise.getDepartments().get(i).getEmployees().get(entreprise.getDepartments().get(i).getEmployees().size()-1).getUUID(),
-								entreprise.getDepartments().get(i).getEmployees().get(entreprise.getDepartments().get(i).getEmployees().size()-1).getName(),
-								entreprise.getDepartments().get(i).getEmployees().get(entreprise.getDepartments().get(i).getEmployees().size()-1).getFirstname(),
+								employeeToModify.getUUID(),
+								employeeToModify.getName(),
+								employeeToModify.getFirstname(),
 								entreprise.getDepartments().get(i).getName(),
-								entreprise.getDepartments().get(i).getEmployees().get(entreprise.getDepartments().get(i).getEmployees().size()-1).getoverTime()
+								employeeToModify.getovertimeFormatted(),
+								check
+								
 						}
 						);
 			}

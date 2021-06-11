@@ -84,7 +84,9 @@ public class PointeuseController{
 		}else {
 			ldtCurrent = ldtCurrent.minusMinutes(currentMin);
 		}
-
+		ldtCurrent.minusSeconds(ldtCurrent.getSecond());
+		ldtCurrent.minusNanos(ldtCurrent.getNano());
+		
 		return ldtCurrent;
 	}
 
