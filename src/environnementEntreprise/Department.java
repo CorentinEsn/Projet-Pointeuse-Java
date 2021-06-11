@@ -10,7 +10,7 @@ public class Department implements Serializable{
 	private String description;
 	
 	private ArrayList<Employee> employees;
-	//methodes
+	//methods
 	
 	public ArrayList<Employee> getEmployees() {
 		return employees;
@@ -40,12 +40,11 @@ public class Department implements Serializable{
 	
 	public void addEmployee(Employee newEmployee) {
 		employees.add(newEmployee);
+		
 	}
 
-	public void addEmployee(ArrayList<Employee> newEmployees) {
-		employees.addAll(newEmployees)
-		
-		;
+	public void addAllEmployee(ArrayList<Employee> newEmployees) {
+		employees.addAll(newEmployees);
 	}
 	
 	public int modEmployee(Employee oldEmployee,Employee newEmployee) {
@@ -56,6 +55,7 @@ public class Department implements Serializable{
 				employees.get(i).setoverTime(newEmployee.getoverTime());
 				employees.get(i).setSCH(newEmployee.getSCH());
 				employees.get(i).setUUID(newEmployee.getUUID());
+				employees.get(i).setHistory(newEmployee.getHistory());
 				return i;
 				}
 

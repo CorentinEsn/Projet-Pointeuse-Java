@@ -8,6 +8,7 @@ import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 
 import core.view.CUEmployee;
+import core.view.Main_view;
 import environnementEntreprise.Company;
 
 
@@ -27,6 +28,7 @@ public class ButtonAUeEmployee implements ActionListener{
 	private int status; //=0 if add; =1 if modify
 	private int selectedline=0;
 
+
 	public ButtonAUeEmployee(Company Entreprise,DefaultTableModel model) {
 		entreprise=Entreprise;
 		this.nameField=new JTextField("");
@@ -34,38 +36,38 @@ public class ButtonAUeEmployee implements ActionListener{
 		this.departmentBox=new JComboBox<String>();
 		this.model=model;
 		status = 0;
-		
+
 		this.tabBoxs=new ArrayList<ArrayList<JComboBox<Integer>>>(5);
 		for (int i=0;i<5;i++) {
 			this.tabBoxs.add(new ArrayList<JComboBox<Integer>>(4));
-			}
+		}
 
 		for(int i=0;i<5;i++) {
-    		tabBoxs.get(i).add(new JComboBox<Integer>(hoursList)); 
-    		tabBoxs.get(i).add(new JComboBox<Integer>(minutesList)); 
-    		tabBoxs.get(i).add(new JComboBox<Integer>(hoursList)); 
-    		tabBoxs.get(i).add(new JComboBox<Integer>(minutesList)); 
-    		}
+			tabBoxs.get(i).add(new JComboBox<Integer>(hoursList)); 
+			tabBoxs.get(i).add(new JComboBox<Integer>(minutesList)); 
+			tabBoxs.get(i).add(new JComboBox<Integer>(hoursList)); 
+			tabBoxs.get(i).add(new JComboBox<Integer>(minutesList)); 
+		}
 	}
-	public ButtonAUeEmployee(Company Entreprise,DefaultTableModel model,JTable employeeTable) {
+	public ButtonAUeEmployee(Company Entreprise,DefaultTableModel model,JTable employeeTable,int status) {
 		entreprise=Entreprise;
 		this.nameField=new JTextField("");
 		this.firstnameField=new JTextField("");
 		this.departmentBox=new JComboBox<String>();
 		this.model=model;
 		this.employeeTable=employeeTable;
-		status=1;
+		this.status=status;
 
 		this.tabBoxs=new ArrayList<ArrayList<JComboBox<Integer>>>(5);	    
-	    	for (int i=0;i<5;i++) {
-	    		tabBoxs.add(new ArrayList<JComboBox<Integer>>(4));}
-	    	for(int i=0;i<5;i++) {
-	    		tabBoxs.get(i).add(new JComboBox<Integer>(hoursList)); 
-	    		tabBoxs.get(i).add(new JComboBox<Integer>(minutesList)); 
-	    		tabBoxs.get(i).add(new JComboBox<Integer>(hoursList)); 
-	    		tabBoxs.get(i).add(new JComboBox<Integer>(minutesList)); 
-	    		}
-	    	
+		for (int i=0;i<5;i++) {
+			tabBoxs.add(new ArrayList<JComboBox<Integer>>(4));}
+		for(int i=0;i<5;i++) {
+			tabBoxs.get(i).add(new JComboBox<Integer>(hoursList)); 
+			tabBoxs.get(i).add(new JComboBox<Integer>(minutesList)); 
+			tabBoxs.get(i).add(new JComboBox<Integer>(hoursList)); 
+			tabBoxs.get(i).add(new JComboBox<Integer>(minutesList)); 
+		}
+
 	}
 
 
@@ -79,7 +81,7 @@ public class ButtonAUeEmployee implements ActionListener{
 		}
 
 
-		
+
 		if (status==1 && employeeTable.getSelectedRow()==-1) {
 			JOptionPane.showMessageDialog(null, "Vous n'avez selectionné aucune ligne!", "Erreur", JOptionPane.ERROR_MESSAGE);
 		}

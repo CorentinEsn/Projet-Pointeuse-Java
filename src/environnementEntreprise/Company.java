@@ -47,6 +47,21 @@ public class Company implements Serializable{
 		return 0;
 	}
 	
+	public ArrayList<Employee> allEmployees(){
+		ArrayList<Employee> employees = new ArrayList<Employee>();
+		ArrayList<Employee> rez = new ArrayList<Employee>();
+		
+		for(int i=0;i<departments.size();i++) {
+			employees = departments.get(i).getEmployees();
+			for(int j=0;j < employees.size();j++) {
+				rez.add(employees.get(j));
+			}
+			
+		}
+		
+		return rez;
+	}
+	
 	public Company(String name){
 		this.name=name;
 		this.departments=new ArrayList<>();
