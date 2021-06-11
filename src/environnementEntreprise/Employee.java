@@ -5,11 +5,12 @@ import java.util.UUID;
 
 import static java.time.temporal.ChronoUnit.MINUTES;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 
-public class Employee {
-
+public class Employee implements Serializable{
+	
 
 	private UUID uuid;
 	private String name ;

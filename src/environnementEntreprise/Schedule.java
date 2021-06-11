@@ -1,10 +1,11 @@
 package environnementEntreprise;
 
 import java.util.HashMap;
+import java.io.Serializable;
 import java.time.LocalTime;
 
-public class Schedule {
-
+public class Schedule implements Serializable{
+	
 	private HashMap< Integer , Pair<LocalTime,LocalTime> > SCH;
 
 	public Schedule () {

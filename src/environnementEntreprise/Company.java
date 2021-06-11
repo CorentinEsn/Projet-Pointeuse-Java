@@ -1,8 +1,9 @@
 package environnementEntreprise;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Company {
+public class Company implements Serializable{
 	//attributes
 	private String name;
 	private ArrayList<Department> departments;
