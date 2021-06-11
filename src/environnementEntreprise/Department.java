@@ -39,9 +39,10 @@ public class Department {
 	
 	public void addEmployee(Employee newEmployee) {
 		employees.add(newEmployee);
+		
 	}
 
-	public void addEmployee(ArrayList<Employee> newEmployees) {
+	public void addAllEmployee(ArrayList<Employee> newEmployees) {
 		employees.addAll(newEmployees)
 		
 		;

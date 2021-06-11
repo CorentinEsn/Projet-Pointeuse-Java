@@ -9,19 +9,19 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 
 public class Employee {
-	
+
 
 	private UUID uuid;
 	private String name ;
 	private String firstname;
-	
+
 	//overTime contains the amount of spare minutes an employee has
 	private long overTime;
-	
+
 	private boolean checkedIn;
-	
+
 	public Schedule SCH;
-	
+
 	public Schedule getSCH() {
 		return SCH;
 	}
@@ -31,9 +31,9 @@ public class Employee {
 	}
 
 	public static int maxID=0;
-	
+
 	private HashMap<LocalDateTime,String> history;
-	
+
 	//methods
 	public Employee() {
 
@@ -41,9 +41,9 @@ public class Employee {
 		checkedIn = false;
 		overTime = 0;
 	}
-	
+
 	public Employee(String name, String firstname,Schedule SCH) {
-		
+
 		this.setName(name);
 		this.setFirstname(firstname);
 		this.uuid = UUID.randomUUID();
@@ -51,11 +51,11 @@ public class Employee {
 		checkedIn = false;
 		overTime = 0;
 	}
-	
- 	public UUID getUUID() {
+
+	public UUID getUUID() {
 		return uuid;
 	}
-	
+
 	public void setUUID(UUID newUUID) {
 		uuid = newUUID;
 	}
@@ -67,67 +67,67 @@ public class Employee {
 	public void setoverTime(long newoverTime) {
 		overTime = newoverTime;
 	}
-	
+
 	public void checkIO(LocalDateTime time){
-		
+
 		LocalTime timeOfDay = time.toLocalTime();
 		long timeDiff;
 		String message = "cheched out";
-		
+
 		//THE EMPLOYEE IS CHECKING IN
 		if (checkedIn == false) {
 			checkedIn = true;
 			message = "cheched in";
 			switch (time.getDayOfWeek()) {
 			case MONDAY:
-				timeDiff = MINUTES.between(timeOfDay, SCH.getSCH().get("Monday").getL());
-				
+				timeDiff = MINUTES.between(timeOfDay, SCH.getSCH().get(0).getL());
+
 			case TUESDAY:
-				timeDiff = MINUTES.between(timeOfDay, SCH.getSCH().get("Tuesday").getL());
-				
+				timeDiff = MINUTES.between(timeOfDay, SCH.getSCH().get(1).getL());
+
 			case WEDNESDAY:
-				timeDiff = MINUTES.between(timeOfDay, SCH.getSCH().get("Wednesday").getL());
-				
+				timeDiff = MINUTES.between(timeOfDay, SCH.getSCH().get(2).getL());
+
 			case THURSDAY:
-				timeDiff = MINUTES.between(timeOfDay, SCH.getSCH().get("Thursday").getL());
-				
+				timeDiff = MINUTES.between(timeOfDay, SCH.getSCH().get(3).getL());
+
 			case FRIDAY:
-				timeDiff = MINUTES.between(timeOfDay, SCH.getSCH().get("Friday").getL());
-				
+				timeDiff = MINUTES.between(timeOfDay, SCH.getSCH().get(4).getL());
+
 			default:
 				timeDiff = 0;
+			}
+
+			setoverTime(getoverTime()-timeDiff);
 		}
-		
-		setoverTime(getoverTime()-timeDiff);
-		}
-		
+
 		//THE EMPLOYEE IS CHECKING OUT
 		else {
 			checkedIn = false;
 			switch (time.getDayOfWeek()) {
 			case MONDAY:
-				timeDiff = MINUTES.between(timeOfDay, SCH.getSCH().get("Monday").getR());
-				
+				timeDiff = MINUTES.between(timeOfDay, SCH.getSCH().get(0).getR());
+
 			case TUESDAY:
-				timeDiff = MINUTES.between(timeOfDay, SCH.getSCH().get("Tuesday").getR());
-				
+				timeDiff = MINUTES.between(timeOfDay, SCH.getSCH().get(1).getR());
+
 			case WEDNESDAY:
-				timeDiff = MINUTES.between(timeOfDay, SCH.getSCH().get("Wednesday").getR());
-				
+				timeDiff = MINUTES.between(timeOfDay, SCH.getSCH().get(2).getR());
+
 			case THURSDAY:
-				timeDiff = MINUTES.between(timeOfDay, SCH.getSCH().get("Thursday").getR());
-				
+				timeDiff = MINUTES.between(timeOfDay, SCH.getSCH().get(3).getR());
+
 			case FRIDAY:
-				timeDiff = MINUTES.between(timeOfDay, SCH.getSCH().get("Friday").getR());
-				
+				timeDiff = MINUTES.between(timeOfDay, SCH.getSCH().get(4).getR());
+
 			default:
 				timeDiff = 0;
 			}
-			
+
 			setoverTime(getoverTime()+timeDiff);
 			history.put(time, message);
 		}
-		
+
 	}
 
 	public String getName() {
@@ -146,5 +146,5 @@ public class Employee {
 		this.firstname = firstname;
 	}
 
-	
+
 }
