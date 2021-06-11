@@ -1,7 +1,14 @@
 package environnementEntreprise;
 
-public class Pair<L,R> {
-    private L l;
+import java.io.Serializable;
+
+public class Pair<L,R> implements Serializable{
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	
+	private L l;
     private R r;
     
     public Pair(L l, R r){
