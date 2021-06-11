@@ -23,16 +23,12 @@ import pointeuse.SerialPointeuse;
  */
 public class Serializer {
 
-	/**
-	 * the input stream that will read from files
-	 */
-	private ObjectInputStream iS;
-	/**
-	 * the output stream that will write to files
+	/**o files
 	 */
 	private ObjectOutputStream oS;
 
 	/**
+	 * @brief Open a file and create it if it doesn't exist
 	 * @param fileName the name of the file to open or create and open
 	 * @return a File object with the file open
 	 */
@@ -74,7 +70,7 @@ public class Serializer {
 		}
 	}
 
-	public void serializeEmployes(Employee employee) {
+	/*public void serializeEmployes(Employee employee) {
 
 		File empFile = createOpenFile("EmployeeFile.txt");
 		try {
@@ -96,7 +92,7 @@ public class Serializer {
 		}catch(IOException e) {
 			e.printStackTrace();
 		}
-	}
+	}*/
 
 	/**
 	 * @brief Serialize the data from the "pointeuse" in a file in "data/PendingPointingData.dat"
