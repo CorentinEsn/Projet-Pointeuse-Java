@@ -43,9 +43,7 @@ public class Department {
 	}
 
 	public void addAllEmployee(ArrayList<Employee> newEmployees) {
-		employees.addAll(newEmployees)
-		
-		;
+		employees.addAll(newEmployees);
 	}
 	
 	public int modEmployee(Employee oldEmployee,Employee newEmployee) {
