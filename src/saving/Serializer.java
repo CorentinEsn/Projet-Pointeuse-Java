@@ -67,8 +67,8 @@ public class Serializer {
 		if (! directory.exists()){
 			directory.mkdir();
 		}
-		
-		File compFile = createOpenFile("CoreData"+File.separator+"CompanyFile.txt");
+
+		File compFile = createOpenFile("CoreData"+File.separator+"CompanyFile.dat");
 		try {
 			oS = new ObjectOutputStream(new FileOutputStream(compFile));
 			oS.writeObject(company);
@@ -78,79 +78,22 @@ public class Serializer {
 		}
 	}
 
-	/*public void serializeEmployes(Employee employee) {
-
-		File empFile = createOpenFile("EmployeeFile.txt");
-		try {
-			oS = new ObjectOutputStream(new FileOutputStream(empFile));
-			oS.writeObject(employee);
-			oS.close();	
-		}catch(IOException e) {
-			e.printStackTrace();
-		}
-	}
-	
-	public void serializeDepartment(Department department) {
-
-		File depFile = createOpenFile("DepartmentFile.txt");
-		try {
-			oS = new ObjectOutputStream(new FileOutputStream(depFile));
-			oS.writeObject(department);
-			oS.close();	
-		}catch(IOException e) {
-			e.printStackTrace();
-		}
-	}*/
-
-	
-	/**
-	 * serialize the port used by the server
-	 * 
-	 * this function should be expanded with a whole config class if you have more data to serialize
-	 * @param port the port used bu the server to receive the data
-	 * 
-	 */
-	public void serializeWriteCoreConfigData(int port) {
-
+	public Company unserialiseCompagny() {
+		
 		File directory = new File("CoreData");
 		if (! directory.exists()){
 			directory.mkdir();
 		}
 
-		File dataFile = createOpenFile("CoreData"+File.separator+"config.dat");
-		try {
-			oS = new ObjectOutputStream(new FileOutputStream(dataFile));
-			oS.writeObject(port);
-			oS.close();	
-		}catch(IOException e) {
-			e.printStackTrace();
-		}
-
-	}
-	
-	/**
-	 * @brief read the serialized data to read all the config for the core App
-	 * this function should be expanded with a whole config class if you have more data to serialize
-	 * 
-	 * @return an the port that need to be used by the core server
-	 */
-	public int serializeReadCoreConfigData() {
-
-		File directory = new File("CoreData");
-		if (! directory.exists()){
-			directory.mkdir();
-		}
-
-		File dataFile = createOpenFile("CoreData"+File.separator+"config.dat");
-		//SerialPointeuse[] tabData = null;
-		int port = 8080; //default port if something goes wrong
+		File dataFile = createOpenFile("CoreData"+File.separator+"CompanyFile.dat");
+		Company company = null;
 		try {
 			iS = new ObjectInputStream(new FileInputStream(dataFile));
-			port = (int) iS.readObject();
+			company = (Company) iS.readObject();
 			iS.close();	
 		}catch(EOFException e) {
-			System.out.println("EOF ? ressorting to the default port 8080");
-			
+			System.out.println("File not found");
+
 		}catch(ClassNotFoundException e) {
 			//this could happen if the file has been modified, or if there was some difference between the classes version
 			e.printStackTrace();
@@ -159,68 +102,129 @@ public class Serializer {
 			e.printStackTrace();
 		}
 
-		return port;
+		return company;
 
 	}
-	
-	
-	/**
-	 * @brief Serialize the data from the "pointeuse" in a file in "data/PendingPointingData.dat"
-	 * 
-	 * will create the directory if it doesn't exist
-	 * 
-	 * @param tabData the Array of data not sent to serialize
-	 */
-	public void serializeWritePointeuseData(ArrayList<SerialPointeuse> tabData) {
+}
 
-		File directory = new File("PointeuseData");
-		if (! directory.exists()){
-			directory.mkdir();
-		}
+/**
+ * serialize the port used by the server
+ * 
+ * this function should be expanded with a whole config class if you have more data to serialize
+ * @param port the port used bu the server to receive the data
+ * 
+ */
+public void serializeWriteCoreConfigData(int port) {
 
-		File dataFile = createOpenFile("PointeuseData"+File.separator+"PendingPointingData.dat");
-		try {
-			oS = new ObjectOutputStream(new FileOutputStream(dataFile));
-			oS.writeObject(tabData);
-			oS.close();	
-		}catch(IOException e) {
-			e.printStackTrace();
-		}
-
+	File directory = new File("CoreData");
+	if (! directory.exists()){
+		directory.mkdir();
 	}
 
-	/**
-	 * @brief read the serialized data to create an Arraylist with all of it
-	 * @return an Arraylist with all the data not sent previously
-	 */
-	@SuppressWarnings("unchecked") //for the ArrayList cast, because there's no reason it wouldn't be one if the file had been left untouched
-	public ArrayList<SerialPointeuse> serializeReadPointeuseData() {
-
-		File directory = new File("PointeuseData");
-		if (! directory.exists()){
-			directory.mkdir();
-		}
-
-		File dataFile = createOpenFile("PointeuseData"+File.separator+"PendingPointingData.dat");
-		//SerialPointeuse[] tabData = null;
-		ArrayList<SerialPointeuse> arrayData = null;
-		try {
-			iS = new ObjectInputStream(new FileInputStream(dataFile));
-			arrayData = (ArrayList<SerialPointeuse>) iS.readObject();
-
-			iS.close();	
-		}catch(EOFException e) {
-			System.out.println("Fin de Fichier atteinte, fichier vide ?");
-		}catch(ClassNotFoundException e) {
-			//this could happen if the file has been modified, or if there was some difference between the classes version
-			e.printStackTrace();
-
-		}catch(IOException e) {
-			e.printStackTrace();
-		}
-
-		return arrayData;
-
+	File dataFile = createOpenFile("CoreData"+File.separator+"config.dat");
+	try {
+		oS = new ObjectOutputStream(new FileOutputStream(dataFile));
+		oS.writeObject(port);
+		oS.close();	
+	}catch(IOException e) {
+		e.printStackTrace();
 	}
+
+}
+
+/**
+ * @brief read the serialized data to read all the config for the core App
+ * this function should be expanded with a whole config class if you have more data to serialize
+ * 
+ * @return an the port that need to be used by the core server
+ */
+public int serializeReadCoreConfigData() {
+
+	File directory = new File("CoreData");
+	if (! directory.exists()){
+		directory.mkdir();
+	}
+
+	File dataFile = createOpenFile("CoreData"+File.separator+"config.dat");
+	//SerialPointeuse[] tabData = null;
+	int port = 8080; //default port if something goes wrong
+	try {
+		iS = new ObjectInputStream(new FileInputStream(dataFile));
+		port = (int) iS.readObject();
+		iS.close();	
+	}catch(EOFException e) {
+		System.out.println("EOF ? ressorting to the default port 8080");
+
+	}catch(ClassNotFoundException e) {
+		//this could happen if the file has been modified, or if there was some difference between the classes version
+		e.printStackTrace();
+
+	}catch(IOException e) {
+		e.printStackTrace();
+	}
+
+	return port;
+
+}
+
+
+/**
+ * @brief Serialize the data from the "pointeuse" in a file in "data/PendingPointingData.dat"
+ * 
+ * will create the directory if it doesn't exist
+ * 
+ * @param tabData the Array of data not sent to serialize
+ */
+public void serializeWritePointeuseData(ArrayList<SerialPointeuse> tabData) {
+
+	File directory = new File("PointeuseData");
+	if (! directory.exists()){
+		directory.mkdir();
+	}
+
+	File dataFile = createOpenFile("PointeuseData"+File.separator+"PendingPointingData.dat");
+	try {
+		oS = new ObjectOutputStream(new FileOutputStream(dataFile));
+		oS.writeObject(tabData);
+		oS.close();	
+	}catch(IOException e) {
+		e.printStackTrace();
+	}
+
+}
+
+/**
+ * @brief read the serialized data to create an Arraylist with all of it
+ * @return an Arraylist with all the data not sent previously
+ */
+@SuppressWarnings("unchecked") //for the ArrayList cast, because there's no reason it wouldn't be one if the file had been left untouched
+public ArrayList<SerialPointeuse> serializeReadPointeuseData() {
+
+	File directory = new File("PointeuseData");
+	if (! directory.exists()){
+		directory.mkdir();
+	}
+
+	File dataFile = createOpenFile("PointeuseData"+File.separator+"PendingPointingData.dat");
+	//SerialPointeuse[] tabData = null;
+	ArrayList<SerialPointeuse> arrayData = null;
+	try {
+		iS = new ObjectInputStream(new FileInputStream(dataFile));
+		arrayData = (ArrayList<SerialPointeuse>) iS.readObject();
+
+		iS.close();	
+	}catch(EOFException e) {
+		System.out.println("Fin de Fichier atteinte, fichier vide ?");
+	}catch(ClassNotFoundException e) {
+		//this could happen if the file has been modified, or if there was some difference between the classes version
+		e.printStackTrace();
+
+	}catch(IOException e) {
+		e.printStackTrace();
+	}
+
+	return arrayData;
+
+}
 
 }
