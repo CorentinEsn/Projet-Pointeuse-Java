@@ -4,34 +4,35 @@ import java.util.HashMap;
 import java.time.LocalTime;
 
 public class Schedule {
-	
-	private HashMap< String , Pair<LocalTime,LocalTime> > SCH;
-	
+
+	private HashMap< Integer , Pair<LocalTime,LocalTime> > SCH;
+
 	public Schedule () {
-	    SCH.put("Monday", null);
-	    SCH.put("Tuesday", null);
-	    SCH.put("Wednesday", null);
-	    SCH.put("Thursday", null);
-	    SCH.put("Friday", null);
+		SCH=new HashMap<>();
+		SCH.put(0, new Pair<>(LocalTime.now(), LocalTime.now()));
+		SCH.put(1, new Pair<>(LocalTime.now(), LocalTime.now()));
+		SCH.put(1, new Pair<>(LocalTime.now(), LocalTime.now()));
+		SCH.put(3, new Pair<>(LocalTime.now(), LocalTime.now()));
+		SCH.put(4, new Pair<>(LocalTime.now(), LocalTime.now()));
 	}
 
-	public void addHrs(String key, Pair<LocalTime,LocalTime> hours) {
-		
-		if(	key == "Monday" || 
-			key == "Tuesday" || 
-			key == "Wednesday" || 
-			key == "Thursday" || 
-			key == "Friday") {
-		SCH.put(key,hours);
+	public void addHrs(Integer key, Pair<LocalTime,LocalTime> hours) {
+
+		if(	key == 0 || 
+				key == 1 || 
+				key == 2 || 
+				key == 3 || 
+				key == 4) {
+			SCH.put(key,hours);
 		}
-		
+
 	}
-	
-	public HashMap< String , Pair<LocalTime,LocalTime> > getSCH() {
+
+	public HashMap< Integer , Pair<LocalTime,LocalTime> > getSCH() {
 		return SCH;
 	}
 
-	public void setSCH(HashMap< String , Pair<LocalTime,LocalTime> > sch) {
+	public void setSCH(HashMap< Integer , Pair<LocalTime,LocalTime> > sch) {
 		SCH = sch;
 	}
 

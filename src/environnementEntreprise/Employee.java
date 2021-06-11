@@ -1,52 +1,63 @@
 package environnementEntreprise;
 
 import java.util.HashMap;
+import java.util.UUID;
+
 import static java.time.temporal.ChronoUnit.MINUTES;
 
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 
 public class Employee {
-	
-	private int ID;
-	private String nom;
-	private String prenom;
-	
+
+
+	private UUID uuid;
+	private String name ;
+	private String firstname;
+
 	//overTime contains the amount of spare minutes an employee has
 	private long overTime;
-	
+
 	private boolean checkedIn;
-	
+
 	public Schedule SCH;
+
+	public Schedule getSCH() {
+		return SCH;
+	}
+
+	public void setSCH(Schedule sCH) {
+		SCH = sCH;
+	}
+
 	public static int maxID=0;
-	
+
 	private HashMap<LocalDateTime,String> history;
-	
+
 	//methods
 	public Employee() {
-		maxID++;
-		this.setID(maxID);
+
+		this.uuid = UUID.randomUUID();
 		checkedIn = false;
 		overTime = 0;
 	}
-	
-	public Employee(String nom, String prenom) {
-		maxID++;
-		this.setID(maxID);
-		
-		this.setNom(nom);
-		this.setPrenom(prenom);
-		
+
+	public Employee(String name, String firstname,Schedule SCH) {
+
+		this.setName(name);
+		this.setFirstname(firstname);
+		this.uuid = UUID.randomUUID();
+		this.SCH=SCH;
 		checkedIn = false;
 		overTime = 0;
 	}
-	
- 	public int getID() {
-		return ID;
+
+	public UUID getUUID() {
+		return uuid;
 	}
-	
-	public void setID(int newID) {
-		ID = newID;
+
+	public void setUUID(UUID newUUID) {
+		uuid = newUUID;
 	}
 
 	public long getoverTime() {
@@ -56,91 +67,84 @@ public class Employee {
 	public void setoverTime(long newoverTime) {
 		overTime = newoverTime;
 	}
-	
+
 	public void checkIO(LocalDateTime time){
-		
+
 		LocalTime timeOfDay = time.toLocalTime();
 		long timeDiff;
 		String message = "cheched out";
-		
+
 		//THE EMPLOYEE IS CHECKING IN
 		if (checkedIn == false) {
 			checkedIn = true;
 			message = "cheched in";
 			switch (time.getDayOfWeek()) {
 			case MONDAY:
-				timeDiff = MINUTES.between(timeOfDay, SCH.getSCH().get("Monday").getL());
-				
+				timeDiff = MINUTES.between(timeOfDay, SCH.getSCH().get(0).getL());
+
 			case TUESDAY:
-				timeDiff = MINUTES.between(timeOfDay, SCH.getSCH().get("Tuesday").getL());
-				
+				timeDiff = MINUTES.between(timeOfDay, SCH.getSCH().get(1).getL());
+
 			case WEDNESDAY:
-				timeDiff = MINUTES.between(timeOfDay, SCH.getSCH().get("Wednesday").getL());
-				
+				timeDiff = MINUTES.between(timeOfDay, SCH.getSCH().get(2).getL());
+
 			case THURSDAY:
-				timeDiff = MINUTES.between(timeOfDay, SCH.getSCH().get("Thursday").getL());
-				
+				timeDiff = MINUTES.between(timeOfDay, SCH.getSCH().get(3).getL());
+
 			case FRIDAY:
-				timeDiff = MINUTES.between(timeOfDay, SCH.getSCH().get("Friday").getL());
-				
+				timeDiff = MINUTES.between(timeOfDay, SCH.getSCH().get(4).getL());
+
 			default:
 				timeDiff = 0;
+			}
+
+			setoverTime(getoverTime()-timeDiff);
 		}
-		
-		setoverTime(getoverTime()-timeDiff);
-		}
-		
+
 		//THE EMPLOYEE IS CHECKING OUT
 		else {
 			checkedIn = false;
 			switch (time.getDayOfWeek()) {
 			case MONDAY:
-				timeDiff = MINUTES.between(timeOfDay, SCH.getSCH().get("Monday").getR());
-				
+				timeDiff = MINUTES.between(timeOfDay, SCH.getSCH().get(0).getR());
+
 			case TUESDAY:
-				timeDiff = MINUTES.between(timeOfDay, SCH.getSCH().get("Tuesday").getR());
-				
+				timeDiff = MINUTES.between(timeOfDay, SCH.getSCH().get(1).getR());
+
 			case WEDNESDAY:
-				timeDiff = MINUTES.between(timeOfDay, SCH.getSCH().get("Wednesday").getR());
-				
+				timeDiff = MINUTES.between(timeOfDay, SCH.getSCH().get(2).getR());
+
 			case THURSDAY:
-				timeDiff = MINUTES.between(timeOfDay, SCH.getSCH().get("Thursday").getR());
-				
+				timeDiff = MINUTES.between(timeOfDay, SCH.getSCH().get(3).getR());
+
 			case FRIDAY:
-				timeDiff = MINUTES.between(timeOfDay, SCH.getSCH().get("Friday").getR());
-				
+				timeDiff = MINUTES.between(timeOfDay, SCH.getSCH().get(4).getR());
+
 			default:
 				timeDiff = 0;
 			}
-			
+
 			setoverTime(getoverTime()+timeDiff);
 			history.put(time, message);
 		}
-		
+
 	}
 
-	public String getNom() {
-		return nom;
+	public String getName() {
+		return name;
 	}
 
-	public void setNom(String nom) {
-		this.nom = nom;
+	public void setName(String name) {
+		this.name = name;
 	}
 
-	public String getPrenom() {
-		return prenom;
+	public String getFirstname() {
+		return firstname;
 	}
 
-	public void setPrenom(String prenom) {
-		this.prenom = prenom;
+	public void setFirstname(String firstname) {
+		this.firstname = firstname;
 	}
-	
-	//ADAM TEST
-	public static void main(String args[]) { 
-		Employee employee = new Employee("nassiri","adam");
-		//Pair<LocalTime,LocalTime> horaires = new Pair();
-		
-		//employee.SCH.addHrs("Monday",); 
-	}
-	
+
+
 }
