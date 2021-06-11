@@ -20,6 +20,14 @@ public class Employee {
 
 	private boolean checkedIn;
 
+	public boolean isCheckedIn() {
+		return checkedIn;
+	}
+
+	public void setCheckedIn(boolean checkedIn) {
+		this.checkedIn = checkedIn;
+	}
+
 	public Schedule SCH;
 
 	public Schedule getSCH() {

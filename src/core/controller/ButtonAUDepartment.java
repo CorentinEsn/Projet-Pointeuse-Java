@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 package core.controller;
 
 import java.awt.event.*;
@@ -9,22 +12,41 @@ import core.view.*;
 import environnementEntreprise.Company;
 
 
+// TODO: Auto-generated Javadoc
 //this button is located on the departmentcard of the mainframe, 
 //it is the add or the modified button (depends of "status")
 //it create the form  "CUDepartments"
 public class ButtonAUDepartment implements ActionListener{
 	
+	/** The name field. */
 	//items for the form
 	private JTextField nameField;
+	
+	/** The description area. */
 	private JTextArea descriptionArea;
 	
+	/** The departmenttable. */
 	//items used to add or modify the datas
 	private JTable departmenttable;
+	
+	/** The entreprise. */
 	private Company entreprise;
+	
+	/** The model. */
 	private DefaultTableModel model;
+	
+	/** The status. */
 	private int status; //=0 if add; =1 if modify
+	
+	/** The selectedline. */
 	private int selectedline=0;
 	
+	/**
+	 * Instantiates a new button AU department.
+	 *
+	 * @param entreprise the entreprise
+	 * @param model the model
+	 */
 	//constructor for adding button
 	public ButtonAUDepartment(Company entreprise,DefaultTableModel model) {
 		this.entreprise=entreprise;
@@ -35,6 +57,13 @@ public class ButtonAUDepartment implements ActionListener{
 		status=0;
 	}
 	
+	/**
+	 * Instantiates a new button AU department.
+	 *
+	 * @param entreprise the entreprise
+	 * @param model the model
+	 * @param departmenttable the departmenttable
+	 */
 	//constructor for modifyng button
 	public ButtonAUDepartment(Company entreprise,DefaultTableModel model,JTable departmenttable) {
 		

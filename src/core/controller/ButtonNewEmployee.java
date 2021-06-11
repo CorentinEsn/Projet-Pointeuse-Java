@@ -76,8 +76,8 @@ public class ButtonNewEmployee implements ActionListener {
 								entreprise.getDepartments().get(i).getEmployees().get(entreprise.getDepartments().get(i).getEmployees().size()-1).getName(),
 								entreprise.getDepartments().get(i).getEmployees().get(entreprise.getDepartments().get(i).getEmployees().size()-1).getFirstname(),
 								entreprise.getDepartments().get(i).getName(),
-								entreprise.getDepartments().get(i).getEmployees().get(entreprise.getDepartments().get(i).getEmployees().size()-1).getoverTime()
-
+								entreprise.getDepartments().get(i).getEmployees().get(entreprise.getDepartments().get(i).getEmployees().size()-1).getoverTime(),
+								"Absent",
 
 						}
 						);
