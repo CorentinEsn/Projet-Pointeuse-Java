@@ -1,3 +1,7 @@
+/*
+ * @author Thomas Blumstein
+ * Create all the principal views of the app
+ */
 package core.view;
 
 import java.awt.*;
@@ -18,49 +22,106 @@ import pointeuse.ThreadReadPointeuseData;
 import saving.Serializer;
 
 
+
+/**
+ * The Class Main_view.
+ */
 //**********MAIN FRAME with all view in it***********//
 public class Main_view extends JFrame {
+	
+	/** The Company. */
 	Company entreprise; //all the data of the company (departments, employees...)
+	
+	/** The employeetable. */
 	JTable employeetable;
+	
+	/** The port's textfield. */
 	JTextField portTextField;
+	
+	/** The DefaultTablemodel employee. */
 	DefaultTableModel modelEmployee;
+	
+	/** The DefaultTablemodel department. */
 	DefaultTableModel modelDepartment;
+	
+	/** The selection button for Time View. */
 	JButton selectionButton=new JButton("Valider");
+	
+	/**
+	 * Gets the selection button.
+	 *
+	 * @return the selection button
+	 */
 	public JButton getSelectionButton() {
 		return selectionButton;
 	}
 
 
+	/**
+	 * Sets the selection button.
+	 *
+	 * @param selectionButton the new selection button
+	 */
 	public void setSelectionButton(JButton selectionButton) {
 		this.selectionButton = selectionButton;
 	}
 
 
+	/**
+	 * Gets the DefaultTablemodel employee.
+	 *
+	 * @return the DefaultTablemodel employee
+	 */
 	public DefaultTableModel getModelEmployee() {
 		return modelEmployee;
 	}
 
 
+	/**
+	 * Sets the DefaultTablemodel employee.
+	 *
+	 * @param modelEmployee the new DefaultTablemodel employee
+	 */
 	public void setModelEmployee(DefaultTableModel modelEmployee) {
 		this.modelEmployee = modelEmployee;
 	}
 
 
+	/**
+	 * Gets the DefaultTablemodel department.
+	 *
+	 * @return the DefaultTablemodel department
+	 */
 	public DefaultTableModel getModelDepartment() {
 		return modelDepartment;
 	}
 
 
+	/**
+	 * Sets the DefaultTablemodel department.
+	 *
+	 * @param modelDepartment the new DefaultTablemodel department
+	 */
 	public void setModelDepartment(DefaultTableModel modelDepartment) {
 		this.modelDepartment = modelDepartment;
 	}
 
 
+	/**
+	 * Gets the employeetable.
+	 *
+	 * @return the employeetable
+	 */
 	public JTable getEmployeetable() {
 		return employeetable;
 	}
 
 
+	/**
+	 * Instantiates a new main view.
+	 *
+	 * @param Entreprise the entreprise
+	 */
 	public Main_view(Company Entreprise) {
 		super(Entreprise.getName());//creating the frame with the name of the company (need to be the first line, dont move it)
 		this.entreprise=Entreprise;
@@ -100,12 +161,21 @@ public class Main_view extends JFrame {
 	}
 
 
+	/**
+	 * Employee view.
+	 *
+	 * @param card the JPanel
+	 */
 	//**********Vue des Employés***********//
 	public void EmployeeView(JPanel card) {
 		card.setLayout(new GridBagLayout());
 		GridBagConstraints grid = new GridBagConstraints();
 		String[] columns = { "ID", "Nom", "Prénom", "Département", "Heures supplémentaires", "Présent?" };
-		 modelEmployee = new DefaultTableModel(columns, 0);//creation of the model for JTable
+		 modelEmployee = new DefaultTableModel(columns, 0){
+				public boolean isCellEditable(int row, int col) {
+					return false;
+				};
+			};//creation of the model for JTable
 
 		int numberOfEmployees=0;
 		for(int i=0;i<entreprise.getDepartments().size();i++) {//check if there are employees stocked
@@ -142,8 +212,12 @@ public class Main_view extends JFrame {
 		}
 
 
-
+		
 		employeetable = new JTable(modelEmployee);
+		JScrollPane js = new JScrollPane(employeetable);
+		js.setBounds(5, 10, 300, 150);
+		js.setVisible(true);
+		employeetable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 		grid.fill = GridBagConstraints.HORIZONTAL;
 		grid.gridy = 0;
 		grid.gridwidth = 50;
@@ -152,6 +226,8 @@ public class Main_view extends JFrame {
 		card.add(employeetable.getTableHeader(), grid);
 		grid.gridy = 1;
 		card.add(employeetable, grid);
+		grid.gridx = 1;
+		card.add(js,grid);
 		grid.gridy = 2;
 		grid.gridx = 4;
 		grid.weightx = 10;
@@ -180,12 +256,21 @@ public class Main_view extends JFrame {
 	}
 
 
+	/**
+	 * Department view.
+	 *
+	 * @param card the JPanel
+	 */
 	//**********Department View***********//
 	public void DepartmentView(JPanel card) {
 		card.setLayout(new GridBagLayout());
 		GridBagConstraints grid = new GridBagConstraints();//used for placing the differents items
 		String[] columns = { "Nom", "Description" };//names of the tabs columns
-		modelDepartment = new DefaultTableModel(columns, 0);
+		modelDepartment = new DefaultTableModel(columns, 0){
+			public boolean isCellEditable(int row, int col) {
+				return false;
+			};
+		};
 		if(entreprise.getDepartments().size()==0) {//if there are no departments stocked, create an empty table
 			modelDepartment.addRow(
 					new Object[]{
@@ -241,10 +326,15 @@ public class Main_view extends JFrame {
 		card.add(buttons, grid);
 	}
 
+	/**
+	 * Time view.
+	 *
+	 * @param card the JPanel
+	 */
 	public void TimeView(JPanel card) {
 		card.setLayout(new GridBagLayout());
 		GridBagConstraints grid = new GridBagConstraints();
-		JPanel date = new JPanel();
+		JPanel date = new JPanel();//
 
 		Integer[] daysList=new Integer[32];
 		for (Integer i=1;i<32;i++) 
@@ -260,25 +350,34 @@ public class Main_view extends JFrame {
 
 		JComboBox<Integer> dayComboBox  = new JComboBox<Integer>(daysList); 
 		dayComboBox.setSelectedIndex(today.getDayOfMonth());
-		JComboBox<String> monthComboBox =new JComboBox<>(months);
+		JComboBox<String> monthComboBox =new JComboBox<String>(months);
 		monthComboBox.setSelectedIndex(today.getMonthValue());
 		JComboBox<Integer> yearComboBox  = new JComboBox<Integer>(yearsList); 
 		yearComboBox.setSelectedIndex(1);
 		selectionButton=new JButton("Valider");
-		String[] columns = { "ID", "Nom", "Prénom", "Heure d'arrivée", "Heure théorique d'arrivée", "Heure de départ",
-		"Heure théorique de départ" };
-		DefaultTableModel modelTime = new DefaultTableModel(columns, 0);
-		selectionButton.addActionListener(new SelectionTimeListener(entreprise, modelTime, LocalDate.of(	Integer.parseInt(yearComboBox.getSelectedItem().toString()),
-																										monthComboBox.getSelectedIndex(),
-																										Integer.parseInt(dayComboBox.getSelectedItem().toString()))));
+		
+		JButton allButton= new JButton("Tout Visualiser");
+		
+		String[] columns = { "Date","ID", "Nom", "Prénom", "Heure d'arrivée", "Heure théorique d'arrivée", "Heure de départ",
+		"Heure théorique de départ" };//names of the table columns
+		DefaultTableModel modelTime = new DefaultTableModel(columns, 10){
+			public boolean isCellEditable(int row, int col) {
+				return false;
+			};
+		};
+		selectionButton.addActionListener(new SelectionTimeListener(entreprise, modelTime, dayComboBox,monthComboBox,yearComboBox));
+		allButton.addActionListener(new AllVisualisation(entreprise, modelTime));
 		date.add(dayComboBox);
 		date.add(monthComboBox);
 		date.add(yearComboBox);
 		date.add(selectionButton);
+		date.add(allButton);
 		card.add(date, grid);
 		
 		JTable timeTable = new JTable(modelTime);//creation of the table itself
 		selectionButton.doClick();
+		JScrollPane js = new JScrollPane(timeTable);
+		//add evrything
 		grid.fill = GridBagConstraints.HORIZONTAL;
 		grid.gridy = 1;
 		grid.gridwidth = 50;
@@ -287,10 +386,20 @@ public class Main_view extends JFrame {
 		card.add(timeTable.getTableHeader(), grid);
 		grid.gridy = 2;
 		card.add(timeTable, grid);
+		grid.gridx=1;
+		js.setBounds(5, 10, 300, 150);
+		js.setVisible(true);
+		card.add(js,grid);
+		
 
 	}
 
 	
+	/**
+	 * Config view.
+	 *
+	 * @param card the Panel
+	 */
 	private void ConfigView(JPanel card) {
 		
 		JPanel buttons = new JPanel();//panel for all the buttons
@@ -305,11 +414,11 @@ public class Main_view extends JFrame {
 		card.add(coreDataPath);
 		card.add(configDataPath);
 		
-		//Adding button
+		
 		JLabel Portlabel= new JLabel("Port : "); 
 		buttons.add(Portlabel);
 
-		//Modifying button
+		
 		portTextField= new JTextField("8080");	
 		buttons.add(portTextField);
 		
@@ -320,6 +429,11 @@ public class Main_view extends JFrame {
 	}
 
 
+	/**
+	 * The main method.
+	 *
+	 * @param args the arguments
+	 */
 	public static void main(String[] args) {
 		// Assemble all the pieces of the MVC
 		Serializer serializer = new Serializer();

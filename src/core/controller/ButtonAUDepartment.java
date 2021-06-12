@@ -1,5 +1,5 @@
 /*
- * 
+ * @author Thomas Blumstein
  */
 package core.controller;
 
@@ -12,21 +12,26 @@ import core.view.*;
 import environnementEntreprise.Company;
 
 
-// TODO: Auto-generated Javadoc
-//this button is located on the departmentcard of the mainframe, 
-//it is the add or the modified button (depends of "status")
-//it create the form  "CUDepartments"
+
+
+/**
+ * The Class ButtonAUDepartment.
+ * this button is located on the departmentcard of the mainframe, 
+ * it is the add or the modified button (depends of "status")
+ * it create the form  "CUDepartments"
+ */
+
 public class ButtonAUDepartment implements ActionListener{
 	
-	/** The name field. */
-	//items for the form
+	/** The name TextField. */
 	private JTextField nameField;
 	
-	/** The description area. */
+	/** The description TextArea. */
 	private JTextArea descriptionArea;
 	
+	
+	/**items used to add or modify the datas*/
 	/** The departmenttable. */
-	//items used to add or modify the datas
 	private JTable departmenttable;
 	
 	/** The entreprise. */
@@ -43,11 +48,11 @@ public class ButtonAUDepartment implements ActionListener{
 	
 	/**
 	 * Instantiates a new button AU department.
-	 *
+	 * Constructor for adding button
 	 * @param entreprise the entreprise
 	 * @param model the model
 	 */
-	//constructor for adding button
+	
 	public ButtonAUDepartment(Company entreprise,DefaultTableModel model) {
 		this.entreprise=entreprise;
 		this.nameField=new JTextField("");
@@ -59,12 +64,12 @@ public class ButtonAUDepartment implements ActionListener{
 	
 	/**
 	 * Instantiates a new button AU department.
-	 *
+	 * Constructor for modifyng button
 	 * @param entreprise the entreprise
 	 * @param model the model
 	 * @param departmenttable the departmenttable
 	 */
-	//constructor for modifyng button
+	
 	public ButtonAUDepartment(Company entreprise,DefaultTableModel model,JTable departmenttable) {
 		
 		this.entreprise=entreprise;
@@ -75,6 +80,11 @@ public class ButtonAUDepartment implements ActionListener{
 		status=1;
 	}
 	
+	/**
+	 * Action performed.
+	 *
+	 * @param ae the ActionEvent
+	 */
 	@Override
 	public void actionPerformed(ActionEvent ae) {
 		 //showing an alert if there are no selected row

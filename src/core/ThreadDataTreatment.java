@@ -4,6 +4,7 @@ package core;
 import pointeuse.SerialPointeuse;
 
 import environnementEntreprise.Company;
+import environnementEntreprise.Employee;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
@@ -60,8 +61,29 @@ public class ThreadDataTreatment implements Runnable{
 		//gotta unpack it using getters, then putting in in your company how you wish
 		//don't forget that the UUID could belong to no one
 		
-		view.getModelEmployee().fireTableDataChanged();
-		view.getModelDepartment().fireTableDataChanged();
+		view.getModelEmployee().setRowCount(0);
+		for (int i=0;i<company.getDepartments().size();i++) {
+
+			for (int j=0;j<company.getDepartments().get(i).getEmployees().size();j++) {
+				Employee temp =company.getDepartments().get(i).getEmployees().get(j);
+				String check="Absent";
+				if(temp.isCheckedIn()) {
+					check="Présent";
+				}
+			view.getModelEmployee().addRow(
+					new Object[] {
+							temp.getUUID(),
+							temp.getName(),
+							temp.getFirstname(),
+							temp.getName(),
+							temp.getovertimeFormatted(),
+							check
+							
+					}
+					);
+			
+		}
+		}
 		view.getSelectionButton().doClick();
 		System.out.println("Data has been treated");
 	}

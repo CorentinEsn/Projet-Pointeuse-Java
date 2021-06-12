@@ -1,3 +1,6 @@
+/*
+ * @author Thomas Blumstein
+ */
 package core.controller;
 
 import java.awt.event.ActionEvent;
@@ -15,17 +18,49 @@ import environnementEntreprise.Employee;
 import environnementEntreprise.Pair;
 import environnementEntreprise.Schedule;
 
+/**
+ * The Class ButtonModEmployee.
+ * used to modify an employee using the data of the form
+ */
 public class ButtonModEmployee implements ActionListener{
+	
+	/** The name. */
 	private JTextField name;
+	
+	/** The firstname. */
 	private JTextField firstname;
+	
+	/** The departmentbox. */
 	private JComboBox<String> departmentbox;
+	
+	/** The tab boxs. */
 	private ArrayList<ArrayList<JComboBox<Integer>>> tabBoxs;
+	
+	/** The entreprise. */
 	private Company entreprise;
+	
+	/** The model. */
 	private DefaultTableModel model;
+	
+	/** The old employee. */
 	private Employee oldEmployee;
+	
+	/** The selectedline. */
 	private int selectedline;
 
 
+	/**
+	 * Instantiates a new button mod employee.
+	 *
+	 * @param entreprise the entreprise
+	 * @param name the name
+	 * @param firstname the firstname
+	 * @param departmentbox the departmentbox
+	 * @param tabBoxs the tab boxs
+	 * @param model the model
+	 * @param oldEmployee the old employee
+	 * @param selectedline the selectedline
+	 */
 	public ButtonModEmployee(Company entreprise, JTextField name, JTextField firstname, JComboBox<String> departmentbox, ArrayList<ArrayList<JComboBox<Integer>>> tabBoxs, DefaultTableModel model, Employee oldEmployee,int selectedline) {
 		super();
 		this.entreprise=entreprise;
@@ -39,6 +74,11 @@ public class ButtonModEmployee implements ActionListener{
 	}
 
 
+	/**
+	 * Action performed.
+	 *
+	 * @param ae the ActionEvent
+	 */
 	@Override
 	public void actionPerformed(ActionEvent ae){
 		//creation of the schedule
@@ -74,20 +114,20 @@ public class ButtonModEmployee implements ActionListener{
 				}
 				
 				model.addRow(
-						new Object[] {
-								employeeToModify.getUUID(),
-								employeeToModify.getName(),
-								employeeToModify.getFirstname(),
-								entreprise.getDepartments().get(i).getName(),
-								employeeToModify.getovertimeFormatted(),
-								check
-								
-						}
-						);
-			}
+					new Object[] {
+							employeeToModify.getUUID(),
+							employeeToModify.getName(),
+							employeeToModify.getFirstname(),
+							employeeToModify.getName(),
+							employeeToModify.getoverTime(),
+							check
+
+					}
+					);
 
 		}
 	}
 
+	}
 }
 

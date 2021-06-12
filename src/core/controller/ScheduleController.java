@@ -1,3 +1,6 @@
+/*
+ * 
+ */
 package core.controller;
 
 import java.awt.event.ActionEvent;
@@ -13,17 +16,43 @@ import core.view.ScheduleView;
 import environnementEntreprise.Company;
 import environnementEntreprise.Schedule;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class ScheduleController.
+ */
 public class ScheduleController implements ActionListener{
+	
+	/** The schedule array list. */
 	private ArrayList<ArrayList<LocalTime>> scheduleArrayList =new ArrayList<>();
+	
+	/** The sch. */
 	private Schedule SCH;
+	
+	/** The table. */
 	private JTable table;
+	
+	/** The model. */
 	private DefaultTableModel model;
+	
+	/** The columns. */
 	private String[]columns= {"Jour","Arrivée","Départ"};
+	
+	/** The days. */
 	private String[]days= {"Lundi","Mardi","Mercredi","Jeudi","Vendredi"};
+	
+	/** The entreprise. */
 	private Company entreprise;
+	
+	/** The employee table. */
 	private JTable employeeTable;
 
 
+	/**
+	 * Instantiates a new schedule controller.
+	 *
+	 * @param entreprise the entreprise
+	 * @param employeeTable the employee table
+	 */
 	public ScheduleController(Company entreprise,JTable employeeTable) {
 
 		model=new DefaultTableModel(columns,0);
@@ -34,6 +63,11 @@ public class ScheduleController implements ActionListener{
 	}
 
 
+	/**
+	 * Action performed.
+	 *
+	 * @param ae the ae
+	 */
 	@Override
 	public void actionPerformed(ActionEvent ae) {
 

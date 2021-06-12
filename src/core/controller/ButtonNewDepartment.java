@@ -1,3 +1,6 @@
+/*
+ * @author Thomas Blumstein
+ */
 package core.controller;
 
 import java.awt.event.ActionEvent;
@@ -9,13 +12,33 @@ import javax.swing.table.DefaultTableModel;
 import environnementEntreprise.*;
 import core.view.*;
 
+/**
+ * The Class ButtonNewDepartment.
+ * used to create a department using the data in the form
+ */
 public class ButtonNewDepartment implements ActionListener {
-	 private JTextField name;
-	 private JTextArea description;
-	 private Company entreprise;
-	 private DefaultTableModel model;
 	 
-	 public ButtonNewDepartment(Company entreprise, JTextField name, JTextArea description ,DefaultTableModel model) {
+ 	/** The name. */
+ 	private JTextField name;
+	 
+ 	/** The description. */
+ 	private JTextArea description;
+	 
+ 	/** The Company. */
+ 	private Company entreprise;
+	 
+ 	/** The DefaultTableModel. */
+ 	private DefaultTableModel model;
+	 
+	 /**
+ 	 * Instantiates a new button new department.
+ 	 *
+ 	 * @param entreprise the Company
+ 	 * @param name the name
+ 	 * @param description the description
+ 	 * @param model the model
+ 	 */
+ 	public ButtonNewDepartment(Company entreprise, JTextField name, JTextArea description ,DefaultTableModel model) {
 		 super();
 		 this.entreprise=entreprise;
 		 this.name=name;
@@ -23,16 +46,25 @@ public class ButtonNewDepartment implements ActionListener {
 		 this.model=model;
 	 }
 	 
-	 @Override
+	 /**
+ 	 * Action performed.
+ 	 *
+ 	 * @param ae the ActionEvent
+ 	 */
+ 	@Override
 		public void actionPerformed(ActionEvent ae){
-		 
+		 model.setRowCount(0);
 		 Department temp=new Department(name.getText(),description.getText());
-		 entreprise.addDepartment(temp);
-		 			 model.addRow(
+		 entreprise.addDepartment(temp);//add to the storage
+		 for (int i=0;i<entreprise.getDepartments().size();i++) {
+			 //add tot the table
+			 model.addRow(
 	                   new Object[]{
-	                         entreprise.getDepartments().get(entreprise.getDepartments().size()-1).getName(),
-	                         entreprise.getDepartments().get(entreprise.getDepartments().size()-1).getDescription()
+	                         entreprise.getDepartments().get(i).getName(),
+	                         entreprise.getDepartments().get(i).getDescription()
 	                   });
+		 }
+		 			 
 		 name.setText("");
 		 description.setText("");
 	 }

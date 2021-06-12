@@ -101,6 +101,7 @@ public class Employee implements Serializable{
 	 */
 	public Employee(String name, String firstname,Schedule SCH) {
 
+		
 		this.history=new HashMap<LocalDate, Pair<LocalTime,LocalTime>>();
 		this.setName(name);
 		this.setFirstname(firstname);
@@ -218,8 +219,9 @@ public class Employee implements Serializable{
 	public void checkIO(LocalDateTime time){
 
 		LocalTime timeOfDay = time.toLocalTime();
+		LocalTime temp=LocalTime.of(1, 1, 1,1);
 		long timeDiff;
-		Pair<LocalTime,LocalTime> pair =new Pair<LocalTime, LocalTime>(timeOfDay, timeOfDay);
+		Pair<LocalTime,LocalTime> pair =new Pair<LocalTime, LocalTime>(timeOfDay, temp);
 		
 		//THE EMPLOYEE IS CHECKING IN
 		if (checkedIn == false) {
@@ -250,7 +252,7 @@ public class Employee implements Serializable{
 				break;
 			}
 			System.out.println(timeDiff);
-			pair = new Pair<LocalTime,LocalTime>(timeOfDay,timeOfDay);
+			pair = new Pair<LocalTime,LocalTime>(timeOfDay,temp);
 			setoverTime(getoverTime()+timeDiff);
 			
 		}

@@ -1,3 +1,7 @@
+/*
+ * @author Thomas Blumstein
+ * Frame to add or update a department
+ */
 package core.view;
 
 import java.awt.*;
@@ -11,23 +15,49 @@ import core.controller.ButtonNewDepartment;
 import environnementEntreprise.Company;
 import environnementEntreprise.Department;
 
-//form view to add or update a department
+/**
+ * The Class CUDepartments.
+ */
+
 public class CUDepartments extends JFrame {
+	
+	/** The name label. */
 	JLabel nameLabel = new JLabel("Nom : ");
+	
+	/** The name field. */
 	JTextField nameField; 
+	
+	/** The old department. */
 	Department oldDepartment;
+	
+	/** The description label. */
 	JLabel descriptionLabel = new JLabel("Description : ");
+	
+	/** The description area. */
 	JTextArea descriptionArea ; 
+	
+	/** The model. */
 	private DefaultTableModel model;
 
+	/** The entreprise. */
 	Company entreprise;
 
-	//constructor (create the view)
-	public CUDepartments(Company entreprise,DefaultTableModel model,JTextField nameField, JTextArea descriptionArea, int status,int ligneSelectionnee) {
+	/**
+	 * Instantiates a new CU departments.
+	 *
+	 * @param entreprise the Company
+	 * @param model the DefaultTableModel
+	 * @param nameField a Textfield
+	 * @param descriptionArea a JtextArea
+	 * @param status the status to konw if it's a creation of modification
+	 * @param selectedline the selected line of the table
+	 */
+
+	public CUDepartments(Company entreprise,DefaultTableModel model,JTextField nameField, JTextArea descriptionArea, int status,int selectedline) {
 		super("Département");
 		this.model=model;
 		if (status==1) {//if update, set the olddepartment
-			this.oldDepartment=entreprise.getDepartments().get(ligneSelectionnee);
+			this.oldDepartment=entreprise.getDepartments().get(selectedline);
 		}
 		this.nameField=nameField;
 		this.descriptionArea=descriptionArea;
@@ -46,7 +76,7 @@ public class CUDepartments extends JFrame {
 
 		setSize(500, 400);
 
-		//adding the differnets items
+		//adding the differents items
 		setLayout(new GridBagLayout());
 		GridBagConstraints grid = new GridBagConstraints();
 		grid.fill = GridBagConstraints.HORIZONTAL;

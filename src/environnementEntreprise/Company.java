@@ -5,7 +5,6 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.time.LocalDate;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class Company.
  */

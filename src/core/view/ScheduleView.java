@@ -1,9 +1,22 @@
+/*
+ * @author Thomas Blumstein
+ */
 package core.view;
 import javax.swing.*;
 
+/**
+ * The Class ScheduleView.
+ */
 public class ScheduleView  extends JFrame{
+	
+	/** The schedule. */
 	private JTable schedule;
 
+	/**
+	 * Instantiates a new schedule view.
+	 *
+	 * @param Schedule the Table of the schedule
+	 */
 	public ScheduleView(JTable Schedule) {
 		super("EDT");
 		this.schedule=Schedule;
