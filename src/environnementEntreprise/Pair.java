@@ -1,24 +1,62 @@
+
 package environnementEntreprise;
 
 import java.io.Serializable;
 
+/**
+ * The Class Pair.
+ *
+ * @param <L> the generic type
+ * @param <R> the generic type
+ */
 public class Pair<L,R> implements Serializable{
-    /**
-	 * 
-	 */
+    
+    /** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 1L;
 	
+	/** left attribute l. */
 	private L l;
+    
+    /** right attribute r. */
     private R r;
     
+    /**
+     * Instantiates a new pair.
+     *
+     * @param l the l
+     * @param r the r
+     */
     public Pair(L l, R r){
         this.l = l;
         this.r = r;
     }
     
+    /**
+     * Gets l.
+     *
+     * @return the l
+     */
     public L getL(){ return l; }
+    
+    /**
+     * Gets r.
+     *
+     * @return the r
+     */
     public R getR(){ return r; }
+    
+    /**
+     * Sets l.
+     *
+     * @param l the new l
+     */
     public void setL(L l){ this.l = l; }
+    
+    /**
+     * Sets r.
+     *
+     * @param r the new r
+     */
     public void setR(R r){ this.r = r; }
 }
 
