@@ -26,10 +26,11 @@ import java.util.UUID;
 import javax.swing.*;
 import javax.swing.event.*;
 
+import pointeuse.ConfigPointeuse;
 import pointeuse.TextPrompt;
 import pointeuse.ThreadSendPointeuseData;
 import pointeuse.controller.*;
-
+import saving.Serializer;
 
 import java.io.Serializable;
 
@@ -46,17 +47,10 @@ public class PointeuseView extends JFrame{
 	 */
 	public PointeuseView() {
 		super("Pointeuse");//windows title
-
-		/**
-		 * Listener that will serialize data when the app is closed
-		 */
-		WindowListener closeListener = new WindowAdapter() {
-			public void windowClosing(WindowEvent e){
-				ThreadSendPointeuseData.writeStockedData();
-				System.exit(0);
-			}
-		};
-		addWindowListener(closeListener);
+		ConfigPointeuse config = new Serializer().serializeReadPointeuseConfigData();
+		
+		
+		
 
 		//create the strings and label for the time anda date
 		String sLdtDateCurrent = PointeuseController.getFullDateFromCurrentDateTime();
@@ -74,7 +68,7 @@ public class PointeuseView extends JFrame{
 		//textfields of the IP and UUID
 		JTextField  tfUUID = new JTextField (22);
 		TextPrompt tpUUID = new TextPrompt("Employe UUID (format 8-4-4-4-12)", tfUUID);
-
+		
 		JTextField  tfIPAddress = new JTextField (9);
 		TextPrompt tpIPAddress = new TextPrompt("IP Address", tfIPAddress);
 
@@ -84,6 +78,11 @@ public class PointeuseView extends JFrame{
 		JComponent editor = new JSpinner.NumberEditor(spPort, "#####");
 		spPort.setEditor(editor);
 		JLabel  lbPort = new JLabel ("Port :");
+		
+		if(config != null) {
+			tfIPAddress.setText(config.getIpAddress());
+			spPort.setValue(config.getPort());
+		}
 
 		//checking button, with a listener to make it do stuff
 		JButton checkInOutbutton = new JButton("Check In/Out");
@@ -95,6 +94,15 @@ public class PointeuseView extends JFrame{
 
 		tfUUID.getDocument().addDocumentListener(tfListener);
 		tfIPAddress.getDocument().addDocumentListener(tfListener);
+		
+		
+		/**
+		 * Listener that will serialize data when the app is closed
+		 */
+		WindowListener closeListener = new WinListener(tfIPAddress, spPort);
+		addWindowListener(closeListener);
+		
+		
 
 		JPanel frame = new JPanel();
 		frame.setLayout(new GridBagLayout());

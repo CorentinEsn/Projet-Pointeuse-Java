@@ -10,6 +10,7 @@ import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 
 import environnementEntreprise.*;
+import pointeuse.ConfigPointeuse;
 import pointeuse.SerialPointeuse;  
 
 /**
@@ -168,7 +169,67 @@ public class Serializer {
 
 	}
 
+	
+	
+	/**
+	 * serialize the config used for the pointeuse
+	 * @param port the port used bu the server to receive the data
+	 * 
+	 */
+	public void serializeWritePointeuseConfigData(ConfigPointeuse dataConfig) {
 
+		File directory = new File("PointeuseData");
+		if (! directory.exists()){
+			directory.mkdir();
+		}
+
+		File dataFile = createOpenFile("PointeuseData"+File.separator+"config.dat");
+		try {
+			oS = new ObjectOutputStream(new FileOutputStream(dataFile));
+			oS.writeObject(dataConfig);
+			oS.close();	
+		}catch(IOException e) {
+			e.printStackTrace();
+		}
+
+	}
+
+	/**
+	 * @brief read the serialized data to read all the config for the core App
+	 * this function should be expanded with a whole config class if you have more data to serialize
+	 * 
+	 * @return an the port that need to be used by the core server
+	 */
+	public ConfigPointeuse serializeReadPointeuseConfigData() {
+
+		File directory = new File("PointeuseData");
+		if (! directory.exists()){
+			directory.mkdir();
+		}
+
+		File dataFile = createOpenFile("PointeuseData"+File.separator+"config.dat");
+		//SerialPointeuse[] tabData = null;
+		ConfigPointeuse dataConfig = null; //default port if something goes wrong
+		try {
+			iS = new ObjectInputStream(new FileInputStream(dataFile));
+			dataConfig = (ConfigPointeuse) iS.readObject();
+			iS.close();	
+		}catch(EOFException e) {
+			System.out.println("EOF ?");
+
+		}catch(ClassNotFoundException e) {
+			//this could happen if the file has been modified, or if there was some difference between the classes version
+			e.printStackTrace();
+
+		}catch(IOException e) {
+			e.printStackTrace();
+		}
+
+		return dataConfig;
+
+	}
+	
+	
 	/**
 	 * @brief Serialize the data from the "pointeuse" in a file in "data/PendingPointingData.dat"
 	 * 
