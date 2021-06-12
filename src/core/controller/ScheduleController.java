@@ -5,6 +5,7 @@ import java.awt.event.ActionListener;
 import java.time.LocalTime;
 import java.util.ArrayList;
 
+import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
@@ -35,6 +36,11 @@ public class ScheduleController implements ActionListener{
 
 	@Override
 	public void actionPerformed(ActionEvent ae) {
+
+		if (employeeTable.getSelectedRow()==-1) {
+			JOptionPane.showMessageDialog(null, "Vous n'avez selectionné aucune ligne!", "Erreur", JOptionPane.ERROR_MESSAGE);
+		}
+		else {
 		for (int i=0;i<entreprise.getDepartments().size();i++) {
 			for (int j=0;j<entreprise.getDepartments().get(i).getEmployees().size() ;j++) {
 				if (entreprise.getDepartments().get(i).getEmployees().get(j).getUUID()==employeeTable.getValueAt(0, employeeTable.getSelectedRow()));{
@@ -55,5 +61,6 @@ public class ScheduleController implements ActionListener{
 
 		ScheduleView v=new ScheduleView(table);
 		v.setVisible(true);
+	}
 	}
 }

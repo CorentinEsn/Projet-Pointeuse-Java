@@ -6,6 +6,7 @@ import java.util.UUID;
 import static java.time.temporal.ChronoUnit.MINUTES;
 
 import java.io.Serializable;
+import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -58,6 +59,7 @@ public class Employee implements Serializable{
 
 	public Employee(String name, String firstname,Schedule SCH) {
 
+		this.history=new HashMap<LocalDate, Pair<LocalTime,LocalTime>>();
 		this.setName(name);
 		this.setFirstname(firstname);
 		this.uuid = UUID.randomUUID();
@@ -90,11 +92,33 @@ public class Employee implements Serializable{
 		return history;
 	}
 	
+	public int dayOfWeek(LocalDate date) {
+		int rez;
+		DayOfWeek dayOfWeek = date.getDayOfWeek();
+
+		switch (dayOfWeek) {
+		case MONDAY:
+			rez=0;
+		case TUESDAY:
+			rez=1;
+		case WEDNESDAY:
+			rez=2;
+		case THURSDAY:
+			rez=3;
+		case FRIDAY:
+			rez=4;
+		default:
+			rez = -1;
+		}
+		
+		return rez;
+	}
+	
 	public void checkIO(LocalDateTime time){
 
 		LocalTime timeOfDay = time.toLocalTime();
 		long timeDiff;
-		Pair<LocalTime,LocalTime> pair ;
+		Pair<LocalTime,LocalTime> pair =new Pair<LocalTime, LocalTime>(timeOfDay, timeOfDay);
 		
 		//THE EMPLOYEE IS CHECKING IN
 		if (checkedIn == false) {

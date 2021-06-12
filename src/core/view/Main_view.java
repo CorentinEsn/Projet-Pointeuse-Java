@@ -4,6 +4,7 @@ import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
@@ -212,30 +213,41 @@ public class Main_view extends JFrame {
 			daysList[i]=i;
 		}
 		String months[] = {"","Janvier","Février","Mars","Avril","Mai","Juin","Juillet","Aout","Septembre","Octobre","Novembre","Décembre"};
-		Integer[] yearsList = new Integer[LocalDateTime.now().getYear()-1969];
-		for (int i=0;i<LocalDateTime.now().getYear()-1970;i++) {
-			yearsList[i+1]=LocalDateTime.now().getYear()-i;
+		LocalDateTime today=LocalDateTime.now();
+		Integer[] yearsList = new Integer[today.getYear()-1969];
+		for (int i=0;i<today.getYear()-1970;i++) {
+			yearsList[i+1]=today.getYear()-i;
 		}
 
 		JComboBox<Integer> dayComboBox  = new JComboBox<Integer>(daysList); 
+		dayComboBox.setSelectedIndex(today.getDayOfMonth());
 		JComboBox<String> monthComboBox =new JComboBox<>(months);
+		monthComboBox.setSelectedIndex(today.getMonthValue());
 		JComboBox<Integer> yearComboBox  = new JComboBox<Integer>(yearsList); 
+		yearComboBox.setSelectedIndex(1);
+		JButton selectionButton=new JButton("Valider");
+		String[] columns = { "ID", "Nom", "Prénom", "Heure d'arrivée", "Heure théorique d'arrivée", "Heure de départ",
+		"Heure théorique de départ" };
+		DefaultTableModel model = new DefaultTableModel(columns, 0);//creation of the model for JTable
+		selectionButton.addActionListener(new SelectionTimeListener(entreprise, model, LocalDate.of(	Integer.parseInt(yearComboBox.getSelectedItem().toString()),
+																										monthComboBox.getSelectedIndex(),
+																										Integer.parseInt(dayComboBox.getSelectedItem().toString()))));
 		date.add(dayComboBox);
 		date.add(monthComboBox);
 		date.add(yearComboBox);
+		date.add(selectionButton);
 		card.add(date, grid);
-		String[] names = { "ID", "Nom", "Prénom", "Heure d'arrivée", "Heure théorique d'arrivée", "Heure de départ",
-		"Heure théorique de départ" };
-		Object[][] tableData = new Object[20][7];
-		JTable employeetable = new JTable(tableData, names);
+		
+		JTable timeTable = new JTable(model);//creation of the table itself
+		selectionButton.doClick();
 		grid.fill = GridBagConstraints.HORIZONTAL;
 		grid.gridy = 1;
 		grid.gridwidth = 50;
 		grid.gridx = 0;
 		grid.weightx = 400;
-		card.add(employeetable.getTableHeader(), grid);
+		card.add(timeTable.getTableHeader(), grid);
 		grid.gridy = 2;
-		card.add(employeetable, grid);
+		card.add(timeTable, grid);
 
 	}
 
@@ -271,7 +283,7 @@ public class Main_view extends JFrame {
 			Entreprise.addDepartment(department);
 		}
 
-		Thread t = new Thread(new ThreadReadPointeuseData(Entreprise, port));//NEED A WAY TO CHANGE THE PORT IN-APP
+		Thread t = new Thread(new ThreadReadPointeuseData(Entreprise, port));
 		t.start();
 
 		Main_view v = new Main_view(Entreprise);

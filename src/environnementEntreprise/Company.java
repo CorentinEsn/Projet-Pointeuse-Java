@@ -106,7 +106,9 @@ public class Company implements Serializable{
 					
 				}
 				*/
-				if(departments.get(i).getEmployees().get(j).getHistory().get(day) != null && added==false) {
+				System.out.println(departments.get(i).getEmployees().get(j).getName());
+				System.out.println(departments.get(i).getEmployees().get(j).getHistory().get(day));
+				if(departments.get(i).getEmployees().get(j).getHistory()!=null && departments.get(i).getEmployees().get(j).getHistory().get(day) != null && added==false) {
 					employees.add(getDepartments().get(i).getEmployees().get(j));
 					added = true;
 				}

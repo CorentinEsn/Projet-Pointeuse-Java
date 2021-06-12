@@ -36,9 +36,9 @@ public class ThreadReadPointeuseData implements Runnable {
 	public void run() {
 		try {
     		System.out.println("Initialise server");
+    		while(true) {
 			ServerSocket myServerSocket = new ServerSocket(port);
-			myServerSocket.setSoTimeout(10000);
-			while(true) {
+			myServerSocket.setSoTimeout(0);
 				System.out.println("server waiting for connexion");
 				Socket servSocket = myServerSocket.accept();
 				System.out.println("server connected");
