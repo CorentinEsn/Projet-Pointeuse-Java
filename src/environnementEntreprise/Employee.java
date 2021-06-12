@@ -141,8 +141,9 @@ public class Employee implements Serializable{
 			}
 
 			setoverTime(getoverTime()+timeDiff);
-			history.put(time, message);
 		}
+
+		history.put(time, message);
 
 	}
 
