@@ -6,6 +6,7 @@ import java.util.UUID;
 import static java.time.temporal.ChronoUnit.MINUTES;
 
 import java.io.Serializable;
+import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -89,6 +90,29 @@ public class Employee implements Serializable{
 	public HashMap<LocalDate,Pair<LocalTime,LocalTime>> getHistory(){
 		return history;
 	}
+	
+	public int dayOfWeek(LocalDate date) {
+		int rez;
+		DayOfWeek dayOfWeek = date.getDayOfWeek();
+
+		switch (dayOfWeek) {
+		case MONDAY:
+			rez=0;
+		case TUESDAY:
+			rez=1;
+		case WEDNESDAY:
+			rez=2;
+		case THURSDAY:
+			rez=3;
+		case FRIDAY:
+			rez=4;
+		default:
+			rez = -1;
+		}
+		
+		return rez;
+	}
+	
 	public void checkIO(LocalDateTime time){
 
 		LocalTime timeOfDay = time.toLocalTime();
