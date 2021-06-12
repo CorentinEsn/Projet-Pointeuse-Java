@@ -5,6 +5,12 @@ import java.util.ArrayList;
 import java.util.UUID;
 
 public class Department implements Serializable{
+	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	
 	//attributs
 	private String name;
 	private String description;

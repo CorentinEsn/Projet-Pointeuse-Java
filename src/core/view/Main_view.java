@@ -85,8 +85,8 @@ public class Main_view extends JFrame {
 					});
 		}
 		else{ //if there are departments in stock, use them to create the table
-			for(int i=0;i<numberOfEmployees;i++) {
-				for(int j=0;j<entreprise.getDepartments().get(i).getEmployees().size();i++) {
+			for(int i=0;i<entreprise.getDepartments().size();i++) {
+				for(int j=0;j<entreprise.getDepartments().get(i).getEmployees().size();j++) {
 
 					model.addRow(
 							new Object[] {
