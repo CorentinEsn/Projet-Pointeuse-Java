@@ -2,6 +2,10 @@ package environnementEntreprise;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.Map;
+import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 public class Company implements Serializable{
 	
@@ -71,6 +75,44 @@ public class Company implements Serializable{
 	public Company(String name){
 		this.name=name;
 		this.departments=new ArrayList<>();
+	}
+	
+	public ArrayList<Employee> whoWasHere(LocalDate day) {
+		//return value
+		ArrayList<Employee> employees = new ArrayList<Employee>();
+		
+		//lengths for the for loops
+		int nbEmployees;
+		int nbDepartments = getDepartments().size();
+		
+		//iterator and entry for the history search
+        Iterator<Map.Entry<LocalDateTime, String> > iterator;
+        Map.Entry<LocalDateTime,String> entry ;
+        boolean added = false;
+
+		for(int i = 0 ; i < nbDepartments ; i++){
+			nbEmployees = getDepartments().get(i).getEmployees().size();
+			
+			for(int j = 0 ; j < nbEmployees ; j++){
+				added = false;
+				iterator = departments.get(i).getEmployees().get(j).getHistory().entrySet().iterator();
+				
+				while (iterator.hasNext() && added == false) {
+					
+					entry = iterator.next();
+					
+					if ( day == entry.getKey().toLocalDate() ) {
+						employees.add(getDepartments().get(i).getEmployees().get(j));
+						added = true;
+					}
+					
+				}
+				
+			}
+			
+		}
+		
+		return employees;
 	}
 
 }

@@ -4,10 +4,7 @@ package core;
 import pointeuse.SerialPointeuse;
 
 import environnementEntreprise.Company;
-import environnementEntreprise.Department;
-import environnementEntreprise.Employee;
 
-import java.util.ArrayList;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
@@ -37,14 +34,17 @@ public class ThreadDataTreatment implements Runnable{
 		LocalDateTime date = dataToTreat.getDate();
 		
 		//treating
+		int nbDepartments = company.getDepartments().size();
+		int nbEmployees ;
+		
 			//search for the employee attached to that UUID
-		for(int i=0;i<company.getDepartments().size();i++) {
-			for(int j=0;j < company.getDepartments().get(i).getEmployees().size();j++) {
+		for(int i = 0 ; i < nbDepartments ; i++) {
+			nbEmployees = company.getDepartments().get(i).getEmployees().size();
+			for(int j=0 ; j < nbEmployees ; j++) {
 				if (company.getDepartments().get(i).getEmployees().get(j).getUUID() == id) {
+					
 					//that employee is now checked in/out at that date, their history is also updated 
-					
 					System.out.println("Employee found");
-					
 					company.getDepartments().get(i).getEmployees().get(j).checkIO(date);
 				}
 				
