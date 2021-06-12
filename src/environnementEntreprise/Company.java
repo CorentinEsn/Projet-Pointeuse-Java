@@ -2,9 +2,6 @@ package environnementEntreprise;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.Map;
-import java.time.LocalDateTime;
 import java.time.LocalDate;
 
 public class Company implements Serializable{
@@ -86,8 +83,8 @@ public class Company implements Serializable{
 		int nbDepartments = getDepartments().size();
 		
 		//iterator and entry for the history search
-        Iterator<Map.Entry<LocalDateTime, String> > iterator;
-        Map.Entry<LocalDateTime,String> entry ;
+        //Iterator<Map.Entry<LocalDateTime, String> > iterator;
+        //Map.Entry<LocalDateTime,String> entry ;
         boolean added = false;
 
 		for(int i = 0 ; i < nbDepartments ; i++){
@@ -95,8 +92,9 @@ public class Company implements Serializable{
 			
 			for(int j = 0 ; j < nbEmployees ; j++){
 				added = false;
-				iterator = departments.get(i).getEmployees().get(j).getHistory().entrySet().iterator();
-				
+				//some old unnecessary useless fucking piece of shit code
+				//iterator = departments.get(i).getEmployees().get(j).getHistory().entrySet().iterator();
+				/*
 				while (iterator.hasNext() && added == false) {
 					
 					entry = iterator.next();
@@ -106,6 +104,11 @@ public class Company implements Serializable{
 						added = true;
 					}
 					
+				}
+				*/
+				if(departments.get(i).getEmployees().get(j).getHistory().get(day) != null && added==false) {
+					employees.add(getDepartments().get(i).getEmployees().get(j));
+					added = true;
 				}
 				
 			}
