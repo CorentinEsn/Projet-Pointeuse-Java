@@ -8,6 +8,12 @@ import java.time.LocalDateTime;
 import java.time.LocalDate;
 
 public class Company implements Serializable{
+	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	
 	//attributes
 	private String name;
 	private ArrayList<Department> departments;

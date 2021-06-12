@@ -105,9 +105,9 @@ public class ButtonAUeEmployee implements ActionListener{
 
 				for (int j =0;j<5;j++) {
 					this.tabBoxs.get(j).get(0).setSelectedIndex(entreprise.getDepartments().get(numberofdepartment).getEmployees().get(i).getSCH().getSCH().get(j).getL().getHour());
-					this.tabBoxs.get(j).get(1).setSelectedIndex(entreprise.getDepartments().get(numberofdepartment).getEmployees().get(i).getSCH().getSCH().get(j).getL().getMinute());
+					this.tabBoxs.get(j).get(1).setSelectedIndex(entreprise.getDepartments().get(numberofdepartment).getEmployees().get(i).getSCH().getSCH().get(j).getL().getMinute()/15);
 					this.tabBoxs.get(j).get(2).setSelectedIndex(entreprise.getDepartments().get(numberofdepartment).getEmployees().get(i).getSCH().getSCH().get(j).getR().getHour());
-					this.tabBoxs.get(j).get(3).setSelectedIndex(entreprise.getDepartments().get(numberofdepartment).getEmployees().get(i).getSCH().getSCH().get(j).getR().getMinute());
+					this.tabBoxs.get(j).get(3).setSelectedIndex(entreprise.getDepartments().get(numberofdepartment).getEmployees().get(i).getSCH().getSCH().get(j).getR().getMinute()/15);
 				}
 			}
 

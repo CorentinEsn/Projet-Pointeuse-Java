@@ -1,7 +1,9 @@
 package core.view;
 
 import java.awt.*;
-
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
@@ -11,12 +13,14 @@ import javax.swing.table.DefaultTableModel;
 import core.controller.*;
 import environnementEntreprise.*;
 import pointeuse.ThreadReadPointeuseData;
+import saving.Serializer;
 
 
 //**********MAIN FRAME with all view in it***********//
 public class Main_view extends JFrame {
 	Company entreprise; //all the data of the company (departments, employees...)
 	JTable employeetable;
+	JTextField portTextField;
 	public JTable getEmployeetable() {
 		return employeetable;
 	}
@@ -25,7 +29,16 @@ public class Main_view extends JFrame {
 	public Main_view(Company Entreprise) {
 		super(Entreprise.getName());//creating the frame with the name of the company (need to be the first line, dont move it)
 		this.entreprise=Entreprise;
-		setDefaultCloseOperation(EXIT_ON_CLOSE);//setting the exit when clicking on the X
+		//setDefaultCloseOperation(EXIT_ON_CLOSE);//setting the exit when clicking on the X
+		WindowListener closeListener = new WindowAdapter() {
+			public void windowClosing(WindowEvent e){
+				Serializer serializer = new Serializer();
+				serializer.serializeCompany(entreprise);
+				serializer.serializeWriteCoreConfigData(Integer.parseInt(portTextField.getText()));
+				System.exit(0);
+			}
+		};
+		addWindowListener(closeListener);
 		setSize(800, 500);//size of the frame
 		JTabbedPane tabbedPane = new JTabbedPane();//creation of the container for the differents tabs
 		JPanel card1 = new JPanel();//creation of the main container for the employee
@@ -36,16 +49,16 @@ public class Main_view extends JFrame {
 
 		JPanel card3 = new JPanel();//creation of the main container for the schedules
 		TimeView(card3);
-		
-		JPanel card4 = new JPanel();//creation of the main container for the schedules
+
+		JPanel card4 = new JPanel();//creation of the main container for the configuration
 		ConfigView(card4);
+
 
 
 		//adding all the tabs
 		tabbedPane.addTab("Employés", card1);
 		tabbedPane.addTab("Départements", card2);
 		tabbedPane.addTab("Horaires", card3);
-		tabbedPane.addTab("Config", card4);
 		//adding the tabs panel
 		add(tabbedPane, BorderLayout.CENTER);
 	}
@@ -55,7 +68,8 @@ public class Main_view extends JFrame {
 	public void EmployeeView(JPanel card) {
 		card.setLayout(new GridBagLayout());
 		GridBagConstraints grid = new GridBagConstraints();
-		String[] columns = { "ID", "Nom", "Prénom", "Département", "Heures supplémentaires", "Présent?" };
+		String[] columns = { "ID", "Nom", "Prénom", "Département", "Heures supplémentaires", "Présent?",
+		"Emploi du Temps" };
 		DefaultTableModel model = new DefaultTableModel(columns, 0);//creation of the model for JTable
 
 		int numberOfEmployees=0;
@@ -67,25 +81,20 @@ public class Main_view extends JFrame {
 		if (numberOfEmployees==0) {
 			model.addRow(//if there are no employees stocked, create an empty table
 					new Object[]{
-							"","","","","",""	                         
+							"","","","","","",""		                         
 					});
 		}
 		else{ //if there are departments in stock, use them to create the table
-			for(int i=0;i<numberOfEmployees;i++) {
-				for(int j=0;j<entreprise.getDepartments().get(i).getEmployees().size();i++) {
-					
-					String checkString="Absent";
-					if(entreprise.getDepartments().get(i).getEmployees().get(j).isCheckedIn()) {
-						checkString="Présent";
-					}
+			for(int i=0;i<entreprise.getDepartments().size();i++) {
+				for(int j=0;j<entreprise.getDepartments().get(i).getEmployees().size();j++) {
+
 					model.addRow(
 							new Object[] {
 									entreprise.getDepartments().get(i).getEmployees().get(j).getUUID(),
 									entreprise.getDepartments().get(i).getEmployees().get(j).getName(),
 									entreprise.getDepartments().get(i).getEmployees().get(j).getFirstname(),
 									entreprise.getDepartments().get(i).getName(),
-									entreprise.getDepartments().get(i).getEmployees().get(j).getoverTime(),
-									checkString
+									entreprise.getDepartments().get(i).getEmployees().get(j).getoverTime()
 
 							});
 				}
@@ -229,6 +238,7 @@ public class Main_view extends JFrame {
 		card.add(employeetable, grid);
 
 	}
+
 	
 	private void ConfigView(JPanel card) {
 		
@@ -239,21 +249,29 @@ public class Main_view extends JFrame {
 		buttons.add(Portlabel);
 
 		//Modifying button
-		JTextField portTextField= new JTextField("8080");	
+		portTextField= new JTextField("8080");	
 		buttons.add(portTextField);
 		
 		JLabel Infolabel= new JLabel("Le changement ne sera effectif quu'après redémarrage de l'application"); 
 		buttons.add(Infolabel);
+		card.add(buttons);
 		
 	}
 
+
 	public static void main(String[] args) {
 		// Assemble all the pieces of the MVC
-		Company Entreprise =new Company("Polytech") ;
-		Department testDepartment=new Department("info", "test");
-		Entreprise.addDepartment(testDepartment);
+		Serializer serializer = new Serializer();
+		Company Entreprise = serializer.unserialiseCompagny();
+		int port = serializer.serializeReadCoreConfigData();
+		
+		if(Entreprise == null) {
+			Entreprise =new Company("Polytech") ;
+			Department department=new Department("info","test");
+			Entreprise.addDepartment(department);
+		}
 
-		Thread t = new Thread(new ThreadReadPointeuseData(Entreprise, 8080));//NEED A WAY TO CHANGE THE PORT IN-APP
+		Thread t = new Thread(new ThreadReadPointeuseData(Entreprise, port));//NEED A WAY TO CHANGE THE PORT IN-APP
 		t.start();
 
 		Main_view v = new Main_view(Entreprise);

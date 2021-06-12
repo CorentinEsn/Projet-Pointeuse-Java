@@ -6,6 +6,11 @@ import java.time.LocalTime;
 
 public class Schedule implements Serializable{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	
 	private HashMap< Integer , Pair<LocalTime,LocalTime> > SCH;
 
 	public Schedule () {
