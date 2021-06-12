@@ -4,6 +4,7 @@ import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
+import java.io.File;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -293,7 +294,17 @@ public class Main_view extends JFrame {
 	private void ConfigView(JPanel card) {
 		
 		JPanel buttons = new JPanel();//panel for all the buttons
-
+		
+		
+		JLabel coreDataPath = new JLabel(	"Company Data is stored in : "+
+											System.getProperty("user.dir")+
+											"CoreData"+File.separator+"CompanyFile.dat");
+		JLabel configDataPath = new JLabel(	"Configuration Data is stored in : "+
+											System.getProperty("user.dir")+
+											"CoreData"+File.separator+"config.dat    ");
+		card.add(coreDataPath);
+		card.add(configDataPath);
+		
 		//Adding button
 		JLabel Portlabel= new JLabel("Port : "); 
 		buttons.add(Portlabel);
