@@ -6,6 +6,7 @@ import java.util.UUID;
 import static java.time.temporal.ChronoUnit.MINUTES;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 
@@ -45,7 +46,7 @@ public class Employee implements Serializable{
 
 	public static int maxID=0;
 
-	private HashMap<LocalDateTime,String> history;
+	private HashMap<LocalDate,Pair<LocalTime,LocalTime>> history;
 
 	//methods
 	public Employee() {
@@ -81,23 +82,22 @@ public class Employee implements Serializable{
 		overTime = newoverTime;
 	}
 	
-	public void setHistory(HashMap<LocalDateTime,String> newHistory) {
+	public void setHistory(HashMap<LocalDate,Pair<LocalTime,LocalTime>> newHistory) {
 		history = newHistory;
 	}
 	
-	public HashMap<LocalDateTime,String> getHistory(){
+	public HashMap<LocalDate,Pair<LocalTime,LocalTime>> getHistory(){
 		return history;
 	}
 	public void checkIO(LocalDateTime time){
 
 		LocalTime timeOfDay = time.toLocalTime();
 		long timeDiff;
-		String message = "cheched out";
-
+		Pair<LocalTime,LocalTime> pair ;
+		
 		//THE EMPLOYEE IS CHECKING IN
 		if (checkedIn == false) {
 			checkedIn = true;
-			message = "cheched in";
 			switch (time.getDayOfWeek()) {
 			case MONDAY:
 				timeDiff = MINUTES.between(timeOfDay, SCH.getSCH().get(0).getL());
@@ -117,8 +117,9 @@ public class Employee implements Serializable{
 			default:
 				timeDiff = 0;
 			}
-
+			pair = new Pair<LocalTime,LocalTime>(timeOfDay,timeOfDay);
 			setoverTime(getoverTime()-timeDiff);
+			
 		}
 
 		//THE EMPLOYEE IS CHECKING OUT
@@ -143,11 +144,14 @@ public class Employee implements Serializable{
 			default:
 				timeDiff = 0;
 			}
+			pair = history.get(time.toLocalDate());
+			
+			pair.setR(timeOfDay);
 
 			setoverTime(getoverTime()+timeDiff);
 		}
-
-		history.put(time, message);
+		
+		history.put(time.toLocalDate(), pair);
 
 	}
 
