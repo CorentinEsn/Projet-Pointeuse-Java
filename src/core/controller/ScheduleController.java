@@ -1,5 +1,5 @@
 /*
- * 
+ * @author Thomas Blumstein
  */
 package core.controller;
 
@@ -16,16 +16,17 @@ import core.view.ScheduleView;
 import environnementEntreprise.Company;
 import environnementEntreprise.Schedule;
 
-// TODO: Auto-generated Javadoc
+
 /**
  * The Class ScheduleController.
+ * used to instantiate a new view of Schedule
  */
 public class ScheduleController implements ActionListener{
 	
 	/** The schedule array list. */
 	private ArrayList<ArrayList<LocalTime>> scheduleArrayList =new ArrayList<>();
 	
-	/** The sch. */
+	/** The schedule. */
 	private Schedule SCH;
 	
 	/** The table. */
@@ -71,7 +72,7 @@ public class ScheduleController implements ActionListener{
 	@Override
 	public void actionPerformed(ActionEvent ae) {
 
-		if (employeeTable.getSelectedRow()==-1) {
+		if (employeeTable.getSelectedRow()==-1) {//if 0 line selected
 			JOptionPane.showMessageDialog(null, "Vous n'avez selectionné aucune ligne!", "Erreur", JOptionPane.ERROR_MESSAGE);
 		}
 		else {
@@ -83,6 +84,7 @@ public class ScheduleController implements ActionListener{
 			}
 		}
 		for(int i=0;i<5;i++) {
+			//adding a new row to the tables
 			model.addRow(new Object[] {
 					days[i],
 					SCH.getSCH().get(i).getL(),

@@ -1,5 +1,5 @@
 /*
- * 
+ * @author Thomas Blumstein
  */
 package core.controller;
 
@@ -12,9 +12,10 @@ import javax.swing.table.*;
 
 import environnementEntreprise.*;
 
-// TODO: Auto-generated Javadoc
+
 /**
  * The Class ButtonNewEmployee.
+ * used to create an employee using the data of the form
  */
 public class ButtonNewEmployee implements ActionListener {
 	
@@ -42,7 +43,7 @@ public class ButtonNewEmployee implements ActionListener {
 	/**
 	 * Instantiates a new button new employee.
 	 *
-	 * @param entreprise the entreprise
+	 * @param entreprise the Company
 	 * @param name the name
 	 * @param firstname the firstname
 	 * @param departmentbox the departmentbox
@@ -67,7 +68,7 @@ public class ButtonNewEmployee implements ActionListener {
 	/**
 	 * Action performed.
 	 *
-	 * @param ae the ae
+	 * @param ae the ActionEvent
 	 */
 	@Override
 	public void actionPerformed(ActionEvent ae){
