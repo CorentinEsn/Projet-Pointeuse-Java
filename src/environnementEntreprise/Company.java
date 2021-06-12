@@ -2,9 +2,6 @@ package environnementEntreprise;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.Map;
-import java.time.LocalDateTime;
 import java.time.LocalDate;
 
 public class Company implements Serializable{
