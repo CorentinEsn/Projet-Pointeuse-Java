@@ -88,6 +88,7 @@ public class Employee implements Serializable{
 	public HashMap<LocalDateTime,String> getHistory(){
 		return history;
 	}
+	
 	public void checkIO(LocalDateTime time){
 
 		LocalTime timeOfDay = time.toLocalTime();
