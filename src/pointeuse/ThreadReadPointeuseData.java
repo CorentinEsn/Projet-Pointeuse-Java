@@ -36,9 +36,10 @@ public class ThreadReadPointeuseData implements Runnable {
 	public void run() {
 		try {
     		System.out.println("Initialise server");
-			ServerSocket myServerSocket = new ServerSocket(port);
-			myServerSocket.setSoTimeout(10000);
-			while(true) {
+    		while(true) {
+    			ServerSocket myServerSocket = new ServerSocket(port);
+    			myServerSocket.setSoTimeout(0);
+			
 				System.out.println("server waiting for connexion");
 				Socket servSocket = myServerSocket.accept();
 				System.out.println("server connected");
@@ -59,6 +60,7 @@ public class ThreadReadPointeuseData implements Runnable {
 						//return dataToRead;
 						
 					} catch (ClassNotFoundException e) {
+						System.err.println("Unknown class");
 						e.printStackTrace();
 					}
 				} catch (IOException e) {
@@ -67,6 +69,7 @@ public class ThreadReadPointeuseData implements Runnable {
 			}
 
 		} catch (UnknownHostException e) {
+			
 			e.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();

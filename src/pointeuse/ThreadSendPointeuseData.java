@@ -132,6 +132,8 @@ public class ThreadSendPointeuseData implements Runnable {
 	 */
 	public void sendDataStocked(String address, int port) {
 
+		ArrayList<SerialPointeuse> dataToRemove = new ArrayList<SerialPointeuse>();
+		
 		System.out.println(dataToKeep);
 		for(SerialPointeuse data : dataToKeep) {
 			try
@@ -157,7 +159,10 @@ public class ThreadSendPointeuseData implements Runnable {
 				}
 				clientSocket.close();
 				//the data was sent, remove it from the tab
-				dataToKeep.remove(data);
+				//this would cause concurrentModificationException
+				//dataToKeep.remove(data);
+				//so instead we add the data to another arraylist in the meantime
+				dataToRemove.add(data);
 			}
 			catch (ConnectException e) {
 				System.out.println("Error :  connection failed,  the data stays in dataToKeep");
@@ -170,8 +175,15 @@ public class ThreadSendPointeuseData implements Runnable {
 			{
 				e.printStackTrace();
 			}
+			
+			
 
 
 		}
+		
+		//all the data that have been sent are removed
+		dataToKeep.removeAll(dataToRemove);
 	}
+	
+	
 }
