@@ -161,17 +161,17 @@ public class Serializer {
 			config = (ConfigCore) iS.readObject();
 			iS.close();	
 		}catch(EOFException e) {
-			System.out.println("EOF ? ressorting to the default port 8080 and company name Polytech");
-			config = new ConfigCore("Polytech", 8080);
+			System.out.println("EOF ? ressorting to the default port 8080 and company name DefaultCompanyName");
+			config = new ConfigCore("DefaultCompanyName", 8080);
 
 		}catch(ClassNotFoundException e) {
 			//this could happen if the file has been modified, or if there was some difference between the classes version
 			e.printStackTrace();
-			config = new ConfigCore("Polytech", 8080);
+			config = new ConfigCore("DefaultCompanyName", 8080);
 
 		}catch(IOException e) {
 			e.printStackTrace();
-			config = new ConfigCore("Polytech", 8080);
+			config = new ConfigCore("DefaultCompanyName", 8080);
 		}
 
 		return config;

@@ -456,6 +456,9 @@ public class Main_view extends JFrame {
 		// Assemble all the pieces of the MVC
 		Serializer serializer = new Serializer();
 		Company Entreprise = serializer.unserialiseCompagny();
+		if(Entreprise == null) {
+			Entreprise = new Company("DefaultCompanyName");
+		}
 		configCore = serializer.serializeReadCoreConfigData();
 		Entreprise.setName(configCore.getCompanyName());
 
