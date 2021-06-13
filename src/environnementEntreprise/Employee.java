@@ -4,6 +4,7 @@ package environnementEntreprise;
 import java.util.HashMap;
 import java.util.UUID;
 
+
 import static java.time.temporal.ChronoUnit.MINUTES;
 
 import java.io.Serializable;
@@ -16,16 +17,16 @@ import java.time.LocalTime;
  * The Class Employee.
  */
 public class Employee implements Serializable{
-	
+
 	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 1L;
-	
+
 	/** The uuid. */
 	private UUID uuid;
-	
+
 	/** The name. */
 	private String name ;
-	
+
 	/** The firstname. */
 	private String firstname;
 
@@ -100,6 +101,8 @@ public class Employee implements Serializable{
 	 */
 	public Employee(String name, String firstname,Schedule SCH) {
 
+
+		this.history=new HashMap<LocalDate, Pair<LocalTime,LocalTime>>();
 		this.setName(name);
 		this.setFirstname(firstname);
 		this.uuid = UUID.randomUUID();
@@ -134,6 +137,19 @@ public class Employee implements Serializable{
 	public long getoverTime() {
 		return overTime;
 	}
+	public String getovertimeFormatted(){
+		String temp;
+		Long hourOnly=overTime/60;
+		Long minuteOnly=overTime%60;
+		Integer hour=hourOnly.intValue();
+		Integer minute=minuteOnly.intValue();
+		if (overTime<0) {
+			temp="-"+Math.abs(hour)+":"+Math.abs(minute);
+		}
+		else temp=Math.abs(hour)+":"+Math.abs(minute);
+		return temp;
+
+	}
 
 	/**
 	 * Sets the over time of the current employee.
@@ -143,7 +159,7 @@ public class Employee implements Serializable{
 	public void setoverTime(long newoverTime) {
 		overTime = newoverTime;
 	}
-	
+
 	/**
 	 * Sets the history of the current employee.
 	 *
@@ -152,7 +168,7 @@ public class Employee implements Serializable{
 	public void setHistory(HashMap<LocalDate,Pair<LocalTime,LocalTime>> newHistory) {
 		history = newHistory;
 	}
-	
+
 	/**
 	 * Gets the history of the current employee.
 	 *
@@ -161,7 +177,7 @@ public class Employee implements Serializable{
 	public HashMap<LocalDate,Pair<LocalTime,LocalTime>> getHistory(){
 		return history;
 	}
-	
+
 	/**
 	 * determines what day of the week the inputed date is.
 	 *
@@ -171,25 +187,30 @@ public class Employee implements Serializable{
 	public int dayOfWeek(LocalDate date) {
 		int rez;
 		DayOfWeek dayOfWeek = date.getDayOfWeek();
-
 		switch (dayOfWeek) {
 		case MONDAY:
 			rez=0;
+			break;
 		case TUESDAY:
 			rez=1;
+			break;
 		case WEDNESDAY:
 			rez=2;
+			break;
 		case THURSDAY:
 			rez=3;
+			break;
 		case FRIDAY:
 			rez=4;
+			break;
 		default:
 			rez=-1;
+			break;
 		}
-		
+
 		return rez;
 	}
-	
+
 	/**
 	 * checkIO checks an employee in or out
 	 *
@@ -198,34 +219,42 @@ public class Employee implements Serializable{
 	public void checkIO(LocalDateTime time){
 
 		LocalTime timeOfDay = time.toLocalTime();
+		LocalTime temp=LocalTime.of(1, 1, 1,1);
 		long timeDiff;
-		Pair<LocalTime,LocalTime> pair ;
-		
+		Pair<LocalTime,LocalTime> pair =new Pair<LocalTime, LocalTime>(timeOfDay, temp);
+
 		//THE EMPLOYEE IS CHECKING IN
 		if (checkedIn == false) {
 			checkedIn = true;
 			switch (time.getDayOfWeek()) {
 			case MONDAY:
-				timeDiff = MINUTES.between(timeOfDay, SCH.getSCH().get(0).getL());
+				timeDiff = MINUTES.between(timeOfDay, SCH.getSCH().get(0).getR());
+				break;
 
 			case TUESDAY:
-				timeDiff = MINUTES.between(timeOfDay, SCH.getSCH().get(1).getL());
+				timeDiff = MINUTES.between(timeOfDay, SCH.getSCH().get(1).getR());
+				break;
 
 			case WEDNESDAY:
-				timeDiff = MINUTES.between(timeOfDay, SCH.getSCH().get(2).getL());
+				timeDiff = MINUTES.between(timeOfDay, SCH.getSCH().get(2).getR());
+				break;
 
 			case THURSDAY:
-				timeDiff = MINUTES.between(timeOfDay, SCH.getSCH().get(3).getL());
+				timeDiff = MINUTES.between(timeOfDay, SCH.getSCH().get(3).getR());
+				break;
 
 			case FRIDAY:
-				timeDiff = MINUTES.between(timeOfDay, SCH.getSCH().get(4).getL());
+				timeDiff = MINUTES.between(timeOfDay, SCH.getSCH().get(4).getR());
+				break;
 
 			default:
 				timeDiff = 0;
+				break;
 			}
-			pair = new Pair<LocalTime,LocalTime>(timeOfDay,timeOfDay);
-			setoverTime(getoverTime()-timeDiff);
-			
+			System.out.println(timeDiff);
+			pair = new Pair<LocalTime,LocalTime>(timeOfDay,temp);
+			setoverTime(getoverTime()+timeDiff);
+
 		}
 
 		//THE EMPLOYEE IS CHECKING OUT
@@ -234,29 +263,35 @@ public class Employee implements Serializable{
 			switch (time.getDayOfWeek()) {
 			case MONDAY:
 				timeDiff = MINUTES.between(timeOfDay, SCH.getSCH().get(0).getR());
+				break;
 
 			case TUESDAY:
 				timeDiff = MINUTES.between(timeOfDay, SCH.getSCH().get(1).getR());
+				break;
 
 			case WEDNESDAY:
 				timeDiff = MINUTES.between(timeOfDay, SCH.getSCH().get(2).getR());
+				break;
 
 			case THURSDAY:
 				timeDiff = MINUTES.between(timeOfDay, SCH.getSCH().get(3).getR());
+				break;
 
 			case FRIDAY:
 				timeDiff = MINUTES.between(timeOfDay, SCH.getSCH().get(4).getR());
+				break;
 
 			default:
 				timeDiff = 0;
+				break;
 			}
 			pair = history.get(time.toLocalDate());
-			
+
 			pair.setR(timeOfDay);
 
-			setoverTime(getoverTime()+timeDiff);
+			setoverTime(getoverTime()-timeDiff-1);
 		}
-		
+		System.out.println(timeDiff);
 		history.put(time.toLocalDate(), pair);
 
 	}

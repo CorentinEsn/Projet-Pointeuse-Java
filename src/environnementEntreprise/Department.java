@@ -5,7 +5,6 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.UUID;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class Department.
  */
@@ -111,10 +110,7 @@ public class Department implements Serializable{
 			if (employees.get(i).getUUID()==oldEmployee.getUUID()) {
 				employees.get(i).setName(newEmployee.getName());
 				employees.get(i).setFirstname(newEmployee.getFirstname());
-				employees.get(i).setoverTime(newEmployee.getoverTime());
 				employees.get(i).setSCH(newEmployee.getSCH());
-				employees.get(i).setUUID(newEmployee.getUUID());
-				employees.get(i).setHistory(newEmployee.getHistory());
 				return i;
 				}
 

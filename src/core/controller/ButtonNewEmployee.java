@@ -1,31 +1,57 @@
+/*
+ * @author Thomas Blumstein
+ */
 package core.controller;
 
-import java.awt.Component;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.*;
 import java.time.LocalTime;
 import java.util.ArrayList;
 
-import javax.print.attribute.standard.DateTimeAtCreation;
 import javax.swing.*;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableCellRenderer;
+import javax.swing.table.*;
 
-import core.view.Main_view;
-import environnementEntreprise.Company;
-import environnementEntreprise.Employee;
-import environnementEntreprise.Pair;
-import environnementEntreprise.Schedule;
+import environnementEntreprise.*;
 
+
+/**
+ * The Class ButtonNewEmployee.
+ * used to create an employee using the data of the form
+ */
 public class ButtonNewEmployee implements ActionListener {
+
+	/** The name. */
 	private JTextField name;
+
+	/** The firstname. */
 	private JTextField firstname;
+
+	/** The departmentbox. */
 	private JComboBox<String> departmentbox;
+
+	/** The tab boxs. */
 	private ArrayList<ArrayList<JComboBox<Integer>>> tabBoxs;
+
+	/** The entreprise. */
 	private Company entreprise;
+
+	/** The model. */
 	private DefaultTableModel model;
+
+	/** The employee table. */
 	private JTable employeeTable;
 
+
+	/**
+	 * Instantiates a new button new employee.
+	 *
+	 * @param entreprise the Company
+	 * @param name the name
+	 * @param firstname the firstname
+	 * @param departmentbox the departmentbox
+	 * @param tabBoxs the tab boxs
+	 * @param model the model
+	 * @param employeeTable the employee table
+	 */
 	public ButtonNewEmployee(Company entreprise, JTextField name, 
 			JTextField firstname, JComboBox<String> departmentbox, 
 			ArrayList<ArrayList<JComboBox<Integer>>> tabBoxs, 
@@ -40,11 +66,17 @@ public class ButtonNewEmployee implements ActionListener {
 		this.employeeTable=employeeTable;
 	}
 
+	/**
+	 * Action performed.
+	 *
+	 * @param ae the ActionEvent
+	 */
 	@Override
 	public void actionPerformed(ActionEvent ae){
 
 		//creation of the schedule
 		Schedule schedule=new Schedule();
+		model.setRowCount(0);
 		for (int i=0;i<5;i++) {
 			//creation of the localtime stored in the schedule
 			//arrival
@@ -67,25 +99,36 @@ public class ButtonNewEmployee implements ActionListener {
 		for (int i=0;i<entreprise.getDepartments().size();i++) {
 			if (entreprise.getDepartments().get(i).getName()==departmentbox.getSelectedItem().toString()) {
 				entreprise.getDepartments().get(i).addEmployee(new Employee(name.getText(), firstname.getText(),schedule));;
-
-
-
+			}
+			for (int j=0;j<entreprise.getDepartments().get(i).getEmployees().size();j++) {
+				Employee temp =entreprise.getDepartments().get(i).getEmployees().get(j);
+				String check="Absent";
+				if(temp.isCheckedIn()) {
+					check="Présent";
+				}
 				model.addRow(
 						new Object[] {
-								entreprise.getDepartments().get(i).getEmployees().get(entreprise.getDepartments().get(i).getEmployees().size()-1).getUUID(),
-								entreprise.getDepartments().get(i).getEmployees().get(entreprise.getDepartments().get(i).getEmployees().size()-1).getName(),
-								entreprise.getDepartments().get(i).getEmployees().get(entreprise.getDepartments().get(i).getEmployees().size()-1).getFirstname(),
+								temp.getUUID(),
+								temp.getName(),
+								temp.getFirstname(),
 								entreprise.getDepartments().get(i).getName(),
-								entreprise.getDepartments().get(i).getEmployees().get(entreprise.getDepartments().get(i).getEmployees().size()-1).getoverTime(),
-								"Absent",
+								temp.getovertimeFormatted(),
+								check
 
 						}
 						);
 			}
 		}
 
+		//reset of the frame
 		name.setText(null);
 		firstname.setText(null);
+		for (int j =0;j<5;j++) {
+			this.tabBoxs.get(j).get(0).setSelectedIndex(0);
+			this.tabBoxs.get(j).get(1).setSelectedIndex(0);
+			this.tabBoxs.get(j).get(2).setSelectedIndex(0);
+			this.tabBoxs.get(j).get(3).setSelectedIndex(0);
+		}
 
 
 	}

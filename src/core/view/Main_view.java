@@ -1,9 +1,15 @@
+/*
+ * @author Thomas Blumstein
+ * Create all the principal views of the app
+ */
 package core.view;
 
 import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
+import java.io.File;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
@@ -16,16 +22,106 @@ import pointeuse.ThreadReadPointeuseData;
 import saving.Serializer;
 
 
+
+/**
+ * The Class Main_view.
+ */
 //**********MAIN FRAME with all view in it***********//
 public class Main_view extends JFrame {
+
+	/** The Company. */
 	Company entreprise; //all the data of the company (departments, employees...)
+
+	/** The employeetable. */
 	JTable employeetable;
+
+	/** The port's textfield. */
 	JTextField portTextField;
+
+	/** The DefaultTablemodel employee. */
+	DefaultTableModel modelEmployee;
+
+	/** The DefaultTablemodel department. */
+	DefaultTableModel modelDepartment;
+
+	/** The selection button for Time View. */
+	JButton selectionButton=new JButton("Valider");
+
+	/**
+	 * Gets the selection button.
+	 *
+	 * @return the selection button
+	 */
+	public JButton getSelectionButton() {
+		return selectionButton;
+	}
+
+
+	/**
+	 * Sets the selection button.
+	 *
+	 * @param selectionButton the new selection button
+	 */
+	public void setSelectionButton(JButton selectionButton) {
+		this.selectionButton = selectionButton;
+	}
+
+
+	/**
+	 * Gets the DefaultTablemodel employee.
+	 *
+	 * @return the DefaultTablemodel employee
+	 */
+	public DefaultTableModel getModelEmployee() {
+		return modelEmployee;
+	}
+
+
+	/**
+	 * Sets the DefaultTablemodel employee.
+	 *
+	 * @param modelEmployee the new DefaultTablemodel employee
+	 */
+	public void setModelEmployee(DefaultTableModel modelEmployee) {
+		this.modelEmployee = modelEmployee;
+	}
+
+
+	/**
+	 * Gets the DefaultTablemodel department.
+	 *
+	 * @return the DefaultTablemodel department
+	 */
+	public DefaultTableModel getModelDepartment() {
+		return modelDepartment;
+	}
+
+
+	/**
+	 * Sets the DefaultTablemodel department.
+	 *
+	 * @param modelDepartment the new DefaultTablemodel department
+	 */
+	public void setModelDepartment(DefaultTableModel modelDepartment) {
+		this.modelDepartment = modelDepartment;
+	}
+
+
+	/**
+	 * Gets the employeetable.
+	 *
+	 * @return the employeetable
+	 */
 	public JTable getEmployeetable() {
 		return employeetable;
 	}
 
 
+	/**
+	 * Instantiates a new main view.
+	 *
+	 * @param Entreprise the entreprise
+	 */
 	public Main_view(Company Entreprise) {
 		super(Entreprise.getName());//creating the frame with the name of the company (need to be the first line, dont move it)
 		this.entreprise=Entreprise;
@@ -59,18 +155,27 @@ public class Main_view extends JFrame {
 		tabbedPane.addTab("Employés", card1);
 		tabbedPane.addTab("Départements", card2);
 		tabbedPane.addTab("Horaires", card3);
+		tabbedPane.addTab("Config", card4);
 		//adding the tabs panel
 		add(tabbedPane, BorderLayout.CENTER);
 	}
 
 
+	/**
+	 * Employee view.
+	 *
+	 * @param card the JPanel
+	 */
 	//**********Vue des Employés***********//
 	public void EmployeeView(JPanel card) {
 		card.setLayout(new GridBagLayout());
 		GridBagConstraints grid = new GridBagConstraints();
-		String[] columns = { "ID", "Nom", "Prénom", "Département", "Heures supplémentaires", "Présent?",
-		"Emploi du Temps" };
-		DefaultTableModel model = new DefaultTableModel(columns, 0);//creation of the model for JTable
+		String[] columns = { "ID", "Nom", "Prénom", "Département", "Heures supplémentaires", "Présent?" };
+		modelEmployee = new DefaultTableModel(columns, 0){
+			public boolean isCellEditable(int row, int col) {
+				return false;
+			};
+		};//creation of the model for JTable
 
 		int numberOfEmployees=0;
 		for(int i=0;i<entreprise.getDepartments().size();i++) {//check if there are employees stocked
@@ -79,7 +184,7 @@ public class Main_view extends JFrame {
 			}
 		}
 		if (numberOfEmployees==0) {
-			model.addRow(//if there are no employees stocked, create an empty table
+			modelEmployee.addRow(//if there are no employees stocked, create an empty table
 					new Object[]{
 							"","","","","","",""		                         
 					});
@@ -87,14 +192,19 @@ public class Main_view extends JFrame {
 		else{ //if there are departments in stock, use them to create the table
 			for(int i=0;i<entreprise.getDepartments().size();i++) {
 				for(int j=0;j<entreprise.getDepartments().get(i).getEmployees().size();j++) {
-
-					model.addRow(
+					Employee temp=entreprise.getDepartments().get(i).getEmployees().get(j);
+					String checkString="Absent";
+					if(temp.isCheckedIn()) {
+						checkString="Présent";
+					}
+					modelEmployee.addRow(
 							new Object[] {
-									entreprise.getDepartments().get(i).getEmployees().get(j).getUUID(),
-									entreprise.getDepartments().get(i).getEmployees().get(j).getName(),
-									entreprise.getDepartments().get(i).getEmployees().get(j).getFirstname(),
+									temp.getUUID(),
+									temp.getName(),
+									temp.getFirstname(),
 									entreprise.getDepartments().get(i).getName(),
-									entreprise.getDepartments().get(i).getEmployees().get(j).getoverTime()
+									temp.getovertimeFormatted(),
+									checkString
 
 							});
 				}
@@ -103,7 +213,8 @@ public class Main_view extends JFrame {
 
 
 
-		employeetable = new JTable(model);
+		employeetable = new JTable(modelEmployee);
+		employeetable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 		grid.fill = GridBagConstraints.HORIZONTAL;
 		grid.gridy = 0;
 		grid.gridwidth = 50;
@@ -120,14 +231,14 @@ public class Main_view extends JFrame {
 
 
 		JButton addButton = new JButton("Ajouter");
-		addButton.addActionListener(new ButtonAUeEmployee(entreprise,model));
+		addButton.addActionListener(new ButtonAUeEmployee(entreprise,modelEmployee));
 		buttons.add(addButton);
 		JButton modButton = new JButton("Modifier");
-		modButton.addActionListener(new ButtonAUeEmployee(entreprise,model,employeetable,1));
+		modButton.addActionListener(new ButtonAUeEmployee(entreprise,modelEmployee,employeetable,1));
 		buttons.add(modButton);
 		grid.gridx = 6;
 		JButton delButton = new JButton("Supprimer");	
-		delButton.addActionListener(new ButtonDel(entreprise,model,employeetable,1));
+		delButton.addActionListener(new ButtonDel(entreprise,modelEmployee,employeetable,1));
 		buttons.add(delButton);
 		card.add(buttons, grid);
 		grid.gridx = 7;
@@ -140,14 +251,23 @@ public class Main_view extends JFrame {
 	}
 
 
+	/**
+	 * Department view.
+	 *
+	 * @param card the JPanel
+	 */
 	//**********Department View***********//
 	public void DepartmentView(JPanel card) {
 		card.setLayout(new GridBagLayout());
 		GridBagConstraints grid = new GridBagConstraints();//used for placing the differents items
 		String[] columns = { "Nom", "Description" };//names of the tabs columns
-		DefaultTableModel model = new DefaultTableModel(columns, 0);//creation of the model for JTable
+		modelDepartment = new DefaultTableModel(columns, 0){
+			public boolean isCellEditable(int row, int col) {
+				return false;
+			};
+		};
 		if(entreprise.getDepartments().size()==0) {//if there are no departments stocked, create an empty table
-			model.addRow(
+			modelDepartment.addRow(
 					new Object[]{
 							"",
 							""
@@ -155,7 +275,7 @@ public class Main_view extends JFrame {
 		}
 		else{ //if there are departments in stock, use them to create the table
 			for(int i=0;i<entreprise.getDepartments().size();i++) {
-				model.addRow(
+				modelDepartment.addRow(
 						new Object[]{
 								entreprise.getDepartments().get(i).getName(),
 								entreprise.getDepartments().get(i).getDescription()
@@ -163,7 +283,7 @@ public class Main_view extends JFrame {
 			}
 		}		
 
-		JTable departmenttable = new JTable(model);//creation of the table itself
+		JTable departmenttable = new JTable(modelDepartment);//creation of the table itself
 		departmenttable.getColumnModel().getColumn(0).setPreferredWidth(50);//set the size of the first column
 		departmenttable.getColumnModel().getColumn(1).setPreferredWidth(350);//set the size of second column
 
@@ -184,27 +304,32 @@ public class Main_view extends JFrame {
 
 		//Adding button
 		JButton addButton = new JButton("Ajouter"); 
-		addButton.addActionListener(new ButtonAUDepartment(entreprise,model));
+		addButton.addActionListener(new ButtonAUDepartment(entreprise,modelDepartment));
 		buttons.add(addButton);
 
 		//Modifying button
 		JButton modButton = new JButton("Modifier");	
-		modButton.addActionListener(new ButtonAUDepartment(entreprise,model,departmenttable));
+		modButton.addActionListener(new ButtonAUDepartment(entreprise,modelDepartment,departmenttable));
 		buttons.add(modButton);
 		grid.gridx = 6;
 
 
 		//Deleting button
 		JButton delButton = new JButton("Supprimer");	
-		delButton.addActionListener(new ButtonDel(entreprise,model,departmenttable,0));
+		delButton.addActionListener(new ButtonDel(entreprise,modelDepartment,departmenttable,0));
 		buttons.add(delButton);
 		card.add(buttons, grid);
 	}
 
+	/**
+	 * Time view.
+	 *
+	 * @param card the JPanel
+	 */
 	public void TimeView(JPanel card) {
 		card.setLayout(new GridBagLayout());
 		GridBagConstraints grid = new GridBagConstraints();
-		JPanel date = new JPanel();
+		JPanel date = new JPanel();//
 
 		Integer[] daysList=new Integer[32];
 		for (Integer i=1;i<32;i++) 
@@ -212,69 +337,118 @@ public class Main_view extends JFrame {
 			daysList[i]=i;
 		}
 		String months[] = {"","Janvier","Février","Mars","Avril","Mai","Juin","Juillet","Aout","Septembre","Octobre","Novembre","Décembre"};
-		Integer[] yearsList = new Integer[LocalDateTime.now().getYear()-1969];
-		for (int i=0;i<LocalDateTime.now().getYear()-1970;i++) {
-			yearsList[i+1]=LocalDateTime.now().getYear()-i;
+		LocalDateTime today=LocalDateTime.now();
+		Integer[] yearsList = new Integer[today.getYear()-1969];
+		for (int i=0;i<today.getYear()-1970;i++) {
+			yearsList[i+1]=today.getYear()-i;
 		}
 
 		JComboBox<Integer> dayComboBox  = new JComboBox<Integer>(daysList); 
-		JComboBox<String> monthComboBox =new JComboBox<>(months);
+		dayComboBox.setSelectedIndex(today.getDayOfMonth());
+		JComboBox<String> monthComboBox =new JComboBox<String>(months);
+		monthComboBox.setSelectedIndex(today.getMonthValue());
 		JComboBox<Integer> yearComboBox  = new JComboBox<Integer>(yearsList); 
+		yearComboBox.setSelectedIndex(1);
+		selectionButton=new JButton("Valider");
+
+		JButton allButton= new JButton("Tout Visualiser");
+
+		String[] columns = { "Date","ID", "Nom", "Prénom", "Heure d'arrivée", "Heure théorique d'arrivée", "Heure de départ",
+		"Heure théorique de départ" };//names of the table columns
+		DefaultTableModel modelTime = new DefaultTableModel(columns, 10){
+			public boolean isCellEditable(int row, int col) {
+				return false;
+			};
+		};
+		selectionButton.addActionListener(new SelectionTimeListener(entreprise, modelTime, dayComboBox,monthComboBox,yearComboBox));
+		allButton.addActionListener(new AllVisualisation(entreprise, modelTime));
 		date.add(dayComboBox);
 		date.add(monthComboBox);
 		date.add(yearComboBox);
+		date.add(selectionButton);
+		date.add(allButton);
 		card.add(date, grid);
-		String[] names = { "ID", "Nom", "Prénom", "Heure d'arrivée", "Heure théorique d'arrivée", "Heure de départ",
-		"Heure théorique de départ" };
-		Object[][] tableData = new Object[20][7];
-		JTable employeetable = new JTable(tableData, names);
+
+		JTable timeTable = new JTable(modelTime);//creation of the table itself
+		selectionButton.doClick();
+		//add evrything
 		grid.fill = GridBagConstraints.HORIZONTAL;
 		grid.gridy = 1;
 		grid.gridwidth = 50;
 		grid.gridx = 0;
 		grid.weightx = 400;
-		card.add(employeetable.getTableHeader(), grid);
+		card.add(timeTable.getTableHeader(), grid);
 		grid.gridy = 2;
-		card.add(employeetable, grid);
+		card.add(timeTable, grid);
+		grid.gridx=1;
+
 
 	}
 
-	
+
+	/**
+	 * Config view of the app.
+	 *
+	 * @param card the Panel
+	 */
 	private void ConfigView(JPanel card) {
-		
-		JPanel buttons = new JPanel();//panel for all the buttons
 
-		//Adding button
+		JPanel port = new JPanel();//panel for the port selection
+
+
+		JLabel coreDataPath = new JLabel(	"Company Data is stored in : "+
+				System.getProperty("user.dir")+
+				"CoreData"+File.separator+"CompanyFile.dat");
+		JLabel configDataPath = new JLabel(	"Configuration Data is stored in : "+
+				System.getProperty("user.dir")+
+				"CoreData"+File.separator+"config.dat    ");
+		
+
 		JLabel Portlabel= new JLabel("Port : "); 
-		buttons.add(Portlabel);
 
-		//Modifying button
 		portTextField= new JTextField("8080");	
-		buttons.add(portTextField);
-		
+
 		JLabel Infolabel= new JLabel("Le changement ne sera effectif quu'après redémarrage de l'application"); 
-		buttons.add(Infolabel);
-		card.add(buttons);
 		
+		JPanel companyPanel = new JPanel();//panel for the company name
+		
+		JLabel companyJLabel =new JLabel("Nom de Votre Entreprise :");
+		
+		JTextField companyField =new JTextField(10);
+		companyField.setText(entreprise.getName());
+		
+		//add everything
+		companyPanel.add(companyJLabel);
+		companyPanel.add(companyField);
+		port.add(Portlabel);
+		port.add(portTextField);
+		card.add(coreDataPath);
+		card.add(configDataPath);
+		port.add(Infolabel);
+		card.add(companyPanel);
+		card.add(port);
+		
+
 	}
 
 
+	/**
+	 * The main method.
+	 *
+	 * @param args the arguments
+	 */
 	public static void main(String[] args) {
 		// Assemble all the pieces of the MVC
 		Serializer serializer = new Serializer();
 		Company Entreprise = serializer.unserialiseCompagny();
 		int port = serializer.serializeReadCoreConfigData();
-		
-		if(Entreprise == null) {
-			Entreprise =new Company("Polytech") ;
-			Department department=new Department("info","test");
-			Entreprise.addDepartment(department);
-		}
 
-		Thread t = new Thread(new ThreadReadPointeuseData(Entreprise, port));//NEED A WAY TO CHANGE THE PORT IN-APP
+
+		Main_view v;
+
+		v = new Main_view(Entreprise);
+		Thread t = new Thread(new ThreadReadPointeuseData(Entreprise, port,v));
 		t.start();
-
-		Main_view v = new Main_view(Entreprise);
 		v.setVisible(true);
 
 	}

@@ -1,8 +1,12 @@
+/*
+ * @author Thomas Blumstein
+ */
 package core.controller;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 import javax.swing.JComboBox;
@@ -14,17 +18,49 @@ import environnementEntreprise.Employee;
 import environnementEntreprise.Pair;
 import environnementEntreprise.Schedule;
 
+/**
+ * The Class ButtonModEmployee.
+ * used to modify an employee using the data of the form
+ */
 public class ButtonModEmployee implements ActionListener{
+
+	/** The name. */
 	private JTextField name;
+
+	/** The firstname. */
 	private JTextField firstname;
+
+	/** The departmentbox. */
 	private JComboBox<String> departmentbox;
+
+	/** The tab boxs. */
 	private ArrayList<ArrayList<JComboBox<Integer>>> tabBoxs;
+
+	/** The entreprise. */
 	private Company entreprise;
+
+	/** The model. */
 	private DefaultTableModel model;
+
+	/** The old employee. */
 	private Employee oldEmployee;
+
+	/** The selectedline. */
 	private int selectedline;
 
 
+	/**
+	 * Instantiates a new button mod employee.
+	 *
+	 * @param entreprise the entreprise
+	 * @param name the name
+	 * @param firstname the firstname
+	 * @param departmentbox the departmentbox
+	 * @param tabBoxs the tab boxs
+	 * @param model the model
+	 * @param oldEmployee the old employee
+	 * @param selectedline the selectedline
+	 */
 	public ButtonModEmployee(Company entreprise, JTextField name, JTextField firstname, JComboBox<String> departmentbox, ArrayList<ArrayList<JComboBox<Integer>>> tabBoxs, DefaultTableModel model, Employee oldEmployee,int selectedline) {
 		super();
 		this.entreprise=entreprise;
@@ -38,6 +74,11 @@ public class ButtonModEmployee implements ActionListener{
 	}
 
 
+	/**
+	 * Action performed.
+	 *
+	 * @param ae the ActionEvent
+	 */
 	@Override
 	public void actionPerformed(ActionEvent ae){
 		//creation of the schedule
@@ -65,17 +106,35 @@ public class ButtonModEmployee implements ActionListener{
 			if (entreprise.getDepartments().get(i).getName()==departmentbox.getSelectedItem().toString()) {
 				entreprise.getDepartments().get(i).modEmployee(oldEmployee,newEmployee);
 				model.removeRow(selectedline);
+				Employee employeeToModify=entreprise.getDepartments().get(i).getEmployees().get(entreprise.getDepartments().get(i).getEmployees().size()-1);
+
+				String check="Absent";
+				if (employeeToModify.isCheckedIn()) {
+					check="Présent";
+				}
+
 				model.addRow(
 						new Object[] {
-								entreprise.getDepartments().get(i).getEmployees().get(entreprise.getDepartments().get(i).getEmployees().size()-1).getUUID(),
-								entreprise.getDepartments().get(i).getEmployees().get(entreprise.getDepartments().get(i).getEmployees().size()-1).getName(),
-								entreprise.getDepartments().get(i).getEmployees().get(entreprise.getDepartments().get(i).getEmployees().size()-1).getFirstname(),
-								entreprise.getDepartments().get(i).getName(),
-								entreprise.getDepartments().get(i).getEmployees().get(entreprise.getDepartments().get(i).getEmployees().size()-1).getoverTime()
+								employeeToModify.getUUID(),
+								employeeToModify.getName(),
+								employeeToModify.getFirstname(),
+								employeeToModify.getName(),
+								employeeToModify.getoverTime(),
+								check
+
 						}
 						);
-			}
 
+			}
+		}
+		//reset of the frame
+		name.setText(null);
+		firstname.setText(null);
+		for (int j =0;j<5;j++) {
+			this.tabBoxs.get(j).get(0).setSelectedIndex(0);
+			this.tabBoxs.get(j).get(1).setSelectedIndex(0);
+			this.tabBoxs.get(j).get(2).setSelectedIndex(0);
+			this.tabBoxs.get(j).get(3).setSelectedIndex(0);
 		}
 	}
 
