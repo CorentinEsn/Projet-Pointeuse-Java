@@ -22,28 +22,28 @@ import environnementEntreprise.Schedule;
  * used to instantiate a new view of Schedule
  */
 public class ScheduleController implements ActionListener{
-	
+
 	/** The schedule array list. */
 	private ArrayList<ArrayList<LocalTime>> scheduleArrayList =new ArrayList<>();
-	
+
 	/** The schedule. */
 	private Schedule SCH;
-	
+
 	/** The table. */
 	private JTable table;
-	
+
 	/** The model. */
 	private DefaultTableModel model;
-	
+
 	/** The columns. */
 	private String[]columns= {"Jour","Arrivée","Départ"};
-	
+
 	/** The days. */
 	private String[]days= {"Lundi","Mardi","Mercredi","Jeudi","Vendredi"};
-	
+
 	/** The entreprise. */
 	private Company entreprise;
-	
+
 	/** The employee table. */
 	private JTable employeeTable;
 
@@ -76,27 +76,27 @@ public class ScheduleController implements ActionListener{
 			JOptionPane.showMessageDialog(null, "Vous n'avez selectionné aucune ligne!", "Erreur", JOptionPane.ERROR_MESSAGE);
 		}
 		else {
-		for (int i=0;i<entreprise.getDepartments().size();i++) {
-			for (int j=0;j<entreprise.getDepartments().get(i).getEmployees().size() ;j++) {
-				if (entreprise.getDepartments().get(i).getEmployees().get(j).getUUID()==employeeTable.getValueAt(0, employeeTable.getSelectedRow()));{
-					this.SCH=entreprise.getDepartments().get(i).getEmployees().get(j).getSCH();
+			for (int i=0;i<entreprise.getDepartments().size();i++) {
+				for (int j=0;j<entreprise.getDepartments().get(i).getEmployees().size() ;j++) {
+					if (entreprise.getDepartments().get(i).getEmployees().get(j).getUUID()==employeeTable.getValueAt(0, employeeTable.getSelectedRow()));{
+						this.SCH=entreprise.getDepartments().get(i).getEmployees().get(j).getSCH();
+					}
 				}
 			}
-		}
-		for(int i=0;i<5;i++) {
-			//adding a new row to the tables
-			model.addRow(new Object[] {
-					days[i],
-					SCH.getSCH().get(i).getL(),
-					SCH.getSCH().get(i).getR()
+			for(int i=0;i<5;i++) {
+				//adding a new row to the tables
+				model.addRow(new Object[] {
+						days[i],
+						SCH.getSCH().get(i).getL(),
+						SCH.getSCH().get(i).getR()
+				}
+
+						);
 			}
 
-					);
+
+			ScheduleView v=new ScheduleView(table);
+			v.setVisible(true);
 		}
-
-
-		ScheduleView v=new ScheduleView(table);
-		v.setVisible(true);
-	}
 	}
 }

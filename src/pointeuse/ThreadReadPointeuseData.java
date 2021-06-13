@@ -18,39 +18,39 @@ public class ThreadReadPointeuseData implements Runnable {
 	private Company company;
 	private int port;
 	private Main_view view;
-	
+
 	public ThreadReadPointeuseData(Company company, int port,Main_view view) {
 		this.view=view;
 		this.company = company;
 		this.port = port;
 	}
-	
+
 	protected void onPacketReceived(SerialPointeuse packet) {
-        
-//        switch (packet.getPacketType()) {
-//            case EMPLOYEE_POINT: {
-//                App.getInstance().checkin(((PacketEmployeePoint) packet).getEmployeeId());
-//                break;
-//            }
-//        }
-    }
-	
+
+		//        switch (packet.getPacketType()) {
+		//            case EMPLOYEE_POINT: {
+		//                App.getInstance().checkin(((PacketEmployeePoint) packet).getEmployeeId());
+		//                break;
+		//            }
+		//        }
+	}
+
 	@Override
 	public void run() {
 		try {
-    		System.out.println("Initialise server");
-    		while(true) {
+			System.out.println("Initialise server");
+			while(true) {
 
-			ServerSocket myServerSocket = new ServerSocket(port);
-			myServerSocket.setSoTimeout(0);
+				ServerSocket myServerSocket = new ServerSocket(port);
+				myServerSocket.setSoTimeout(0);
 
-			
+
 
 				System.out.println("server waiting for connexion");
 				Socket servSocket = myServerSocket.accept();
 				System.out.println("server connected");
 				//servSocket.setSoTimeout(10000);
-				
+
 				try {
 					ObjectInputStream objectInput = new ObjectInputStream(servSocket.getInputStream());
 					try {
@@ -64,7 +64,7 @@ public class ThreadReadPointeuseData implements Runnable {
 						myServerSocket.close();
 						System.out.println("Connexion closed");
 						//return dataToRead;
-						
+
 					} catch (ClassNotFoundException e) {
 						System.err.println("Unknown class");
 						e.printStackTrace();
@@ -75,12 +75,12 @@ public class ThreadReadPointeuseData implements Runnable {
 			}
 
 		} catch (UnknownHostException e) {
-			
+
 			e.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
 
-	
+
 }

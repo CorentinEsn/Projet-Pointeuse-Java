@@ -17,16 +17,16 @@ import java.time.LocalTime;
  * The Class Employee.
  */
 public class Employee implements Serializable{
-	
+
 	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 1L;
-	
+
 	/** The uuid. */
 	private UUID uuid;
-	
+
 	/** The name. */
 	private String name ;
-	
+
 	/** The firstname. */
 	private String firstname;
 
@@ -101,7 +101,7 @@ public class Employee implements Serializable{
 	 */
 	public Employee(String name, String firstname,Schedule SCH) {
 
-		
+
 		this.history=new HashMap<LocalDate, Pair<LocalTime,LocalTime>>();
 		this.setName(name);
 		this.setFirstname(firstname);
@@ -148,7 +148,7 @@ public class Employee implements Serializable{
 		}
 		else temp=Math.abs(hour)+":"+Math.abs(minute);
 		return temp;
-		
+
 	}
 
 	/**
@@ -159,7 +159,7 @@ public class Employee implements Serializable{
 	public void setoverTime(long newoverTime) {
 		overTime = newoverTime;
 	}
-	
+
 	/**
 	 * Sets the history.
 	 *
@@ -168,7 +168,7 @@ public class Employee implements Serializable{
 	public void setHistory(HashMap<LocalDate,Pair<LocalTime,LocalTime>> newHistory) {
 		history = newHistory;
 	}
-	
+
 	/**
 	 * Gets the history.
 	 *
@@ -177,7 +177,7 @@ public class Employee implements Serializable{
 	public HashMap<LocalDate,Pair<LocalTime,LocalTime>> getHistory(){
 		return history;
 	}
-	
+
 	/**
 	 * Day of week.
 	 *
@@ -207,10 +207,10 @@ public class Employee implements Serializable{
 			rez=-1;
 			break;
 		}
-		
+
 		return rez;
 	}
-	
+
 	/**
 	 * checkIO checks an enmployee in or out
 	 *
@@ -222,7 +222,7 @@ public class Employee implements Serializable{
 		LocalTime temp=LocalTime.of(1, 1, 1,1);
 		long timeDiff;
 		Pair<LocalTime,LocalTime> pair =new Pair<LocalTime, LocalTime>(timeOfDay, temp);
-		
+
 		//THE EMPLOYEE IS CHECKING IN
 		if (checkedIn == false) {
 			checkedIn = true;
@@ -254,7 +254,7 @@ public class Employee implements Serializable{
 			System.out.println(timeDiff);
 			pair = new Pair<LocalTime,LocalTime>(timeOfDay,temp);
 			setoverTime(getoverTime()+timeDiff);
-			
+
 		}
 
 		//THE EMPLOYEE IS CHECKING OUT
@@ -286,7 +286,7 @@ public class Employee implements Serializable{
 				break;
 			}
 			pair = history.get(time.toLocalDate());
-			
+
 			pair.setR(timeOfDay);
 
 			setoverTime(getoverTime()-timeDiff-1);

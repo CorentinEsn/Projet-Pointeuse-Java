@@ -28,25 +28,25 @@ import saving.Serializer;
  */
 //**********MAIN FRAME with all view in it***********//
 public class Main_view extends JFrame {
-	
+
 	/** The Company. */
 	Company entreprise; //all the data of the company (departments, employees...)
-	
+
 	/** The employeetable. */
 	JTable employeetable;
-	
+
 	/** The port's textfield. */
 	JTextField portTextField;
-	
+
 	/** The DefaultTablemodel employee. */
 	DefaultTableModel modelEmployee;
-	
+
 	/** The DefaultTablemodel department. */
 	DefaultTableModel modelDepartment;
-	
+
 	/** The selection button for Time View. */
 	JButton selectionButton=new JButton("Valider");
-	
+
 	/**
 	 * Gets the selection button.
 	 *
@@ -171,11 +171,11 @@ public class Main_view extends JFrame {
 		card.setLayout(new GridBagLayout());
 		GridBagConstraints grid = new GridBagConstraints();
 		String[] columns = { "ID", "Nom", "Prénom", "Département", "Heures supplémentaires", "Présent?" };
-		 modelEmployee = new DefaultTableModel(columns, 0){
-				public boolean isCellEditable(int row, int col) {
-					return false;
-				};
-			};//creation of the model for JTable
+		modelEmployee = new DefaultTableModel(columns, 0){
+			public boolean isCellEditable(int row, int col) {
+				return false;
+			};
+		};//creation of the model for JTable
 
 		int numberOfEmployees=0;
 		for(int i=0;i<entreprise.getDepartments().size();i++) {//check if there are employees stocked
@@ -205,18 +205,15 @@ public class Main_view extends JFrame {
 									entreprise.getDepartments().get(i).getName(),
 									temp.getovertimeFormatted(),
 									checkString
-									
+
 							});
 				}
 			}		
 		}
 
 
-		
+
 		employeetable = new JTable(modelEmployee);
-		JScrollPane js = new JScrollPane(employeetable);
-		js.setBounds(5, 10, 300, 150);
-		js.setVisible(true);
 		employeetable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 		grid.fill = GridBagConstraints.HORIZONTAL;
 		grid.gridy = 0;
@@ -226,8 +223,6 @@ public class Main_view extends JFrame {
 		card.add(employeetable.getTableHeader(), grid);
 		grid.gridy = 1;
 		card.add(employeetable, grid);
-		grid.gridx = 1;
-		card.add(js,grid);
 		grid.gridy = 2;
 		grid.gridx = 4;
 		grid.weightx = 10;
@@ -355,9 +350,9 @@ public class Main_view extends JFrame {
 		JComboBox<Integer> yearComboBox  = new JComboBox<Integer>(yearsList); 
 		yearComboBox.setSelectedIndex(1);
 		selectionButton=new JButton("Valider");
-		
+
 		JButton allButton= new JButton("Tout Visualiser");
-		
+
 		String[] columns = { "Date","ID", "Nom", "Prénom", "Heure d'arrivée", "Heure théorique d'arrivée", "Heure de départ",
 		"Heure théorique de départ" };//names of the table columns
 		DefaultTableModel modelTime = new DefaultTableModel(columns, 10){
@@ -373,10 +368,9 @@ public class Main_view extends JFrame {
 		date.add(selectionButton);
 		date.add(allButton);
 		card.add(date, grid);
-		
+
 		JTable timeTable = new JTable(modelTime);//creation of the table itself
 		selectionButton.doClick();
-		JScrollPane js = new JScrollPane(timeTable);
 		//add evrything
 		grid.fill = GridBagConstraints.HORIZONTAL;
 		grid.gridy = 1;
@@ -387,45 +381,54 @@ public class Main_view extends JFrame {
 		grid.gridy = 2;
 		card.add(timeTable, grid);
 		grid.gridx=1;
-		js.setBounds(5, 10, 300, 150);
-		js.setVisible(true);
-		card.add(js,grid);
-		
+
 
 	}
 
-	
+
 	/**
-	 * Config view.
+	 * Config view of the app.
 	 *
 	 * @param card the Panel
 	 */
 	private void ConfigView(JPanel card) {
-		
-		JPanel buttons = new JPanel();//panel for all the buttons
-		
-		
+
+		JPanel port = new JPanel();//panel for the port selection
+
+
 		JLabel coreDataPath = new JLabel(	"Company Data is stored in : "+
-											System.getProperty("user.dir")+
-											"CoreData"+File.separator+"CompanyFile.dat");
+				System.getProperty("user.dir")+
+				"CoreData"+File.separator+"CompanyFile.dat");
 		JLabel configDataPath = new JLabel(	"Configuration Data is stored in : "+
-											System.getProperty("user.dir")+
-											"CoreData"+File.separator+"config.dat    ");
+				System.getProperty("user.dir")+
+				"CoreData"+File.separator+"config.dat    ");
+		
+
+		JLabel Portlabel= new JLabel("Port : "); 
+
+		portTextField= new JTextField("8080");	
+
+		JLabel Infolabel= new JLabel("Le changement ne sera effectif quu'après redémarrage de l'application"); 
+		
+		JPanel companyPanel = new JPanel();//panel for the company name
+		
+		JLabel companyJLabel =new JLabel("Nom de Votre Entreprise :");
+		
+		JTextField companyField =new JTextField(10);
+		companyField.setText(entreprise.getName());
+		
+		//add everything
+		companyPanel.add(companyJLabel);
+		companyPanel.add(companyField);
+		port.add(Portlabel);
+		port.add(portTextField);
 		card.add(coreDataPath);
 		card.add(configDataPath);
+		port.add(Infolabel);
+		card.add(companyPanel);
+		card.add(port);
 		
-		
-		JLabel Portlabel= new JLabel("Port : "); 
-		buttons.add(Portlabel);
 
-		
-		portTextField= new JTextField("8080");	
-		buttons.add(portTextField);
-		
-		JLabel Infolabel= new JLabel("Le changement ne sera effectif quu'après redémarrage de l'application"); 
-		buttons.add(Infolabel);
-		card.add(buttons);
-		
 	}
 
 
@@ -439,12 +442,8 @@ public class Main_view extends JFrame {
 		Serializer serializer = new Serializer();
 		Company Entreprise = serializer.unserialiseCompagny();
 		int port = serializer.serializeReadCoreConfigData();
-		
-		if(Entreprise == null) {
-			Entreprise =new Company("Polytech") ;
-			Department department=new Department("info","test");
-			Entreprise.addDepartment(department);
-		}
+
+
 		Main_view v;
 
 		v = new Main_view(Entreprise);

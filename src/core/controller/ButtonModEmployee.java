@@ -23,28 +23,28 @@ import environnementEntreprise.Schedule;
  * used to modify an employee using the data of the form
  */
 public class ButtonModEmployee implements ActionListener{
-	
+
 	/** The name. */
 	private JTextField name;
-	
+
 	/** The firstname. */
 	private JTextField firstname;
-	
+
 	/** The departmentbox. */
 	private JComboBox<String> departmentbox;
-	
+
 	/** The tab boxs. */
 	private ArrayList<ArrayList<JComboBox<Integer>>> tabBoxs;
-	
+
 	/** The entreprise. */
 	private Company entreprise;
-	
+
 	/** The model. */
 	private DefaultTableModel model;
-	
+
 	/** The old employee. */
 	private Employee oldEmployee;
-	
+
 	/** The selectedline. */
 	private int selectedline;
 
@@ -107,27 +107,36 @@ public class ButtonModEmployee implements ActionListener{
 				entreprise.getDepartments().get(i).modEmployee(oldEmployee,newEmployee);
 				model.removeRow(selectedline);
 				Employee employeeToModify=entreprise.getDepartments().get(i).getEmployees().get(entreprise.getDepartments().get(i).getEmployees().size()-1);
-				
+
 				String check="Absent";
 				if (employeeToModify.isCheckedIn()) {
 					check="Présent";
 				}
-				
+
 				model.addRow(
-					new Object[] {
-							employeeToModify.getUUID(),
-							employeeToModify.getName(),
-							employeeToModify.getFirstname(),
-							employeeToModify.getName(),
-							employeeToModify.getoverTime(),
-							check
+						new Object[] {
+								employeeToModify.getUUID(),
+								employeeToModify.getName(),
+								employeeToModify.getFirstname(),
+								employeeToModify.getName(),
+								employeeToModify.getoverTime(),
+								check
 
-					}
-					);
+						}
+						);
 
+			}
+		}
+		//reset of the frame
+		name.setText(null);
+		firstname.setText(null);
+		for (int j =0;j<5;j++) {
+			this.tabBoxs.get(j).get(0).setSelectedIndex(0);
+			this.tabBoxs.get(j).get(1).setSelectedIndex(0);
+			this.tabBoxs.get(j).get(2).setSelectedIndex(0);
+			this.tabBoxs.get(j).get(3).setSelectedIndex(0);
 		}
 	}
 
-	}
 }
 

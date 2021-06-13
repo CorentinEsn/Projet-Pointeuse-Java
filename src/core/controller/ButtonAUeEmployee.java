@@ -23,37 +23,37 @@ import environnementEntreprise.Company;
  */
 //it create the form  "CUDepartments"
 public class ButtonAUeEmployee implements ActionListener{
-	
+
 	/** The hours list used to instantiate the ComboBox. */
 	Integer[] hoursList= {0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24};
-	
+
 	/** The minutes list used to instantiate the ComboBox. */
 	Integer[] minutesList= {0,15,30,45};
-	
+
 	/** The Company. */
 	private Company entreprise;
-	
+
 	/** The name TextField. */
 	private JTextField nameField;
-	
+
 	/** The firstname TextField. */
 	private JTextField firstnameField;
-	
+
 	/** The department ComboBox. */
 	private JComboBox<String> departmentBox;
-	
+
 	/** The DefaultTablemodel. */
 	private DefaultTableModel model;
-	
+
 	/** The ComboBoxs. */
 	private ArrayList<ArrayList<JComboBox<Integer>>> tabBoxs;
-	
+
 	/** The employee table. */
 	private JTable employeeTable;
-	
+
 	/** The status. */
 	private int status; //=0 if add; =1 if modify
-	
+
 	/** The selectedline of the table. */
 	private int selectedline=0;
 
@@ -85,7 +85,7 @@ public class ButtonAUeEmployee implements ActionListener{
 			tabBoxs.get(i).add(new JComboBox<Integer>(minutesList)); 
 		}
 	}
-	
+
 	/**
 	 * Instantiates a new button AU employee.
 	 * used to modify an employee

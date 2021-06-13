@@ -18,53 +18,53 @@ import environnementEntreprise.*;
  * The Class CUEmployee, Create a form to add or update an Employee
  */
 public class CUEmployee extends JFrame {
-	
+
 	/** The Company. */
 	Company entreprise;
 
 
 	/** The name label. */
 	JLabel nameLabel = new JLabel("Nom : ");
-	
+
 	/** The name TextField. */
 	JTextField nameField = new JTextField(30); // accepts up to 30 characters (French longest name is 27 character)
 
 	/** The firstname label. */
 	JLabel firstnameLabel = new JLabel("Prénom : ");
-	
+
 	/** The firstname TextField. */
 	JTextField firstnameField;
 
 	/** The department label. */
 	JLabel departmentLabel = new JLabel("Département : ");
-	
+
 	/** The department ComboBox. */
 	JComboBox<String> departmentBox=new JComboBox<String>();
 
 	/** The schedule label. */
 	JLabel scheduleLabel=new JLabel("Emploi du temps :");
-	
+
 	/** The arrival label. */
 	JLabel arrivalLabel=new JLabel("Arrivée :");
-	
+
 	/** The departure label. */
 	JLabel departureLabel =new JLabel("Départ :");
-	
+
 	/** The days labels. */
 	JLabel[] daysLabels= {new JLabel("Lundi : "),new JLabel("Mardi : "),new JLabel("Mercredi : "),new JLabel("Jeudi : "),new JLabel("Vendredi : ")};
-	
+
 	/** The ComboBoxs. */
 	ArrayList<ArrayList<JComboBox<Integer>>> tabBoxs;
-	
+
 	/** The DeafultTablemodel. */
 	private DefaultTableModel model;  
-	
+
 	/** The old employee. */
 	private Employee oldEmployee;
-	
+
 	/** The selectedline. */
 	private int selectedline;
-	
+
 	/** The employee table. */
 	private JTable employeeTable;
 
@@ -105,7 +105,7 @@ public class CUEmployee extends JFrame {
 			this.selectedline=employeeTable.getSelectedRow();
 		}
 		if (status==1) {//if update, set the olddepartment
-			
+
 			for (int i=0;i<entreprise.getDepartments().size();i++) {
 				for (int j=0;j<entreprise.getDepartments().get(i).getEmployees().size() ;j++) {
 					if (entreprise.getDepartments().get(i).getEmployees().get(j).getUUID()==employeeTable.getValueAt(selectedline,0));{

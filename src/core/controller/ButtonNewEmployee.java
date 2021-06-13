@@ -18,27 +18,28 @@ import environnementEntreprise.*;
  * used to create an employee using the data of the form
  */
 public class ButtonNewEmployee implements ActionListener {
-	
+
 	/** The name. */
 	private JTextField name;
-	
+
 	/** The firstname. */
 	private JTextField firstname;
-	
+
 	/** The departmentbox. */
 	private JComboBox<String> departmentbox;
-	
+
 	/** The tab boxs. */
 	private ArrayList<ArrayList<JComboBox<Integer>>> tabBoxs;
-	
+
 	/** The entreprise. */
 	private Company entreprise;
-	
+
 	/** The model. */
 	private DefaultTableModel model;
-	
+
 	/** The employee table. */
 	private JTable employeeTable;
+
 
 	/**
 	 * Instantiates a new button new employee.
@@ -105,22 +106,29 @@ public class ButtonNewEmployee implements ActionListener {
 				if(temp.isCheckedIn()) {
 					check="Présent";
 				}
-			model.addRow(
-					new Object[] {
-							temp.getUUID(),
-							temp.getName(),
-							temp.getFirstname(),
-							entreprise.getDepartments().get(i).getName(),
-							temp.getovertimeFormatted(),
-							check
+				model.addRow(
+						new Object[] {
+								temp.getUUID(),
+								temp.getName(),
+								temp.getFirstname(),
+								entreprise.getDepartments().get(i).getName(),
+								temp.getovertimeFormatted(),
+								check
 
-					}
-					);
-		}
+						}
+						);
+			}
 		}
 
+		//reset of the frame
 		name.setText(null);
 		firstname.setText(null);
+		for (int j =0;j<5;j++) {
+			this.tabBoxs.get(j).get(0).setSelectedIndex(0);
+			this.tabBoxs.get(j).get(1).setSelectedIndex(0);
+			this.tabBoxs.get(j).get(2).setSelectedIndex(0);
+			this.tabBoxs.get(j).get(3).setSelectedIndex(0);
+		}
 
 
 	}
