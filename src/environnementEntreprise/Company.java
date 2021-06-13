@@ -1,10 +1,11 @@
-
+ 
 package environnementEntreprise;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.time.LocalDate;
 
+// TODO: Auto-generated Javadoc
 /**
  * The Class Company.
  */
@@ -20,9 +21,9 @@ public class Company implements Serializable{
 	private ArrayList<Department> departments;
 	
 	/**
-	 * Gets the departments.
+	 * Gets the departments of the current company.
 	 *
-	 * @return the departments
+	 * @return ArrayList<Department> departments : the departments of the current company
 	 */
 	//methods
 	public ArrayList<Department> getDepartments() {
@@ -30,45 +31,45 @@ public class Company implements Serializable{
 	}
 
 	/**
-	 * Sets the departments.
+	 * Sets the departments of the current company.
 	 *
-	 * @param departments the new departments
+	 * @param ArrayList<Department> departments : the new departments
 	 */
 	public void setDepartments(ArrayList<Department> departments) {
 		this.departments = departments;
 	}
 	
 	/**
-	 * Gets the name.
+	 * Gets the name of the current company.
 	 *
-	 * @return the name
+	 * @return String name : the name of the current company
 	 */
 	public String getName() {
 		return name;
 	}
 
 	/**
-	 * Sets the name.
+	 * Sets the name of the current company.
 	 *
-	 * @param newName the new name
+	 * @param String newName : the new name of the current company
 	 */
 	public void setName(String newName) {
 		name = newName;
 	}
 
 	/**
-	 * Adds the department.
+	 * Adds a department to the current company.
 	 *
-	 * @param department the department
+	 * @param Department department : the department to add
 	 */
 	public void addDepartment(Department department) {
 		departments.add(department);
 	}
 	
 	/**
-	 * Del department.
+	 * Deletes a departments from the current company.
 	 *
-	 * @param department the department
+	 * @param Department department : the department to delete, the name of the parameter department needs to be the same as the department you want to delete
 	 */
 	public void delDepartment(Department department) {
 		for (int i=0;i <departments.size();i++) {
@@ -98,9 +99,9 @@ public class Company implements Serializable{
 	}
 	
 	/**
-	 * allEmployees.
+	 * Returns a ArrayList of all employees of the current company.
 	 *
-	 * @return rez an ArrayList containing all employees
+	 * @return ArrayList<Employee> rez : contains all employees
 	 */
 	public ArrayList<Employee> allEmployees(){
 		ArrayList<Employee> employees = new ArrayList<Employee>();
@@ -120,7 +121,7 @@ public class Company implements Serializable{
 	/**
 	 * Instantiates a new company.
 	 *
-	 * @param name the name
+	 * @param name the name of the new company
 	 */
 	public Company(String name){
 		this.name=name;
@@ -128,22 +129,18 @@ public class Company implements Serializable{
 	}
 	
 	/**
-	 * whoWasHere
+	 * Returns a list of all the employees who checked in on the inputed day
 	 *
 	 * @param LocalDate day where we want to check who was here
-	 * @return employees an ArrayList containing all employees who checked on that day
+	 * @return ArrayList<Employee> employees : contains all employees who checked in that day
 	 */
 	public ArrayList<Employee> whoWasHere(LocalDate day) {
 		//return value
 		ArrayList<Employee> employees = new ArrayList<Employee>();
 		
-		//lengths for the for loops
+		//lengths and condition value for the for loops
 		int nbEmployees;
 		int nbDepartments = getDepartments().size();
-		
-		//iterator and entry for the history search
-        //Iterator<Map.Entry<LocalDateTime, String> > iterator;
-        //Map.Entry<LocalDateTime,String> entry ;
         boolean added = false;
 
 		for(int i = 0 ; i < nbDepartments ; i++){
@@ -151,21 +148,7 @@ public class Company implements Serializable{
 			
 			for(int j = 0 ; j < nbEmployees ; j++){
 				added = false;
-				//some old unnecessary useless fucking piece of shit code
-				//iterator = departments.get(i).getEmployees().get(j).getHistory().entrySet().iterator();
-				/*
-				while (iterator.hasNext() && added == false) {
-					
-					entry = iterator.next();
-					
-					if ( day == entry.getKey().toLocalDate() ) {
-						employees.add(getDepartments().get(i).getEmployees().get(j));
-						added = true;
-					}
-					
-				}
-				*/
-				if(departments.get(i).getEmployees().get(j).getHistory()!=null && departments.get(i).getEmployees().get(j).getHistory().get(day) != null && added==false) {
+				if(departments.get(i).getEmployees().get(j).getHistory().get(day) != null && added==false) {
 					employees.add(getDepartments().get(i).getEmployees().get(j));
 					added = true;
 				}

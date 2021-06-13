@@ -14,7 +14,6 @@ public class Department implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
 	/** The name. */
-	//attributs
 	private String name;
 	
 	/** The description. */
@@ -25,18 +24,18 @@ public class Department implements Serializable{
 	//methods
 	
 	/**
-	 * Gets the employees.
+	 * Gets the employees of the current Department.
 	 *
-	 * @return the employees
+	 * @return ArrayList<Employee> employees : the list of all employees in the current department
 	 */
 	public ArrayList<Employee> getEmployees() {
 		return employees;
 	}
 	
 	/**
-	 * Sets the employees.
+	 * Sets the employees of the current Department.
 	 *
-	 * @param employees the new employees
+	 * @param ArrayList<Employee> employees : the new list of all employees in the current department
 	 */
 	public void setEmployees(ArrayList<Employee> employees) {
 		this.employees = employees;
@@ -44,9 +43,9 @@ public class Department implements Serializable{
 	
 
 	/**
-	 * Gets the name.
+	 * Gets the name of the department.
 	 *
-	 * @return the name
+	 * @return String name : the name of the current department
 	 */
 	public String getName() {
 		return name;
@@ -54,36 +53,36 @@ public class Department implements Serializable{
 
 	
 	/**
-	 * Sets the name.
+	 * Sets the name of the current department.
 	 *
-	 * @param nom the new name
+	 * @param String name : the new name of the current department
 	 */
-	public void setName(String nom) {
-		this.name = nom;
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	/**
-	 * Gets the description.
+	 * Gets the description of the current department.
 	 *
-	 * @return the description
+	 * @return String description : description of the current department
 	 */
 	public String getDescription() {
 		return description;
 	}
 
 	/**
-	 * Sets the description.
+	 * Sets the description of the current department.
 	 *
-	 * @param newDescription the new description
+	 * @param String newDescription : new description of the current department
 	 */
 	public void setDescription(String newDescription) {
 		description = newDescription;
 	}
 	
 	/**
-	 * Adds the employee.
+	 * Adds an employee to the current department.
 	 *
-	 * @param newEmployee the new employee
+	 * @param Employee newEmployee : the employee to add
 	 */
 	public void addEmployee(Employee newEmployee) {
 		employees.add(newEmployee);
@@ -91,18 +90,18 @@ public class Department implements Serializable{
 	}
 
 	/**
-	 * Adds the all employee.
+	 * Adds all the employees in the inputed list to the current department.
 	 *
-	 * @param newEmployees the new employees
+	 * @param ArrayList<Employee> newEmployees : list of all employees to add
 	 */
 	public void addAllEmployee(ArrayList<Employee> newEmployees) {
 		employees.addAll(newEmployees);
 	}
 	
 	/**
-	 * modEmployee.
+	 * modifies an employee of the current department.
 	 *
-	 * @param oldEmployee the old employee
+	 * @param oldEmployee the old employee (searched by uuid)
 	 * @param newEmployee the new employee
 	 * @return i place of the employee in the list, 0 if not found
 	 */
@@ -120,9 +119,9 @@ public class Department implements Serializable{
 	}
 	
 	/**
-	 * Rem employee.
+	 * Removes an employee from the current department.
 	 *
-	 * @param uuid the uuid
+	 * @param UUID uuid : the uuid of the employee to remove
 	 */
 	public void remEmployee(UUID uuid) {
 		Boolean removed = false;
@@ -154,8 +153,8 @@ public class Department implements Serializable{
 	/**
 	 * Instantiates a new department.
 	 *
-	 * @param name the name
-	 * @param description the description
+	 * @param String name : the name of the new department
+	 * @param String description : the description of the new employee
 	 */
 	public Department(String name,String description) {
 		this.name=name;
