@@ -25,16 +25,11 @@ public class ThreadReadPointeuseData implements Runnable {
 		this.port = port;
 	}
 	
-	protected void onPacketReceived(SerialPointeuse packet) {
-        
-//        switch (packet.getPacketType()) {
-//            case EMPLOYEE_POINT: {
-//                App.getInstance().checkin(((PacketEmployeePoint) packet).getEmployeeId());
-//                break;
-//            }
-//        }
-    }
-	
+	/**
+	 * Server thread, will wait for someone to connect, then receive the data, then close the socket and wait for another one
+	 * We close the socket because there can be multiple pointeuses.
+	 * Once data has been received, creates a thread that will treat the data
+	 */
 	@Override
 	public void run() {
 		try {

@@ -11,6 +11,11 @@ import javax.swing.JTextField;
 
 import pointeuse.SerialPointeuse;
 
+/**
+ * Listener of the button, will prepare the data to send, and check if it's a correct format
+ * @author Lilian
+ *
+ */
 public class ButtonListener implements ActionListener{
 
 	/**
@@ -56,7 +61,7 @@ public class ButtonListener implements ActionListener{
 	}
 
 	/**
-	 * @brief when activated via the pressing of a button, will gather the data of the textfields and prepare the data for sending
+	 * When activated via the pressing of a button, will gather the data of the textfields and prepare the data for sending
 	 * before preparing it, it checks whether the textfields are in a correct format
 	 * and will send an error message and throw an illegal argument error
 	 */
