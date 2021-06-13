@@ -34,7 +34,7 @@ public class Serializer {
 	private ObjectOutputStream oS;
 
 	/**
-	 * @brief Open a file and create it if it doesn't exist
+	 * Open a file and create it if it doesn't exist
 	 * @param fileName the name of the file to open or create and open
 	 * @return a File object with the file open
 	 */
@@ -116,10 +116,8 @@ public class Serializer {
 
 
 	/**
-	 * Serialize the port used by the server
-	 * 
-	 * this function should be expanded with a whole config class if you have more data to serialize
-	 * @param port the port used bu the server to receive the data
+	 * Serialize the company name and port used by the server
+	 * @param configToSave The data taht will be saved
 	 * 
 	 */
 	public void serializeWriteCoreConfigData(ConfigCore configToSave) {
@@ -142,9 +140,8 @@ public class Serializer {
 
 	/**
 	 * Read the serialized data to read all the config for the core App
-	 * this function should be expanded with a whole config class if you have more data to serialize
 	 * 
-	 * @return an the port that need to be used by the core server
+	 * @return all the config that need to be used by the core
 	 */
 	public ConfigCore serializeReadCoreConfigData() {
 
@@ -161,17 +158,17 @@ public class Serializer {
 			config = (ConfigCore) iS.readObject();
 			iS.close();	
 		}catch(EOFException e) {
-			System.out.println("EOF ? ressorting to the default port 8080 and company name Polytech");
-			config = new ConfigCore("Polytech", 8080);
+			System.out.println("EOF ? ressorting to the default port 8080 and company name DefaultCompanyName");
+			config = new ConfigCore("DefaultCompanyName", 8080);
 
 		}catch(ClassNotFoundException e) {
 			//this could happen if the file has been modified, or if there was some difference between the classes version
 			e.printStackTrace();
-			config = new ConfigCore("Polytech", 8080);
+			config = new ConfigCore("DefaultCompanyName", 8080);
 
 		}catch(IOException e) {
 			e.printStackTrace();
-			config = new ConfigCore("Polytech", 8080);
+			config = new ConfigCore("DefaultCompanyName", 8080);
 		}
 
 		return config;
@@ -265,7 +262,7 @@ public class Serializer {
 	}
 
 	/**
-	 * @brief read the serialized data to create an Arraylist with all of it
+	 * Read the serialized data to create an Arraylist with all of it
 	 * @return an Arraylist with all the data not sent previously
 	 */
 	@SuppressWarnings("unchecked") //for the ArrayList cast, because there's no reason it wouldn't be one if the file had been left untouched
