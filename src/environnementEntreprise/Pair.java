@@ -1,17 +1,62 @@
+
 package environnementEntreprise;
 
-public class Pair<L,R> {
-    private L l;
+import java.io.Serializable;
+
+/**
+ * The Class Pair.
+ *
+ * @param <L> the generic type
+ * @param <R> the generic type
+ */
+public class Pair<L,R> implements Serializable{
+    
+    /** The Constant serialVersionUID. */
+	private static final long serialVersionUID = 1L;
+	
+	/** left attribute l. */
+	private L l;
+    
+    /** right attribute r. */
     private R r;
     
+    /**
+     * Instantiates a new pair.
+     *
+     * @param l : the left attribute of the new pair
+     * @param r : the right attribute of the new pair
+     */
     public Pair(L l, R r){
         this.l = l;
         this.r = r;
     }
     
+    /**
+     * Gets l.
+     *
+     * @return the l attribute of the current pair
+     */
     public L getL(){ return l; }
+    
+    /**
+     * Gets r.
+     *
+     * @return the r arribute of the current pair
+     */
     public R getR(){ return r; }
+    
+    /**
+     * Sets l.
+     *
+     * @param l : the new l attribute
+     */
     public void setL(L l){ this.l = l; }
+    
+    /**
+     * Sets r.
+     *
+     * @param r : the new r attribute
+     */
     public void setR(R r){ this.r = r; }
 }
 
@@ -30,8 +75,8 @@ class PairTab<L,R> {
 	
 	/**
 	 * Create a array of pair with 1 entry
-	 * @param l the value of the left entry
-	 * @param r the value of the right entry
+	 * @param l : the value of the left entry
+	 * @param r : the value of the right entry
 	 */
 	public PairTab(L l, R r){
         tabPair[0].setL(l);
@@ -41,8 +86,8 @@ class PairTab<L,R> {
 	
 	/**
 	 * add an entry to the tab. the tab can have duplicates so be careful
-	 * @param l the value of the left entry
-	 * @param r the value of the right entry
+	 * @param l : the value of the left entry
+	 * @param r : the value of the right entry
 	 */
 	public void add(L l,R r) {
 		tabPair[size].setL(l);
@@ -53,8 +98,8 @@ class PairTab<L,R> {
 	/**
 	 * remove an entry of the tab. the entry has to match with the 2 params
 	 * only 1 entry will be removed, even if there are duplicates
-	 * @param l the value of the left entry
-	 * @param r the value of the right entry
+	 * @param l : the value of the left entry
+	 * @param r : the value of the right entry
 	 */
 	public void remove(L l, R r) {
 		boolean skip=false;

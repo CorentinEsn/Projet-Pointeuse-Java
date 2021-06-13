@@ -6,7 +6,11 @@ import java.time.LocalDateTime;
 
 import javax.swing.JLabel;
 
-
+/**
+ * Listener to update the time and data shown on screen
+ * @author Lilian
+ *
+ */
 public class AffListener implements ActionListener{
 
 	/**
@@ -19,7 +23,7 @@ public class AffListener implements ActionListener{
 	private JLabel lbDateCurrent;
 
 	/**
-	 * @brief constructor
+	 * Constructor
 	 * 
 	 * @param lbTimeCurrent {@link AffListener#lbTimeCurrent}
 	 * @param lbDateCurrent {@link AffListener#lbDateCurrent}
@@ -31,7 +35,7 @@ public class AffListener implements ActionListener{
 	}
 
 	/**
-	 * @brief will update the main screen with the new time and date
+	 * Will update the main screen with the new time and date
 	 */
 	public void actionPerformed(ActionEvent evt) {
 		String sLdtDateNew = PointeuseController.getFullDateFromCurrentDateTime(); 

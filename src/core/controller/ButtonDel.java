@@ -1,3 +1,6 @@
+/*
+ * @author Thomas Blumstein
+ */
 package core.controller;
 
 import java.awt.event.ActionEvent;
@@ -8,13 +11,35 @@ import javax.swing.table.DefaultTableModel;
 
 import environnementEntreprise.*;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class ButtonDel.
+ */
 public class ButtonDel implements ActionListener{
+	
+	/** The entreprise. */
 	private Company entreprise;
+	
+	/** The model. */
 	private DefaultTableModel model;
+	
+	/** The table. */
 	JTable table;
-	private int status; 
+	
+	/** The status. */
+	private int status; //if 0, employee, else department
+	
+	/** The message. */
 	String message;
 	
+	/**
+	 * Instantiates a new button del.
+	 *
+	 * @param entreprise the entreprise
+	 * @param model the model
+	 * @param table the table
+	 * @param status the status
+	 */
 	//constructor
 	public ButtonDel(Company entreprise, DefaultTableModel model,JTable table,int status) {
 		this.entreprise=entreprise;
@@ -27,6 +52,11 @@ public class ButtonDel implements ActionListener{
 	
 	
 
+	/**
+	 * Action performed.
+	 *
+	 * @param ae the ActionEvent
+	 */
 	@Override
 	public void actionPerformed(ActionEvent ae){
 		 //showing an alert if there are no selected row

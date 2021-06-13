@@ -5,7 +5,12 @@ import javax.swing.JTextField;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
-
+/**
+ * Listener to add some placeholder when the textfields are empty. 
+ * Will also remove the ability to press the button if all textfields aren't filled
+ * @author Lilian
+ *
+ */
 public class DListener implements DocumentListener{
 
 	/**
@@ -22,7 +27,7 @@ public class DListener implements DocumentListener{
 	private JButton checkInOutbutton;
 
 	/**
-	 * @brief constructor
+	 * Constructor
 	 * 
 	 * @param tfUUID {@link DListener#tfUUID}
 	 * @param tfIPAddress {@link DListener#tfIPAddress}

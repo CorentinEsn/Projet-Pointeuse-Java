@@ -7,6 +7,11 @@ import java.io.ObjectOutputStream;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
+/**
+ * Serialization class to pack the data needed by the core to check int/out someone
+ * @author Lilian
+ *
+ */
 public class SerialPointeuse implements Serializable {
 	/**
 	 * 
@@ -25,7 +30,7 @@ public class SerialPointeuse implements Serializable {
 	}
 
 	/**
-	 * give the UUID
+	 * Give the UUID
 	 * @return the UUID of the current data
 	 */
 	public UUID getUserUUID() {
@@ -33,7 +38,7 @@ public class SerialPointeuse implements Serializable {
 	}
 
 	/**
-	 * give the date in string format
+	 * Give the date in string format
 	 * @return the date in string format
 	 */
 	public String getStrDate() {
@@ -42,7 +47,7 @@ public class SerialPointeuse implements Serializable {
 
 
 	/**
-	 * give the date in LocalDateTime format
+	 * Give the date in LocalDateTime format
 	 * @return the date in LocalDateTime format
 	 */
 	public LocalDateTime getDate() {
@@ -50,7 +55,7 @@ public class SerialPointeuse implements Serializable {
 	}
 
 	/**
-	 * transform the data into a string, for test purposes
+	 * Transform the data into a string, for test purposes
 	 * @return the data in a string format
 	 */
 	@Override
