@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 
+import core.ConfigCore;
 import core.controller.*;
 import environnementEntreprise.*;
 import pointeuse.ThreadReadPointeuseData;
@@ -31,12 +32,18 @@ public class Main_view extends JFrame {
 
 	/** The Company. */
 	Company entreprise; //all the data of the company (departments, employees...)
+	
+	/** All the configuration data */
+	static ConfigCore configCore;
 
-	/** The employeetable. */
+	/** The employee table. */
 	JTable employeetable;
 
-	/** The port's textfield. */
-	JTextField portTextField;
+	/** The port's Spinner. */
+	JSpinner spPort;
+	
+	/** The Company's name */
+	JTextField companyField;
 
 	/** The DefaultTablemodel employee. */
 	DefaultTableModel modelEmployee;
@@ -130,7 +137,9 @@ public class Main_view extends JFrame {
 			public void windowClosing(WindowEvent e){
 				Serializer serializer = new Serializer();
 				serializer.serializeCompany(entreprise);
-				serializer.serializeWriteCoreConfigData(Integer.parseInt(portTextField.getText()));
+				
+				ConfigCore conf = new ConfigCore(companyField.getText(), (int)spPort.getValue());
+				serializer.serializeWriteCoreConfigData(conf);
 				System.exit(0);
 			}
 		};
@@ -406,7 +415,13 @@ public class Main_view extends JFrame {
 
 		JLabel Portlabel= new JLabel("Port : "); 
 
-		portTextField= new JTextField("8080");	
+		//Spinner to choose a port, restricted to a port's limits
+		SpinnerModel modelPort = new SpinnerNumberModel(configCore.getPort(), 0, 65535, 1); 
+		spPort = new JSpinner(modelPort);
+		JComponent editor = new JSpinner.NumberEditor(spPort, "#####");
+		spPort.setEditor(editor);
+		
+
 
 		JLabel Infolabel= new JLabel("Le changement ne sera effectif quu'après redémarrage de l'application"); 
 		
@@ -414,14 +429,14 @@ public class Main_view extends JFrame {
 		
 		JLabel companyJLabel =new JLabel("Nom de Votre Entreprise :");
 		
-		JTextField companyField =new JTextField(10);
+		companyField =new JTextField(10);
 		companyField.setText(entreprise.getName());
 		
 		//add everything
 		companyPanel.add(companyJLabel);
 		companyPanel.add(companyField);
 		port.add(Portlabel);
-		port.add(portTextField);
+		port.add(spPort);
 		card.add(coreDataPath);
 		card.add(configDataPath);
 		port.add(Infolabel);
@@ -441,13 +456,13 @@ public class Main_view extends JFrame {
 		// Assemble all the pieces of the MVC
 		Serializer serializer = new Serializer();
 		Company Entreprise = serializer.unserialiseCompagny();
-		int port = serializer.serializeReadCoreConfigData();
-
+		configCore = serializer.serializeReadCoreConfigData();
+		Entreprise.setName(configCore.getCompanyName());
 
 		Main_view v;
 
 		v = new Main_view(Entreprise);
-		Thread t = new Thread(new ThreadReadPointeuseData(Entreprise, port,v));
+		Thread t = new Thread(new ThreadReadPointeuseData(Entreprise, configCore.getPort(),v));
 		t.start();
 		v.setVisible(true);
 

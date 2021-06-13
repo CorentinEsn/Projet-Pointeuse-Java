@@ -9,6 +9,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 
+import core.ConfigCore;
 import environnementEntreprise.*;
 import pointeuse.ConfigPointeuse;
 import pointeuse.SerialPointeuse;  
@@ -121,7 +122,7 @@ public class Serializer {
 	 * @param port the port used bu the server to receive the data
 	 * 
 	 */
-	public void serializeWriteCoreConfigData(int port) {
+	public void serializeWriteCoreConfigData(ConfigCore configToSave) {
 
 		File directory = new File("CoreData");
 		if (! directory.exists()){
@@ -131,7 +132,7 @@ public class Serializer {
 		File dataFile = createOpenFile("CoreData"+File.separator+"config.dat");
 		try {
 			oS = new ObjectOutputStream(new FileOutputStream(dataFile));
-			oS.writeObject(port);
+			oS.writeObject(configToSave);
 			oS.close();	
 		}catch(IOException e) {
 			e.printStackTrace();
@@ -145,7 +146,7 @@ public class Serializer {
 	 * 
 	 * @return an the port that need to be used by the core server
 	 */
-	public int serializeReadCoreConfigData() {
+	public ConfigCore serializeReadCoreConfigData() {
 
 		File directory = new File("CoreData");
 		if (! directory.exists()){
@@ -154,23 +155,26 @@ public class Serializer {
 
 		File dataFile = createOpenFile("CoreData"+File.separator+"config.dat");
 		//SerialPointeuse[] tabData = null;
-		int port = 8080; //default port if something goes wrong
+		ConfigCore config = null; //default port if something goes wrong
 		try {
 			iS = new ObjectInputStream(new FileInputStream(dataFile));
-			port = (int) iS.readObject();
+			config = (ConfigCore) iS.readObject();
 			iS.close();	
 		}catch(EOFException e) {
-			System.out.println("EOF ? ressorting to the default port 8080");
+			System.out.println("EOF ? ressorting to the default port 8080 and company name Polytech");
+			config = new ConfigCore("Polytech", 8080);
 
 		}catch(ClassNotFoundException e) {
 			//this could happen if the file has been modified, or if there was some difference between the classes version
 			e.printStackTrace();
+			config = new ConfigCore("Polytech", 8080);
 
 		}catch(IOException e) {
 			e.printStackTrace();
+			config = new ConfigCore("Polytech", 8080);
 		}
 
-		return port;
+		return config;
 
 	}
 

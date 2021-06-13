@@ -3,13 +3,20 @@ Thomas Blumstein
 Adam Nassiri
 Corentin Esnault
 
-Notre projet est rendu sous la forme d'un seul projet java sous eclipse. 
+Notre projet est rendu sous la forme d'un seul projet java sous eclipse. Il contient également des exécutables et données sérialisées
 Pour lancer la pointeuse, il faut lancer le fichier "PointeuseController"
 Pour lancer le programme principal, il faut lancer le fichier "Main_view"
-Il n'y a aucune contraite concernant l'ordre de lancement des programmes. 
-Malgré que les deux programmes utilisent une source commune de classes, les deux n'ont pas besoin de l'autre pour fonctionner.
-Nous avons utilisé un modèle MVC pour les deux programmes, avec d'un côté le ou les controleurs qui s'occupe de gerer des données ou d'effectuer des actions (comme par exemple les listener) et de l'autre les vues qui s'occupe de l'organisation de l'affichage.
-Nous avons organisé les données sérialisé dans des dossiers distint : 
-- les données de la pointeuse sont dans le dossier "PointeuseData" et contiennent toutes les check in/out non envoyé par la pointeuse, ainsi qu'un fichier de configuration contenant la derniere adresse IP et le dernier port rentré.
-- les données du programme principal sont dans le dossier "CoreData" et contiennent toutes les information de la companie, dont les département, employé, emploi du temps, check in/out, etc... ainsi qu'un fichier de configuration contenant uniquement le port utilisé pour la récéption des données.
+Il n'y a aucune contrainte concernant l'ordre de lancement des programmes. 
+Malgré le fait que les deux programmes utilisent une source commune de classes, les deux n'ont pas besoin de l'autre pour fonctionner.
+Nous avons utilisé un modèle MVC pour les deux programmes, avec d'un côté le ou les contrôleurs qui s'occupe de gérer des données ou d'effectuer des actions (comme par exemple les listener) et de l'autre les vues qui s'occupe de l'organisation de l'affichage.
+Nous avons organisé les données sérialisé dans des dossiers distinct : 
+- les données de la pointeuse sont dans le dossier "PointeuseData" et contiennent toutes les check in/out non envoyé par la pointeuse, ainsi qu'un fichier de configuration contenant la dernière adresse IP et le dernier port rentré.
+- les données du programme principal sont dans le dossier "CoreData" et contiennent toutes les information de la compagnie, dont les département, employé, emploi du temps, check in/out, etc... ainsi qu'un fichier de configuration contenant uniquement le port utilisé pour la réception des données.
 
+L'exécutable est livré dans un fichier .zip, avec des données sérialisé. Afin que ses données soit utilisées, merci de ne pas déplacer les dossiers ou les .jar.
+
+Voici une liste d'UUID pour éviter d'avoir a tout recopier :
+2e06cfce-7aa2-4b92-bdef-64a9ac6ae816    Lilian    Pouvreau
+d5ae4080-588a-4659-aabe-f577d913c7ca    Thomas    Blumstein
+d33c9d2b-e417-4e4d-8d85-c324d1e1edbc    Nassiri    Adam 
+0d5f75b8-9c88-43ff-a10d-51ff2c2a448a    Esnault    Corentin
