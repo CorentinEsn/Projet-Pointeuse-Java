@@ -9,10 +9,9 @@ public class Main_serial {
 		Company Entreprise =new Company("Polytech") ;
 		Department department=new Department("info","test");
 		Entreprise.addDepartment(department);
-		
+
 		Serializer serializer = new Serializer();
 		serializer.serializeCompany(Entreprise);
-		serializer.unserialiseCompagny();
-		
-}
+
+	}
 }
