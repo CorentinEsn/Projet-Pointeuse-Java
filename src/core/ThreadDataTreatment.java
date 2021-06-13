@@ -13,6 +13,13 @@ import javax.swing.SwingUtilities;
 
 import core.view.Main_view;
 
+/**
+ * Thread to treat a data received by the server
+ * @author Lilian
+ * @author Adam
+ * @author Thomas
+ *
+ */
 public class ThreadDataTreatment implements Runnable{
 
 	private SerialPointeuse dataToTreat;
@@ -29,6 +36,10 @@ public class ThreadDataTreatment implements Runnable{
 		this.company = company;
 	}
 	
+	/**
+	 * Will unpack the data, search for the correct employee and check him in or out.
+	 * if no employee is found, will just ignore the package.
+	 */
 	@Override
 	public void run() {
 		System.out.println("Treating Received data");

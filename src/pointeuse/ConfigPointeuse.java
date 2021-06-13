@@ -2,6 +2,11 @@ package pointeuse;
 
 import java.io.Serializable;
 
+/**
+ * Save class to serialize the configuration of the pointeuse
+ * @author Lilian
+ *
+ */
 public class ConfigPointeuse implements Serializable{
 
 	/**
@@ -9,7 +14,13 @@ public class ConfigPointeuse implements Serializable{
 	 */
 	private static final long serialVersionUID = 1L;
 	
+	/**
+	 * the IP Address to be saved
+	 */
 	private String ipAddress;
+	/**
+	 * the port to be saved
+	 */
 	private int port;
 	
 	

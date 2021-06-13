@@ -38,7 +38,7 @@ public class PointeuseController{
 
 
 	/**
-	 * give the current date with a specified format
+	 * Give the current date with a specified format
 	 * @return the date with a string format of "Month Day(st/nd/rd/th) , Year"
 	 */
 	public static String getFullDateFromCurrentDateTime() {
@@ -71,7 +71,7 @@ public class PointeuseController{
 	}
 
 	/**
-	 * give the current time with a specified format, rounded to by 15 min
+	 * Give the current time with a specified format, rounded to by 15 min
 	 * @return the date with a LocalDateTime
 	 */
 	public static LocalDateTime getFullTimeFromCurrentDateTime() {
@@ -92,7 +92,7 @@ public class PointeuseController{
 
 
 	/**
-	 * create a thread that will send the data, as well as send the older unsent data, and stock them if it fails
+	 * Create a thread that will send the data, as well as send the older unsent data, and stock them if it fails
 	 * @param dataToSend the data to send
 	 * @param address the IP address to which the data will be sent
 	 * @param port the port to which the data will be sent

@@ -6,7 +6,11 @@ import java.time.LocalDateTime;
 
 import javax.swing.JLabel;
 
-
+/**
+ * Listener to update the time and data shown on screen
+ * @author Lilian
+ *
+ */
 public class AffListener implements ActionListener{
 
 	/**

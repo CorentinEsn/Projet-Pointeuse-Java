@@ -10,6 +10,11 @@ import pointeuse.ConfigPointeuse;
 import pointeuse.ThreadSendPointeuseData;
 import saving.Serializer;
 
+/**
+ * Used to serialize the data when the windows is closing
+ * @author Lilian
+ *
+ */
 public class WinListener implements WindowListener{
 
 

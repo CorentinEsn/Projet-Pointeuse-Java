@@ -15,7 +15,8 @@ import pointeuse.SerialPointeuse;
 
 /**
  * 
- * @author Lilian and Corentin
+ * @author Lilian
+ * @author Corentin
  *
  * Will Serialize data for multiple structures, like the pointeuse or the company class
  * all the file names and dirs are already preselected for now
@@ -23,11 +24,11 @@ import pointeuse.SerialPointeuse;
 public class Serializer {
 
 	/**
-	 * the input stream that will read from files
+	 * The input stream that will read from files
 	 */
 	private ObjectInputStream iS;
 	/**
-	 * the output stream that will write to files
+	 * The output stream that will write to files
 	 */
 	private ObjectOutputStream oS;
 
@@ -79,6 +80,10 @@ public class Serializer {
 		}
 	}
 
+	/**
+	 * Read from a file to create a company and all its data
+	 * @return a new company with all the department, employee and data on them
+	 */
 	public Company unserialiseCompagny() {
 
 		File directory = new File("CoreData");
@@ -110,7 +115,7 @@ public class Serializer {
 
 
 	/**
-	 * serialize the port used by the server
+	 * Serialize the port used by the server
 	 * 
 	 * this function should be expanded with a whole config class if you have more data to serialize
 	 * @param port the port used bu the server to receive the data
@@ -135,7 +140,7 @@ public class Serializer {
 	}
 
 	/**
-	 * @brief read the serialized data to read all the config for the core App
+	 * Read the serialized data to read all the config for the core App
 	 * this function should be expanded with a whole config class if you have more data to serialize
 	 * 
 	 * @return an the port that need to be used by the core server
@@ -172,8 +177,8 @@ public class Serializer {
 	
 	
 	/**
-	 * serialize the config used for the pointeuse
-	 * @param port the port used bu the server to receive the data
+	 * Serialize the config used for the pointeuse
+	 * @param dataConfig the structure with all the necessary data
 	 * 
 	 */
 	public void serializeWritePointeuseConfigData(ConfigPointeuse dataConfig) {
@@ -195,7 +200,7 @@ public class Serializer {
 	}
 
 	/**
-	 * @brief read the serialized data to read all the config for the core App
+	 * Read the serialized data to read all the config for the core App
 	 * this function should be expanded with a whole config class if you have more data to serialize
 	 * 
 	 * @return an the port that need to be used by the core server
@@ -231,7 +236,7 @@ public class Serializer {
 	
 	
 	/**
-	 * @brief Serialize the data from the "pointeuse" in a file in "data/PendingPointingData.dat"
+	 * Serialize the data from the "pointeuse" in a file in "data/PendingPointingData.dat"
 	 * 
 	 * will create the directory if it doesn't exist
 	 * 
