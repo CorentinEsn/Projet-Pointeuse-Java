@@ -27,7 +27,7 @@ public class DListener implements DocumentListener{
 	private JButton checkInOutbutton;
 
 	/**
-	 * @brief constructor
+	 * Constructor
 	 * 
 	 * @param tfUUID {@link DListener#tfUUID}
 	 * @param tfIPAddress {@link DListener#tfIPAddress}

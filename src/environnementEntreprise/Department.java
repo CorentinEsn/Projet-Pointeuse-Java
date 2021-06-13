@@ -26,7 +26,7 @@ public class Department implements Serializable{
 	/**
 	 * Gets the employees of the current Department.
 	 *
-	 * @return ArrayList<Employee> employees : the list of all employees in the current department
+	 * @return the list of all employees in the current department
 	 */
 	public ArrayList<Employee> getEmployees() {
 		return employees;
@@ -35,7 +35,7 @@ public class Department implements Serializable{
 	/**
 	 * Sets the employees of the current Department.
 	 *
-	 * @param ArrayList<Employee> employees : the new list of all employees in the current department
+	 * @param employees the new list of all employees in the current department
 	 */
 	public void setEmployees(ArrayList<Employee> employees) {
 		this.employees = employees;
@@ -45,7 +45,7 @@ public class Department implements Serializable{
 	/**
 	 * Gets the name of the department.
 	 *
-	 * @return String name : the name of the current department
+	 * @return the name of the current department
 	 */
 	public String getName() {
 		return name;
@@ -55,7 +55,7 @@ public class Department implements Serializable{
 	/**
 	 * Sets the name of the current department.
 	 *
-	 * @param String name : the new name of the current department
+	 * @param name the new name of the current department
 	 */
 	public void setName(String name) {
 		this.name = name;
@@ -64,7 +64,7 @@ public class Department implements Serializable{
 	/**
 	 * Gets the description of the current department.
 	 *
-	 * @return String description : description of the current department
+	 * @return description of the current department
 	 */
 	public String getDescription() {
 		return description;
@@ -73,7 +73,7 @@ public class Department implements Serializable{
 	/**
 	 * Sets the description of the current department.
 	 *
-	 * @param String newDescription : new description of the current department
+	 * @param newDescription : new description of the current department
 	 */
 	public void setDescription(String newDescription) {
 		description = newDescription;
@@ -82,7 +82,7 @@ public class Department implements Serializable{
 	/**
 	 * Adds an employee to the current department.
 	 *
-	 * @param Employee newEmployee : the employee to add
+	 * @param newEmployee : the employee to add
 	 */
 	public void addEmployee(Employee newEmployee) {
 		employees.add(newEmployee);
@@ -92,7 +92,7 @@ public class Department implements Serializable{
 	/**
 	 * Adds all the employees in the inputed list to the current department.
 	 *
-	 * @param ArrayList<Employee> newEmployees : list of all employees to add
+	 * @param newEmployees : list of all employees to add
 	 */
 	public void addAllEmployee(ArrayList<Employee> newEmployees) {
 		employees.addAll(newEmployees);
@@ -103,7 +103,7 @@ public class Department implements Serializable{
 	 *
 	 * @param oldEmployee the old employee (searched by uuid)
 	 * @param newEmployee the new employee
-	 * @return i place of the employee in the list, 0 if not found
+	 * @return place of the employee in the list, 0 if not found
 	 */
 	public int modEmployee(Employee oldEmployee,Employee newEmployee) {
 		for (int i=0;i <employees.size();i++) {
@@ -121,7 +121,7 @@ public class Department implements Serializable{
 	/**
 	 * Removes an employee from the current department.
 	 *
-	 * @param UUID uuid : the uuid of the employee to remove
+	 * @param uuid : the uuid of the employee to remove
 	 */
 	public void remEmployee(UUID uuid) {
 		Boolean removed = false;
@@ -147,14 +147,14 @@ public class Department implements Serializable{
 	 * Instantiates a new department.
 	 */
 	public Department() {
-		// TODO Auto-generated constructor stub
+		
 	}
 	
 	/**
 	 * Instantiates a new department.
 	 *
-	 * @param String name : the name of the new department
-	 * @param String description : the description of the new employee
+	 * @param name : the name of the new department
+	 * @param description : the description of the new employee
 	 */
 	public Department(String name,String description) {
 		this.name=name;

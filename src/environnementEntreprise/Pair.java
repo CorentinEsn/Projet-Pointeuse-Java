@@ -23,8 +23,8 @@ public class Pair<L,R> implements Serializable{
     /**
      * Instantiates a new pair.
      *
-     * @param L l : the left attribute of the new pair
-     * @param R r : the right attribute of the new pair
+     * @param l : the left attribute of the new pair
+     * @param r : the right attribute of the new pair
      */
     public Pair(L l, R r){
         this.l = l;
@@ -34,28 +34,28 @@ public class Pair<L,R> implements Serializable{
     /**
      * Gets l.
      *
-     * @return Ll: the l attribute of the current pair
+     * @return the l attribute of the current pair
      */
     public L getL(){ return l; }
     
     /**
      * Gets r.
      *
-     * @return R r : the r arribute of the current pair
+     * @return the r arribute of the current pair
      */
     public R getR(){ return r; }
     
     /**
      * Sets l.
      *
-     * @param L l : the new l attribute
+     * @param l : the new l attribute
      */
     public void setL(L l){ this.l = l; }
     
     /**
      * Sets r.
      *
-     * @param R r : the new r attribute
+     * @param r : the new r attribute
      */
     public void setR(R r){ this.r = r; }
 }
@@ -75,8 +75,8 @@ class PairTab<L,R> {
 	
 	/**
 	 * Create a array of pair with 1 entry
-	 * @param L l : the value of the left entry
-	 * @param R r : the value of the right entry
+	 * @param l : the value of the left entry
+	 * @param r : the value of the right entry
 	 */
 	public PairTab(L l, R r){
         tabPair[0].setL(l);
@@ -86,8 +86,8 @@ class PairTab<L,R> {
 	
 	/**
 	 * add an entry to the tab. the tab can have duplicates so be careful
-	 * @param L l : the value of the left entry
-	 * @param R r : the value of the right entry
+	 * @param l : the value of the left entry
+	 * @param r : the value of the right entry
 	 */
 	public void add(L l,R r) {
 		tabPair[size].setL(l);
@@ -98,8 +98,8 @@ class PairTab<L,R> {
 	/**
 	 * remove an entry of the tab. the entry has to match with the 2 params
 	 * only 1 entry will be removed, even if there are duplicates
-	 * @param L l : the value of the left entry
-	 * @param R r : the value of the right entry
+	 * @param l : the value of the left entry
+	 * @param r : the value of the right entry
 	 */
 	public void remove(L l, R r) {
 		boolean skip=false;

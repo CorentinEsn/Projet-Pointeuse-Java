@@ -35,7 +35,7 @@ public class ThreadSendPointeuseData implements Runnable {
 	private static ArrayList<SerialPointeuse> dataToKeep = readStockedData();
 
 	/**
-	 * @brief constructor
+	 * Constructor
 	 * 
 	 * @param dataToSend {@link ThreadSendPointeuseData#dataToSend}
 	 * @param address {@link ThreadSendPointeuseData#address}
@@ -48,7 +48,7 @@ public class ThreadSendPointeuseData implements Runnable {
 	}
 
 	/**
-	 * @brief read data from .dat file
+	 * Read data from .dat file
 	 * 
 	 * usually called when there's a new data to sent
 	 * 
@@ -65,7 +65,7 @@ public class ThreadSendPointeuseData implements Runnable {
 	}
 
 	/**
-	 * @brief write the ArrayList {@link ThreadSendPointeuseData#dataToKeep} to a .dat file
+	 * Write the ArrayList {@link ThreadSendPointeuseData#dataToKeep} to a .dat file
 	 */
 	public static void writeStockedData() {
 		saving.Serializer writingData = new saving.Serializer();
@@ -78,7 +78,7 @@ public class ThreadSendPointeuseData implements Runnable {
 	}
 
 	/**
-	 * @brief function to fill the array with new data to stock
+	 * Function to fill the array with new data to stock
 	 *
 	 * @param failedData the data to add to the array
 	 */
@@ -87,7 +87,7 @@ public class ThreadSendPointeuseData implements Runnable {
 	}
 
 	/**
-	 * @brief the main function, will connect to the server with the given info, and stock the data if the transfer fails
+	 * The main function, will connect to the server with the given info, and stock the data if the transfer fails
 	 */
 	public void run() {
 
@@ -126,7 +126,7 @@ public class ThreadSendPointeuseData implements Runnable {
 	}
 
 	/**
-	 * @brief sends data that is stocked in dataToKeep
+	 * Sends data that is stocked in dataToKeep
 	 * @param address {@link ThreadSendPointeuseData#address}
 	 * @param port {@link ThreadSendPointeuseData#port}
 	 */

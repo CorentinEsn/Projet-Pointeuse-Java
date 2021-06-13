@@ -5,7 +5,6 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.time.LocalDate;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class Company.
  */
@@ -23,7 +22,7 @@ public class Company implements Serializable{
 	/**
 	 * Gets the departments of the current company.
 	 *
-	 * @return ArrayList<Department> departments : the departments of the current company
+	 * @return the departments of the current company
 	 */
 	//methods
 	public ArrayList<Department> getDepartments() {
@@ -33,7 +32,7 @@ public class Company implements Serializable{
 	/**
 	 * Sets the departments of the current company.
 	 *
-	 * @param ArrayList<Department> departments : the new departments
+	 * @param departments : the new departments
 	 */
 	public void setDepartments(ArrayList<Department> departments) {
 		this.departments = departments;
@@ -42,7 +41,7 @@ public class Company implements Serializable{
 	/**
 	 * Gets the name of the current company.
 	 *
-	 * @return String name : the name of the current company
+	 * @return the name of the current company
 	 */
 	public String getName() {
 		return name;
@@ -51,7 +50,7 @@ public class Company implements Serializable{
 	/**
 	 * Sets the name of the current company.
 	 *
-	 * @param String newName : the new name of the current company
+	 * @param newName the new name of the current company
 	 */
 	public void setName(String newName) {
 		name = newName;
@@ -60,7 +59,7 @@ public class Company implements Serializable{
 	/**
 	 * Adds a department to the current company.
 	 *
-	 * @param Department department : the department to add
+	 * @param department : the department to add
 	 */
 	public void addDepartment(Department department) {
 		departments.add(department);
@@ -69,7 +68,7 @@ public class Company implements Serializable{
 	/**
 	 * Deletes a departments from the current company.
 	 *
-	 * @param Department department : the department to delete, the name of the parameter department needs to be the same as the department you want to delete
+	 * @param department : the department to delete, the name of the parameter department needs to be the same as the department you want to delete
 	 */
 	public void delDepartment(Department department) {
 		for (int i=0;i <departments.size();i++) {
@@ -84,7 +83,7 @@ public class Company implements Serializable{
 	 *
 	 * @param oldDepartment the old department
 	 * @param newDepartment the new department
-	 * @return int i the place of the department in the list
+	 * @return the place of the department in the list
 	 */
 	public int modDepartment(Department oldDepartment,Department newDepartment) {
 		for (int i=0;i <departments.size();i++) {
@@ -101,7 +100,7 @@ public class Company implements Serializable{
 	/**
 	 * Returns a ArrayList of all employees of the current company.
 	 *
-	 * @return ArrayList<Employee> rez : contains all employees
+	 * @return contains all employees
 	 */
 	public ArrayList<Employee> allEmployees(){
 		ArrayList<Employee> employees = new ArrayList<Employee>();
@@ -131,8 +130,8 @@ public class Company implements Serializable{
 	/**
 	 * Returns a list of all the employees who checked in on the inputed day
 	 *
-	 * @param LocalDate day where we want to check who was here
-	 * @return ArrayList<Employee> employees : contains all employees who checked in that day
+	 * @param day where we want to check who was here
+	 * @return contains all employees who checked in that day
 	 */
 	public ArrayList<Employee> whoWasHere(LocalDate day) {
 		//return value

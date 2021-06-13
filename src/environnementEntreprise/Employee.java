@@ -40,7 +40,7 @@ public class Employee implements Serializable{
 	/**
 	 * Checks if the current Employee is checked in.
 	 *
-	 * @return boolean checkedIn : True if the employee is currently checked in
+	 * @return True if the employee is currently checked in
 	 */
 	public boolean isCheckedIn() {
 		return checkedIn;
@@ -61,7 +61,7 @@ public class Employee implements Serializable{
 	/**
 	 * Gets the schedule of the current employee.
 	 *
-	 * @return Schedule SCH : current employees schedule
+	 * @return current employees schedule
 	 */
 	public Schedule getSCH() {
 		return SCH;
@@ -70,7 +70,7 @@ public class Employee implements Serializable{
 	/**
 	 * Sets the schedule of the current employee.
 	 *
-	 * @param Schedule sCH : the new schedule of the current employee
+	 * @param sCH : the new schedule of the current employee
 	 */
 	public void setSCH(Schedule sCH) {
 		SCH = sCH;
@@ -95,9 +95,9 @@ public class Employee implements Serializable{
 	/**
 	 * Instantiates a new employee.
 	 *
-	 * @param String name : name of the employee
-	 * @param String firstname : firstname of the employee
-	 * @param Schedule SCH : schedule of the employee
+	 * @param name : name of the employee
+	 * @param firstname : firstname of the employee
+	 * @param SCH : schedule of the employee
 	 */
 	public Employee(String name, String firstname,Schedule SCH) {
 
@@ -114,7 +114,7 @@ public class Employee implements Serializable{
 	/**
 	 * Gets the uuid of the current employee.
 	 *
-	 * @return UUID uuid : the uuid of the current employee
+	 * @return the uuid of the current employee
 	 */
 	public UUID getUUID() {
 		return uuid;
@@ -123,7 +123,7 @@ public class Employee implements Serializable{
 	/**
 	 * Sets the uuid of the current employee.
 	 *
-	 * @param UUID newUUID : the new uuid of the current employee
+	 * @param newUUID : the new uuid of the current employee
 	 */
 	public void setUUID(UUID newUUID) {
 		uuid = newUUID;
@@ -132,7 +132,7 @@ public class Employee implements Serializable{
 	/**
 	 * Gets the over time of the current employee.
 	 *
-	 * @return long overTime : overtime value of the current employee
+	 * @return overtime value of the current employee
 	 */
 	public long getoverTime() {
 		return overTime;
@@ -154,7 +154,7 @@ public class Employee implements Serializable{
 	/**
 	 * Sets the over time of the current employee.
 	 *
-	 * @param long newoverTime : the new over time of the current employee
+	 * @param newoverTime : the new over time of the current employee
 	 */
 	public void setoverTime(long newoverTime) {
 		overTime = newoverTime;
@@ -163,7 +163,7 @@ public class Employee implements Serializable{
 	/**
 	 * Sets the history of the current employee.
 	 *
-	 * @param HashMap<LocalDate,Pair<LocalTime,LocalTime>> newHistory : the new history of the current employee
+	 * @param newHistory : the new history of the current employee
 	 */
 	public void setHistory(HashMap<LocalDate,Pair<LocalTime,LocalTime>> newHistory) {
 		history = newHistory;
@@ -172,7 +172,7 @@ public class Employee implements Serializable{
 	/**
 	 * Gets the history of the current employee.
 	 *
-	 * @return HashMap<LocalDate,Pair<LocalTime,LocalTime>> history : the history of the current employee
+	 * @return the history of the current employee
 	 */
 	public HashMap<LocalDate,Pair<LocalTime,LocalTime>> getHistory(){
 		return history;
@@ -181,8 +181,8 @@ public class Employee implements Serializable{
 	/**
 	 * determines what day of the week the inputed date is.
 	 *
-	 * @param LocalDate date : the date we want to check
-	 * @return int rez : corresponds to the day of the week (from 0 to 4 from monday to friday)
+	 * @param date : the date we want to check
+	 * @return corresponds to the day of the week (from 0 to 4 from monday to friday)
 	 */
 	public int dayOfWeek(LocalDate date) {
 		int rez;
@@ -214,7 +214,7 @@ public class Employee implements Serializable{
 	/**
 	 * checkIO checks an employee in or out
 	 *
-	 * @param LocalDateTime time :the time of checking in or out
+	 * @param time :the time of checking in or out
 	 */
 	public void checkIO(LocalDateTime time){
 
@@ -299,7 +299,7 @@ public class Employee implements Serializable{
 	/**
 	 * Gets the name of the current employee.
 	 *
-	 * @return String name : the name of the crrent employee
+	 * @return the name of the current employee
 	 */
 	public String getName() {
 		return name;
@@ -308,7 +308,7 @@ public class Employee implements Serializable{
 	/**
 	 * Sets the name of the current employee.
 	 *
-	 * @param String name : new name of the current employee
+	 * @param name : new name of the current employee
 	 */
 	public void setName(String name) {
 		this.name = name;
@@ -317,7 +317,7 @@ public class Employee implements Serializable{
 	/**
 	 * Gets the firstname of the current employee.
 	 *
-	 * @return String firstname : the firstname of the current employee
+	 * @return the firstname of the current employee
 	 */
 	public String getFirstname() {
 		return firstname;
@@ -326,7 +326,7 @@ public class Employee implements Serializable{
 	/**
 	 * Sets the firstname of the current employee.
 	 *
-	 * @param String firstname : the new firstname of the current employee
+	 * @param firstname : the new firstname of the current employee
 	 */
 	public void setFirstname(String firstname) {
 		this.firstname = firstname;

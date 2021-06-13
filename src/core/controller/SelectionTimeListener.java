@@ -24,11 +24,9 @@ import environnementEntreprise.Pair;
  * The class that is interested in processing a selectionTime
  * event implements this interface, and the object created
  * with that class is registered with a component using the
- * component's <code>addSelectionTimeListener<code> method. When
+ * component's addSelectionTimeListener method. When
  * the selectionTime event occurs, that object's appropriate
  * method is invoked.
- *
- * @see SelectionTimeEvent
  */
 public class SelectionTimeListener implements ActionListener{
 	
