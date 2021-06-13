@@ -29,10 +29,10 @@ public class Schedule implements Serializable{
 	}
 
 	/**
-	 * Adds the hours of arrival and leave in the schedule.
+	 * Adds the hours of arrival and departure in the schedule.
 	 *
-	 * @param key int corresponding to a day of the week
-	 * @param hours the hours for that day
+	 * @param Integer key : integer corresponding to a day of the week from 0 to 4
+	 * @param Pair<LocalTime,LocalTime> hours : the hours for that day
 	 */
 	public void addHrs(Integer key, Pair<LocalTime,LocalTime> hours) {
 
@@ -49,7 +49,7 @@ public class Schedule implements Serializable{
 	/**
 	 * Gets the schedule.
 	 *
-	 * @return the schedule
+	 * @return HashMap< Integer , Pair<LocalTime,LocalTime> > SCH : the schedule
 	 */
 	public HashMap< Integer , Pair<LocalTime,LocalTime> > getSCH() {
 		return SCH;
@@ -58,7 +58,7 @@ public class Schedule implements Serializable{
 	/**
 	 * Sets the schedule.
 	 *
-	 * @param sch the schedule
+	 * @param HashMap< Integer , Pair<LocalTime,LocalTime> > sch : the schedule
 	 */
 	public void setSCH(HashMap< Integer , Pair<LocalTime,LocalTime> > sch) {
 		SCH = sch;
